@@ -1,0 +1,6 @@
+- Add callback for tags, like code so one can add syntax highlight support for code section without having to reparse the generated doc
+- Implement the full test suite
+- Use xmlwriter to avoid to have to tidy the output
+- Support for stream as output or input (in fromFile, toFile)
+- Remove everything we don't use in discount
+- Play with re2c, could be faster/cleaner, as a 2nd backend

@@ -1,0 +1,12 @@
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE("markdown", "Markdown Support", "no");
+
+if (PHP_MARKDOWN == "yes") {
+		ADD_FLAG("CFLAGS_MARKDOWN", "/D_WIN32");
+		EXTENSION("markdown", "markdown.c");
+		ADD_SOURCES(configure_module_dirname + "/discount", "mkdio.c markdown.c dumptree.c generate.c \
+								resource.c docheader.c toc.c xmlpage.c", "markdown");
+		AC_DEFINE('HAVE_MARKDOWN', 1, 'Have Markdown support', false);
+}
