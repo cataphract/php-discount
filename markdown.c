@@ -327,6 +327,7 @@ MARKDOWN_METHOD(parseToString)
 			RETVAL_FALSE;
 		} else {
 			RETVAL_STRINGL(result, result_len, 1);
+			efree(result);
 		}
 	}
 	php_set_error_handling(EH_NORMAL, NULL TSRMLS_CC);
@@ -444,8 +445,10 @@ MARKDOWN_METHOD(parseFileToString)
 			RETVAL_FALSE;
 		} else {
 			RETVAL_STRINGL(result, result_len, 1);
+			efree(result);
 		}
 		mkd_cleanup(doc);
+		efree(contents);
 	} else if (len == 0) {
 			RETVAL_EMPTY_STRING();
 	} else {
