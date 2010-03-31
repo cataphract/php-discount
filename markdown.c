@@ -470,7 +470,7 @@ MARKDOWN_METHOD(parseFileToFile)
  *
  * Every user visible function must have an entry in markdown_functions[].
  */
-function_entry markdown_functions[] = {
+zend_function_entry markdown_functions[] = {
 	{NULL, NULL, NULL}	/* Must be the last line in markdown_functions[] */
 };
 /* }}} */
