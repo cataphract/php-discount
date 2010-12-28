@@ -1,0 +1,58 @@
+001+ <p>Superscript: A<sup>B</sup>, A<sup>BC</sup></p>
+003+ <p>Relaxed emphasis: kk_kk_</p>
+004+ 
+005+ <p>Strike-through: <del>strikethrough</del></p>
+006+ 
+007+ <p>Lists:</p>
+008+ 
+009+ <p>. sdfsd
+010+ . wesdf</p>
+011+ 
+012+ <dl>
+013+ <dt>hey!</dt>
+014+ <dd>This is a definition list</dd>
+015+ </dl>
+016+ 
+017+ <div class="class"></div>
+018+ 
+019+ <table>
+020+ <thead>
+021+ <tr>
+022+ <th>aaa </th>
+023+ <th> bbbb</th>
+024+ </tr>
+025+ </thead>
+026+ <tbody>
+027+ <tr>
+028+ <td>hello</td>
+029+ <td>sailor</td>
+030+ </tr>
+031+ </tbody>
+032+ </table>
+033+ 
+034+ 
+035+ =====================
+036+ <p>Superscript: A^B, A^(BC)</p>
+037+ 
+038+ <p>Relaxed emphasis: kk<em>kk</em></p>
+039+ 
+040+ <p>Strike-through: ~~strikethrough~~</p>
+041+ 
+042+ <p>Lists:</p>
+043+ 
+044+ <p>. sdfsd
+045+ . wesdf</p>
+046+ 
+047+ <p>=hey!=</p>
+048+ 
+049+ <pre><code>This is a definition list
+050+ </code></pre>
+051+ 
+052+ <blockquote><p>%class%</p></blockquote>
+053+ 
+054+ <p>aaa | bbbb
+055+ &mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;
+056+ hello|sailor</p>
+057+ 
+058+ 
+059+ Done.
