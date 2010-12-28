@@ -1,0 +1,197 @@
+Extension [ <persistent> extension #7 discount version 0.1.0-dev ] {
+
+  - Classes [1] {
+    Class [ <internal:discount> class MarkdownDocument ] {
+
+      - Constants [22] {
+        Constant [ integer NOLINKS ] { 1 }
+        Constant [ integer NOIMAGE ] { 2 }
+        Constant [ integer NOPANTS ] { 4 }
+        Constant [ integer NOHTML ] { 8 }
+        Constant [ integer STRICT ] { 16 }
+        Constant [ integer TAGTEXT ] { 32 }
+        Constant [ integer NO_EXT ] { 64 }
+        Constant [ integer CDATA ] { 128 }
+        Constant [ integer NOSUPERSCRIPT ] { 256 }
+        Constant [ integer NORELAXED ] { 512 }
+        Constant [ integer NOTABLES ] { 1024 }
+        Constant [ integer NOSTRIKETHROUGH ] { 2048 }
+        Constant [ integer TOC ] { 4096 }
+        Constant [ integer ONE_COMPAT ] { 8192 }
+        Constant [ integer AUTOLINK ] { 16384 }
+        Constant [ integer SAFELINK ] { 32768 }
+        Constant [ integer NOHEADER ] { 65536 }
+        Constant [ integer TABSTOP ] { 131072 }
+        Constant [ integer NODIVQUOTE ] { 262144 }
+        Constant [ integer NOALPHALIST ] { 524288 }
+        Constant [ integer NODLIST ] { 1048576 }
+        Constant [ integer EMBED ] { 35 }
+      }
+
+      - Static properties [0] {
+      }
+
+      - Static methods [4] {
+        Method [ <internal:discount> static public method createFromStream ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $markdown_stream ]
+            Parameter #1 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> static public method createFromString ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $markdown_doc ]
+            Parameter #1 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> static public method transformFragment ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $markdown_fragment ]
+            Parameter #1 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> static public method writeFragment ] {
+
+          - Parameters [3] {
+            Parameter #0 [ <required> $markdown_fragment ]
+            Parameter #1 [ <required> $out_stream ]
+            Parameter #2 [ <optional> $flags ]
+          }
+        }
+      }
+
+      - Properties [0] {
+      }
+
+      - Methods [18] {
+        Method [ <internal:discount, ctor> protected method __construct ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> final protected method initFromStream ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $markdown_stream ]
+            Parameter #1 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> final protected method initFromString ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $markdown_doc ]
+            Parameter #1 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> public method compile ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <optional> $flags ]
+          }
+        }
+
+        Method [ <internal:discount> public method isCompiled ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method dumpTree ] {
+
+          - Parameters [2] {
+            Parameter #0 [ <required> $out_stream ]
+            Parameter #1 [ <optional> $title ]
+          }
+        }
+
+        Method [ <internal:discount> public method getTitle ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method getAuthor ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method getDate ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method getHtml ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method writeHtml ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $markdown_outstream ]
+          }
+        }
+
+        Method [ <internal:discount> public method writeXhtmlPage ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $markdown_outstream ]
+          }
+        }
+
+        Method [ <internal:discount> public method getToc ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method getCss ] {
+
+          - Parameters [0] {
+          }
+        }
+
+        Method [ <internal:discount> public method writeToc ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $markdown_outstream ]
+          }
+        }
+
+        Method [ <internal:discount> public method writeCss ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $markdown_outstream ]
+          }
+        }
+
+        Method [ <internal:discount> public method setUrlCallback ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $callback ]
+          }
+        }
+
+        Method [ <internal:discount> public method setAttributesCallback ] {
+
+          - Parameters [1] {
+            Parameter #0 [ <required> $callback ]
+          }
+        }
+      }
+    }
+  }
+}
+

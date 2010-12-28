@@ -1,0 +1,19 @@
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE("discount", "Discount markdown support", "no");
+
+if (PHP_DISCOUNT != "no") {
+	EXTENSION("discount", "discount.c discount_class.c markdowndoc_meth_misc.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_document.c", PHP_DISCOUNT_SHARED, "/D_WSTDIO_DEFINED");
+	ADD_SOURCES(configure_module_dirname + "/lib",
+		"Csio.c css.c docheader.c \
+		dumptree.c emmatch.c flags.c \
+		generate.c html5.c markdown.c \
+		mkdio.c resource.c tags.c \
+		toc.c version.c xml.c \
+		xmlpage.c", "discount");
+	
+	AC_DEFINE("HAVE_DISCOUNT", 1, "Discount markdown support");
+}
+
+
