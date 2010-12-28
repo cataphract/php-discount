@@ -6,7 +6,7 @@ if (!extension_loaded('discount'))
 	die('SKIP discount extension not loaded');
 --FILE--
 <?php
-include dirname(__FILE__)."/helpers.inc.php";
+include dirname(__FILE__)."/helpers.php.inc";
 
 var_dump(
 	MarkdownDocument::createFromString()
