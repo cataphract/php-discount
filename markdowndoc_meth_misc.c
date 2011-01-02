@@ -134,6 +134,7 @@ PHP_METHOD(markdowndoc, writeFragment)
 	php_stream	*stream;
 	int			close;
 	FILE		*f;
+	int			status;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sz|l",
 			&markdown, &markdown_len, &zstream, &flags) == FAILURE) {
@@ -143,10 +144,12 @@ PHP_METHOD(markdowndoc, writeFragment)
 		RETURN_FALSE;
 	}
 
-	/* returns always 0 */
-	mkd_generateline(markdown, markdown_len, f, (mkd_flag_t) flags);
-
+	status = mkd_generateline(markdown, markdown_len, f, (mkd_flag_t) flags);
 	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
+
+	if (markdown_handle_io_error(status, "mkd_generateline" TSRMLS_CC) == FAILURE) {
+		RETURN_FALSE;
+	}
 	
 	RETURN_TRUE;
 }

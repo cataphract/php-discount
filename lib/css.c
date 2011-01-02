@@ -52,6 +52,12 @@ mkd_css(Document *d, char **res)
 	CREATE(f);
 	RESERVE(f, 100);
 	stylesheets(d->code, &f);
+
+	/* on merge: added null termination on zero length results */
+	if (S(f) == 0) {
+		EXPAND(f) = '\0';
+		S(f)--;
+	}
 			
 			/* HACK ALERT! HACK ALERT! HACK ALERT! */
 	*res = T(f);	/* we know that a T(Cstring) is a character pointer */
@@ -71,9 +77,16 @@ mkd_generatecss(Document *d, FILE *f)
     char *res;
     int written = EOF, size = mkd_css(d, &res);
 
+	/* on merge: fixed bug in order of fwrite args */
     if ( size > 0 )
-	written = fwrite(res, size, 1, f);
+	written = fwrite(res, 1, size, f);
     if ( res )
 	efree(res);
-    return (written == size) ? size : EOF;
+
+	/* on merge: changed so it returns 0 on no data and EOF only if there's an error in fwrite */
+	if (size == 0) {
+		return 0;
+	} else {
+		return (written == size) ? size : EOF;
+	}
 }

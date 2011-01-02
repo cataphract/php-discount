@@ -20,7 +20,7 @@ PHP_METHOD(markdowndoc, getToc)
 		RETURN_FALSE;
 	}
 	/* compilation not necessary: */
-	if ((dobj = markdowndoc_get_object(getThis(), 0 TSRMLS_CC)) == NULL) {
+	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
 	
@@ -81,7 +81,7 @@ PHP_METHOD(markdowndoc, writeToc)
 		RETURN_FALSE;
 	}
 	/* no compilation required */
-	if ((dobj = markdowndoc_get_object(getThis(), 0 TSRMLS_CC)) == NULL) {
+	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
 	if (markdowndoc_get_file(zstream, 1, &stream, &close, &f TSRMLS_CC) == FAILURE) {
@@ -91,12 +91,11 @@ PHP_METHOD(markdowndoc, writeToc)
 	status = mkd_generatetoc(dobj->markdoc, f);
 	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
-	if (status < 0) {
-		/* nothing was written; possibly MKD_TOC was not specified */
+	if (markdown_handle_io_error(status, "mkd_generatetoc" TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 
-	RETURN_TRUE;
+	RETURN_BOOL(status == 1); /* 1 for no data; 0 for no MKD_TOC */
 }
 /* }}} */
 
@@ -124,8 +123,7 @@ PHP_METHOD(markdowndoc, writeCss)
 	status = mkd_generatecss(dobj->markdoc, f);
 	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
-	if (status < 0) {
-		/* fwrite did not report everything was written */
+	if (markdown_handle_io_error(status, "mkd_generatecss" TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 

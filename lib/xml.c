@@ -43,16 +43,19 @@ mkd_generatexml(char *p, int size, FILE *out)
 {
     unsigned char c;
     char *entity;
+	int ret = 0;
+
+	/* on merge: changed so the return value has some meaning */
 
     while ( size-- > 0 ) {
 	c = *p++;
 
 	if ( entity = mkd_xmlchar(c) )
-	    fputs(entity, out);
+	    ret |= fputs(entity, out);
 	else
-	    fputc(c, out);
+	    ret |= fputc(c, out);
     }
-    return 0;
+    return ret;
 }
 
 
