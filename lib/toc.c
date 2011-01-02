@@ -64,6 +64,13 @@ mkd_toc(Document *p, char **doc)
 	--last_hnumber;
 	Csprintf(&res, last_hnumber ? "%*s</ul></li>\n" : "%*s</ul>\n", last_hnumber, "");
     }
+
+	/* on merge: added null termination on zero length results */
+	if (S(res) == 0) {
+		EXPAND(res) = '\0';
+		S(res)--;
+	}
+
 			/* HACK ALERT! HACK ALERT! HACK ALERT! */
     *doc = T(res);	/* we know that a T(Cstring) is a character pointer */
 			/* so we can simply pick it up and carry it away, */
@@ -81,8 +88,15 @@ mkd_generatetoc(Document *p, FILE *out)
     int sz = mkd_toc(p, &buf);
     int ret = EOF;
 
+	/* on merge: changed so it returns 1 on normal/no data, 0 on no MKD_TOC and EOF only if there's an error in fwrite */
+
     if ( sz > 0 )
-	ret = fwrite(buf, sz, 1, out);
+	ret = fwrite(buf, 1, sz, out) == (size_t)sz ? 1 : EOF;
+
+	/* on merge: added to allow distinguishing empty toc from no MKD_TOC */
+	if (sz == 0) {
+		ret = (buf != 0);
+	}
 
     if ( buf ) efree(buf);
 

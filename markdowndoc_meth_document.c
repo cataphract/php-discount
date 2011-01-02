@@ -58,10 +58,7 @@ PHP_METHOD(markdowndoc, writeHtml)
 	status = mkd_generatehtml(dobj->markdoc, f);
 	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
-	if (status < 0) {
-		/* should never happen, but... */
-		zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
-			"Call to library function mkd_generatehtml() failed (should not happen!)");
+	if (markdown_handle_io_error(status, "mkd_generatehtml" TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 	
@@ -92,10 +89,7 @@ PHP_METHOD(markdowndoc, writeXhtmlPage)
 	status = mkd_xhtmlpage(dobj->markdoc, f);
 	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
-	if (status < 0) {
-		/* should never happen, but... */
-		zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
-			"Call to library function mkd_xhtmlpage() failed (should not happen!)");
+	if (markdown_handle_io_error(status, "mkd_xhtmlpage" TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 	

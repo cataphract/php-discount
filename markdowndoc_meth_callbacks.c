@@ -36,7 +36,7 @@ static char *proxy_callback(
 	fci->no_separation	= 1;
 
 	retval = zend_call_function(fci, fcc TSRMLS_CC);
-	if (retval != SUCCESS ||fci->retval_ptr_ptr == NULL) {
+	if (retval != SUCCESS || fci->retval_ptr_ptr == NULL) {
 		/* failure was most likely due to a previous exception (probably
 			* in a previous URL), so don't throw yet another exception on
 			* top of it */
@@ -99,6 +99,17 @@ static char *proxy_attributes_callback(const char *url, const int url_len, void 
 }
 /* }}} */
 
+/* {{{ free_proxy_return */
+static void free_proxy_return(char *buffer, void *doc)
+{
+	(void) doc; /* don't care */
+	/* PHP doesn't like efree called on null pointers */
+	if (buffer) {
+		efree(buffer);
+	}
+}
+/* }}} */
+
 /* {{{ proto bool MarkdownDocument::setUrlCallback(callback $url_callback) */
 PHP_METHOD(markdowndoc, setUrlCallback)
 {
@@ -116,6 +127,7 @@ PHP_METHOD(markdowndoc, setUrlCallback)
 	if (fci.size > 0) { /* non-NULL passed */
 		markdowndoc_store_callback(&fci, &fcc, &dobj->url_fci, &dobj->url_fcc);
 		mkd_e_url(dobj->markdoc, proxy_url_callback);
+		mkd_e_free(dobj->markdoc, free_proxy_return);
 		mkd_e_data(dobj->markdoc, dobj);
 	} else { /* NULL */
 		markdowndoc_free_callback(&dobj->url_fci, &dobj->url_fcc);
@@ -142,7 +154,8 @@ PHP_METHOD(markdowndoc, setAttributesCallback)
 
 	if (fci.size > 0) { /* non-NULL passed */
 		markdowndoc_store_callback(&fci, &fcc, &dobj->attr_fci, &dobj->attr_fcc);
-		mkd_e_flags(dobj->markdoc, proxy_url_callback);
+		mkd_e_flags(dobj->markdoc, proxy_attributes_callback);
+		mkd_e_free(dobj->markdoc, free_proxy_return);
 		mkd_e_data(dobj->markdoc, dobj);
 	} else { /* NULL */
 		markdowndoc_free_callback(&dobj->attr_fci, &dobj->attr_fcc);

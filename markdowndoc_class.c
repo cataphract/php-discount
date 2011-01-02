@@ -266,6 +266,23 @@ int markdown_sync_stream_and_file(php_stream *stream, int close, FILE *file TSRM
 	return status ? FAILURE : SUCCESS;
 }
 
+int markdown_handle_io_error(int status, const char *lib_func TSRMLS_DC)
+{
+	if (status < 0) {
+		if (errno == 0) {
+			zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
+				"Unspecified error in library function %s", lib_func);
+			return FAILURE;
+		} else {
+			php_error_docref0(NULL TSRMLS_CC, E_WARNING, "I/O error in library "
+				"function %s: %s (%d)", lib_func, strerror(errno), errno);
+			errno = 0;
+			return FAILURE;
+		}
+	}
+	return SUCCESS;
+}
+
 void markdowndoc_store_callback(
 	zend_fcall_info			*fci_in,
 	zend_fcall_info_cache	*fcc_in,
