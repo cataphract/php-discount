@@ -20,6 +20,7 @@ extern zend_module_entry discount_module_entry;
 #include "TSRM.h"
 #endif
 
+#ifdef DISCOUNT_GLOBALS
 ZEND_BEGIN_MODULE_GLOBALS(discount)
 	void *dummy;
 ZEND_END_MODULE_GLOBALS(discount)
@@ -30,6 +31,7 @@ ZEND_EXTERN_MODULE_GLOBALS(discount);
 # define DISCOUNT_G(v) TSRMG(discount_globals_id, zend_discount_globals *, v)
 #else
 # define DISCOUNT_G(v) (discount_globals.v)
+#endif
 #endif
 
 /* PHP 5.2 compatibility */
