@@ -1,31 +1,20 @@
-dnl $Id: config.m4 299933 2010-05-29 11:23:18Z tony2001 $
-dnl config.m4 for extension rar
+dnl $Id$
+dnl config.m4 for extension discount
 
-PHP_ARG_ENABLE(rar, whether to enable rar support,
-[  --enable-rar            Enable rar support])
+PHP_ARG_ENABLE(discount, whether to enable discount support,
+[  --enable-discount       Enable discount support])
 
-unrar_sources="unrar/rar.cpp unrar/strlist.cpp unrar/strfn.cpp \
-               unrar/pathfn.cpp unrar/smallfn.cpp unrar/savepos.cpp \
-               unrar/global.cpp unrar/file.cpp unrar/filefn.cpp \
-               unrar/filcreat.cpp unrar/archive.cpp unrar/arcread.cpp \
-               unrar/unicode.cpp unrar/system.cpp unrar/isnt.cpp \
-               unrar/crypt.cpp unrar/crc.cpp unrar/rawread.cpp \
-               unrar/encname.cpp unrar/resource.cpp unrar/match.cpp \
-               unrar/timefn.cpp unrar/rdwrfn.cpp unrar/consio.cpp \
-               unrar/options.cpp unrar/ulinks.cpp unrar/errhnd.cpp \
-               unrar/rarvm.cpp unrar/rijndael.cpp unrar/getbits.cpp \
-               unrar/sha1.cpp unrar/extinfo.cpp unrar/extract.cpp \
-               unrar/volume.cpp unrar/find.cpp \
-               unrar/unpack.cpp unrar/cmddata.cpp unrar/dll.cpp \
-               unrar/filestr.cpp unrar/recvol.cpp unrar/rs.cpp \
-               unrar/scantree.cpp unrar/log.cpp unrar/extractchunk.cpp"
+discount_sources="lib/Csio.c lib/css.c lib/docheader.c \
+				  lib/dumptree.c lib/emmatch.c lib/flags.c \
+				  lib/generate.c lib/html5.c lib/markdown.c \
+				  lib/mkdio.c lib/resource.c lib/tags.c \
+				  lib/toc.c lib/version.c lib/xml.c \
+				  lib/xmlpage.c"
 
-if test "$PHP_RAR" != "no"; then
-  PHP_REQUIRE_CXX
-  AC_DEFINE(HAVE_RAR, 1, [Whether you have rar support])
-  PHP_SUBST(RAR_SHARED_LIBADD)  
-  PHP_ADD_LIBRARY_WITH_PATH(stdc++, "", RAR_SHARED_LIBADD)
+if test "$PHP_DISCOUNT" != "no"; then
+  AC_DEFINE(HAVE_DISCOUNT, 1, [Whether you have discount markdown support])
+  PHP_SUBST(DISCOUNT_SHARED_LIBADD)  
 
-  PHP_NEW_EXTENSION(rar, rar.c rar_error.c rararch.c rarentry.c rar_stream.c rar_navigation.c $unrar_sources, $ext_shared,,-DRARDLL -DGUI -DSILENT -Wno-write-strings -I@ext_srcdir@/unrar)  
-  PHP_ADD_BUILD_DIR($ext_builddir/unrar)  
+  PHP_NEW_EXTENSION(discount, rar.c rar_error.c rararch.c rarentry.c rar_stream.c rar_navigation.c $discount_sources, $ext/shared,,-DUSE_DISCOUNT_DL=1 -DUSE_EXTRA_DL=1 -DTABSTOP=4 -I@ext_srcdir@/lib)  
+  PHP_ADD_BUILD_DIR($ext_builddir/lib)  
 fi
