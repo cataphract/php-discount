@@ -218,32 +218,52 @@ is_string:
 	return ret;
 }
 
-int markdowndoc_get_file(zval *arg, int write, php_stream **stream_to_close, FILE **file TSRMLS_DC)
+int markdowndoc_get_file(zval *arg, int write, php_stream **stream, int *must_close, FILE **file TSRMLS_DC)
 {
-	php_stream	*stream;
-	int			must_close;
+	*stream		= NULL;
+	*must_close	= 0;
+	*file		= NULL;
 
-	*stream_to_close = NULL;
-	*file			 = NULL;
-
-	stream = markdowndoc_get_stream(arg, write, &must_close TSRMLS_CC);
-	if (stream == NULL) {
+	*stream = markdowndoc_get_stream(arg, write, must_close TSRMLS_CC);
+	if (*stream == NULL) {
 		return FAILURE;
 	}
 
-	if (php_stream_cast(stream, PHP_STREAM_AS_STDIO, (void**) file, 0) == FAILURE) {
+	if (php_stream_cast(*stream, PHP_STREAM_AS_STDIO, (void**) file, 0) == FAILURE) {
 		if (must_close) {
-			php_stream_close(stream);
+			php_stream_close(*stream);
 		}
+		*stream		= NULL;
+		*must_close	= 0;
 		zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
 			"Could not cast stream into an stdlib file pointer");
 		return FAILURE;
 	}
-
-	if (must_close) {
-		*stream_to_close = stream;
-	}
+	
 	return SUCCESS;
+}
+
+int markdown_sync_stream_and_file(php_stream *stream, int close, FILE *file TSRMLS_DC)
+{
+	fpos_t	pos;
+	int		status;
+
+	fflush(file); /* ignore return */
+
+	if (close) {
+		status = php_stream_close(stream);
+		return status ? FAILURE : SUCCESS;
+	}
+
+	status = fgetpos(file, &pos);
+	if (status) {
+		return FAILURE;
+	}
+	/* don't do simply php_stream_seek(strem, 0L, SEEK_CUR) because
+	 * PHP turns the SEEK_CUR into a SEEK_SET using an out-of-date position
+	 * to calculate the offset */
+	status = php_stream_seek(stream, (off_t) pos, SEEK_SET);
+	return status ? FAILURE : SUCCESS;
 }
 
 void markdowndoc_store_callback(
@@ -275,10 +295,10 @@ void markdowndoc_store_callback(
 void markdowndoc_free_callback(zend_fcall_info **fci, zend_fcall_info_cache **fcc)
 {
 	if (*fci != NULL) {
-		Z_DELREF_P((*fci)->function_name);
+		zval_ptr_dtor(&(*fci)->function_name);
 #if PHP_VERSION_ID >= 50300
 		if ((*fci)->object_ptr != NULL) {
-			Z_DELREF_P((*fci)->object_ptr);
+			zval_ptr_dtor(&(*fci)->object_ptr);
 		}
 #endif
 		efree(*fci);

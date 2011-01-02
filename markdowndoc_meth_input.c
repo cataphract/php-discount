@@ -27,7 +27,8 @@ static int markdown_init_from_stream(zval* obj, zval *zstream, long flags TSRMLS
 {
 	discount_object *dobj = zend_object_store_get_object(obj TSRMLS_CC);
 	MMIOT			*mmiot;
-	php_stream		*stream_to_close;
+	php_stream		*stream;
+	int				close;
 	FILE			*f;
 	int				ret;
 
@@ -41,7 +42,7 @@ static int markdown_init_from_stream(zval* obj, zval *zstream, long flags TSRMLS
 		return FAILURE;
 	}
 
-	if (markdowndoc_get_file(zstream, 0, &stream_to_close, &f TSRMLS_CC) == FAILURE) {
+	if (markdowndoc_get_file(zstream, 0, &stream, &close, &f TSRMLS_CC) == FAILURE) {
 		return FAILURE;
 	}
 
@@ -56,8 +57,8 @@ static int markdown_init_from_stream(zval* obj, zval *zstream, long flags TSRMLS
 		ret = SUCCESS;
 	}
 
-	if (stream_to_close) {
-		php_stream_close(stream_to_close);
+	if (close) {
+		php_stream_close(stream);
 	}
 	return ret;
 }
