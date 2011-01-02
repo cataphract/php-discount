@@ -4,7 +4,7 @@
 ARG_ENABLE("discount", "Discount markdown support", "no");
 
 if (PHP_DISCOUNT != "no") {
-	EXTENSION("discount", "discount.c discount_class.c markdowndoc_meth_misc.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_document.c", PHP_DISCOUNT_SHARED, "/D_WSTDIO_DEFINED");
+	EXTENSION("discount", "discount.c discount_class.c markdowndoc_meth_callbacks.c markdowndoc_meth_document.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_misc.c markdowndoc_meth_parts.c ", PHP_DISCOUNT_SHARED, "/D_WSTDIO_DEFINED");
 	ADD_SOURCES(configure_module_dirname + "/lib",
 		"Csio.c css.c docheader.c \
 		dumptree.c emmatch.c flags.c \

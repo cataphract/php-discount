@@ -3,7 +3,7 @@
 #ifndef __AC_MARKDOWN_WIN32_D
 #define __AC_MARKDOWN_WIN32_D 1
 
-/* configurable; TODO: make configurable via PHP's config */
+/* TODO: make configurable via PHP's config */
 #define USE_DISCOUNT_DL 1
 #define USE_EXTRA_DL 1
 #define TABSTOP 4
