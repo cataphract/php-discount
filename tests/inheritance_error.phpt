@@ -72,7 +72,7 @@ $t = file_get_contents(dirname(__FILE__)."/simple_example.txt");
 show_exc(function () use ($t) { $a = new MarkdownBogus3($t); $a->__toString(); });
 
 echo "\nDone.\n";
---EXPECT--
+--EXPECTF--
 LogicException: Invalid state: the markdown document is not initialized
 
 Warning: MarkdownDocument::initFromString() expects at least 1 parameter, 0 given in %s on line %d

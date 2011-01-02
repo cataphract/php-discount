@@ -21,6 +21,7 @@ static zend_function_entry discount_functions[] = {
 };
 /* }}} */
 
+#ifdef DISCOUNT_GLOBALS
 /* {{{ Globals' related activities */
 ZEND_DECLARE_MODULE_GLOBALS(discount);
 
@@ -37,6 +38,7 @@ static void ZEND_MODULE_GLOBALS_DTOR_N(discount)(void *arg TSRMLS_DC) /* {{{ */
 }
 /* }}} */
 /* end globals }}} */
+#endif
 
 /* {{{ ZEND_MODULE_STARTUP */
 ZEND_MODULE_STARTUP_D(discount)
@@ -83,9 +85,13 @@ zend_module_entry discount_module_entry = {
 	NULL,
 	ZEND_MODULE_INFO_N(discount),
 	PHP_DISCOUNT_VERSION,
+#ifdef DISCOUNT_GLOBALS
 	ZEND_MODULE_GLOBALS(discount),
 	ZEND_MODULE_GLOBALS_CTOR_N(discount),
 	ZEND_MODULE_GLOBALS_DTOR_N(discount),
+#else
+	NO_MODULE_GLOBALS,
+#endif
 	NULL, //post_deactivate_func
 	STANDARD_MODULE_PROPERTIES_EX,
 };
