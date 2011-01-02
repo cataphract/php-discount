@@ -8,8 +8,11 @@ if (!extension_loaded('discount'))
 <?php
 var_dump(MarkdownDocument::writeFragment("", 'php://stdout'));
 
+var_dump(MarkdownDocument::writeFragment("", 'php://stdout', MarkdownDocument::CDATA));
+
 echo "\nDone.\n";
 --EXPECT--
+bool(true)
 bool(true)
 
 Done.
