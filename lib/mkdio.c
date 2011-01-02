@@ -194,6 +194,7 @@ mkd_generatehtml(Document *p, FILE *output)
 	else
 	    fwrite(doc, szdoc, 1, output);
 	putc('\n', output);
+	efree(doc);
 	return 0;
     }
     return -1;

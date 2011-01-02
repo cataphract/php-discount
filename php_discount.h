@@ -37,15 +37,12 @@ ZEND_EXTERN_MODULE_GLOBALS(discount);
 #define zend_parse_parameters_none() \
 	zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "")
 #define Z_DELREF_P ZVAL_DELREF
-# define STREAM_ASSUME_REALPATH 0
-# define ALLOC_PERMANENT_ZVAL(z) \
+#define Z_ADDREF_P ZVAL_ADDREF
+#define STREAM_ASSUME_REALPATH 0
+#define ALLOC_PERMANENT_ZVAL(z) \
         (z) = (zval*) malloc(sizeof(zval));
-# define OPENBASEDIR_CHECKPATH(filename) \
-	(PG(safe_mode) && \
-	(!php_checkuid(filename, NULL, CHECKUID_CHECK_FILE_AND_DIR))) \
-	|| php_check_open_basedir(filename TSRMLS_CC)
-# undef ZEND_BEGIN_ARG_INFO_EX
-# define ZEND_BEGIN_ARG_INFO_EX(name, pass_rest_by_reference, return_reference, required_num_args) \
+#undef ZEND_BEGIN_ARG_INFO_EX
+#define ZEND_BEGIN_ARG_INFO_EX(name, pass_rest_by_reference, return_reference, required_num_args) \
 	static const zend_arg_info name[] = { \
 		{ NULL, 0, NULL, 0, 0, 0, pass_rest_by_reference, return_reference, required_num_args },
 #endif

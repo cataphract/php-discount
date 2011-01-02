@@ -40,7 +40,8 @@ PHP_METHOD(markdowndoc, writeHtml)
 {
 	discount_object *dobj;
 	zval			*zstream;
-	php_stream		*stream_to_close;
+	php_stream		*stream;
+	int				close;
 	FILE			*f;
 	int				status;
 
@@ -50,13 +51,12 @@ PHP_METHOD(markdowndoc, writeHtml)
 	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
-	if (markdowndoc_get_file(zstream, 1, &stream_to_close, &f TSRMLS_CC) == FAILURE) {
+	if (markdowndoc_get_file(zstream, 1, &stream, &close, &f TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 	
 	status = mkd_generatehtml(dobj->markdoc, f);
-	if (stream_to_close)
-		php_stream_close(stream_to_close);
+	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
 	if (status < 0) {
 		/* should never happen, but... */
@@ -74,7 +74,8 @@ PHP_METHOD(markdowndoc, writeXhtmlPage)
 {
 	discount_object *dobj;
 	zval			*zstream;
-	php_stream		*stream_to_close;
+	php_stream		*stream;
+	int				close;
 	FILE			*f;
 	int				status;
 
@@ -84,13 +85,12 @@ PHP_METHOD(markdowndoc, writeXhtmlPage)
 	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
-	if (markdowndoc_get_file(zstream, 1, &stream_to_close, &f TSRMLS_CC) == FAILURE) {
+	if (markdowndoc_get_file(zstream, 1, &stream, &close, &f TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 	
 	status = mkd_xhtmlpage(dobj->markdoc, f);
-	if (stream_to_close)
-		php_stream_close(stream_to_close);
+	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 
 	if (status < 0) {
 		/* should never happen, but... */

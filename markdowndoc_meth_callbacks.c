@@ -32,7 +32,7 @@ static char *proxy_callback(
 	params				= &zurl;
 	fci->retval_ptr_ptr	= &retval_ptr;
 	fci->params			= &params;
-	fci->param_count	= 1;
+	fci->param_count		= 1;
 	fci->no_separation	= 1;
 
 	retval = zend_call_function(fci, fcc TSRMLS_CC);
@@ -49,11 +49,11 @@ static char *proxy_callback(
 		/* may have been changed by return by reference */
 		retval_ptr = *fci->retval_ptr_ptr;
 		if (retval_ptr == NULL) {
-			/* no retval most likely an exception, but we feell confortable
+			/* no retval - most likely an exception, but we feel confortable
 			 * stacking an exception here */
 			zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
-				"Call to PHP %s callback has failed (no return value)",
-				callback_name);
+				"Call to PHP %s callback has failed (%s)",
+				callback_name, EG(exception)?"exception":"no return value");
 		} else if (Z_TYPE_P(retval_ptr) == IS_NULL) {
 			/* use the default string for the url */
 		} else {
@@ -65,9 +65,9 @@ static char *proxy_callback(
 		}
 	}
 
-	Z_DELREF_P(zurl);
+	zval_ptr_dtor(&zurl);
 	if (retval_ptr != NULL) {
-		Z_DELREF_P(retval_ptr);
+		zval_ptr_dtor(&retval_ptr);
 	}
 	return result;
 }
@@ -75,17 +75,27 @@ static char *proxy_callback(
 /* {{{ proxy_url_callback */
 static char *proxy_url_callback(const char *url, const int url_len, void *data)
 {
-	discount_object	*dobj = data;
-	return proxy_callback(url, url_len, dobj->url_fci, dobj->url_fcc, "URL");
+	discount_object	*dobj	= data;
+	char			*retval;
+
+	dobj->in_callback = 1;
+	retval = proxy_callback(url, url_len, dobj->url_fci, dobj->url_fcc, "URL");
+	dobj->in_callback = 0;
+	return retval;
 }
 /* }}} */
 
 /* {{{ proxy_attributes_callback */
 static char *proxy_attributes_callback(const char *url, const int url_len, void *data)
 {
-	discount_object	*dobj = data;
-	return proxy_callback(url, url_len, dobj->attr_fci, dobj->attr_fcc,
+	discount_object	*dobj	= data;
+	char			*retval;
+
+	dobj->in_callback = 1;
+	retval = proxy_callback(url, url_len, dobj->attr_fci, dobj->attr_fcc,
 		"attributes");
+	dobj->in_callback = 0;
+	return retval;
 }
 /* }}} */
 

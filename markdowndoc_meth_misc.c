@@ -58,7 +58,8 @@ PHP_METHOD(markdowndoc, dumpTree)
 {
 	discount_object	*dobj;
 	zval			*zstream;
-	php_stream		*stream_to_close;
+	php_stream		*stream;
+	int				close;
 	FILE			*f;
 	char			*title		= "";
 	int				title_len	= 0;
@@ -71,15 +72,16 @@ PHP_METHOD(markdowndoc, dumpTree)
 	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
-	if (markdowndoc_get_file(zstream, 1, &stream_to_close, &f TSRMLS_CC) == FAILURE) {
+	if (markdowndoc_get_file(zstream, 1, &stream, &close, &f TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 
 	status = mkd_dump(dobj->markdoc, f, title);
-	if (stream_to_close != NULL)
-		php_stream_close(stream_to_close);
+
+	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 	
 	if (status == -1) {
+		/* should never happen */
 		zend_throw_exception(spl_ce_RuntimeException,
 			"Error dumping tree: call to the library failed", 0 TSRMLS_CC);
 		RETURN_FALSE;
@@ -95,7 +97,7 @@ PHP_METHOD(markdowndoc, transformFragment)
 	char	*markdown;
 	int		markdown_len;
 	long	flags		= 0;
-	char	*out;
+	char	*out		= NULL;
 	int		out_len;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|l",
@@ -103,17 +105,22 @@ PHP_METHOD(markdowndoc, transformFragment)
 		RETURN_FALSE;
 	}
 
-	out_len = mkd_line(markdown, markdown_len, &out, (mkd_flag_t) flags);
-	if (EG(exception)) { /*	url callback threw exception */
-		RETURN_FALSE;
+	if (markdown_len == 0) {
+		RETURN_EMPTY_STRING();
 	}
+
+	out_len = mkd_line(markdown, markdown_len, &out, (mkd_flag_t) flags);
 	if (out_len < 0) {
 		zend_throw_exception(spl_ce_RuntimeException,
 			"Error parsing the fragment", 0 TSRMLS_CC);
-		RETURN_FALSE;
+		RETVAL_FALSE;
+	} else {
+		RETVAL_STRINGL(out, out_len, 0);
 	}
 
-	RETURN_STRINGL(out, out_len, 0);
+	if (Z_TYPE_P(return_value) == IS_BOOL && out != NULL) {
+		efree(out);
+	}
 }
 /* }}} */
 
@@ -124,24 +131,22 @@ PHP_METHOD(markdowndoc, writeFragment)
 	int			markdown_len;
 	long		flags		= 0;
 	zval		*zstream;
+	php_stream	*stream;
+	int			close;
 	FILE		*f;
-	php_stream	*stream_to_close;
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sz|l",
 			&markdown, &markdown_len, &zstream, &flags) == FAILURE) {
 		RETURN_FALSE;
 	}
-	if (markdowndoc_get_file(zstream, 1, &stream_to_close, &f TSRMLS_CC) == FAILURE) {
+	if (markdowndoc_get_file(zstream, 1, &stream, &close, &f TSRMLS_CC) == FAILURE) {
 		RETURN_FALSE;
 	}
 
 	/* returns always 0 */
 	mkd_generateline(markdown, markdown_len, f, (mkd_flag_t) flags);
 
-	/* there may be an exception raised at this point */
-
-	if (stream_to_close != NULL)
-		php_stream_close(stream_to_close);
+	markdown_sync_stream_and_file(stream, close, f TSRMLS_CC);
 	
 	RETURN_TRUE;
 }
