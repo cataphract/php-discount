@@ -18,7 +18,7 @@
  */
 #define STRING(type)	struct { type *text; int size, alloc; }
 
-#define CREATE(x)	T(x) = (void*)(S(x) = (x).alloc = 0)
+#define CREATE(x)	T(x) = ((S(x) = (x).alloc = 0), NULL)
 #define EXPAND(x)	(S(x)++)[(S(x) < (x).alloc) \
 			    ? (T(x)) \
 			    : (T(x) = T(x) ? erealloc(T(x), sizeof T(x)[0] * ((x).alloc += 100)) \

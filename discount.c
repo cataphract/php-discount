@@ -11,6 +11,10 @@
 
 #include "markdowndoc_class.h"
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifdef COMPILE_DL_DISCOUNT
 ZEND_GET_MODULE(discount)
 #endif

@@ -117,7 +117,7 @@ static zend_object_value ce_create_object(zend_class_entry *class_type TSRMLS_DC
     zend_object_std_init((zend_object *) dobj, class_type TSRMLS_CC);
  
 #if PHP_VERSION_ID < 50399
-    zend_hash_copy(tobj->std.properties, &(class_type->default_properties),
+    zend_hash_copy(dobj->std.properties, &(class_type->default_properties),
         (copy_ctor_func_t) zval_add_ref, NULL, sizeof(zval*));
 #else
     object_properties_init(&dobj->std, class_type);
@@ -245,7 +245,7 @@ int markdowndoc_get_file(zval *arg, int write, php_stream **stream, int *must_cl
 
 int markdown_sync_stream_and_file(php_stream *stream, int close, FILE *file TSRMLS_DC)
 {
-	fpos_t	pos;
+	long	pos;
 	int		status;
 
 	fflush(file); /* ignore return */
@@ -255,8 +255,8 @@ int markdown_sync_stream_and_file(php_stream *stream, int close, FILE *file TSRM
 		return status ? FAILURE : SUCCESS;
 	}
 
-	status = fgetpos(file, &pos);
-	if (status) {
+	pos = ftell(file);
+	if (pos < 0) {
 		return FAILURE;
 	}
 	/* don't do simply php_stream_seek(strem, 0L, SEEK_CUR) because

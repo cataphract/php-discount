@@ -1,0 +1,20 @@
+Processes the Markdown language with the bundled discount extension.
+
+Markdown is a lightweight markup language created by John Gruber. It is also
+the name of the original tool written in Perl, that converts such markup into
+HTML.
+
+This library is a wrapper for a modified version of the discount Markdown
+processor, created by David Parsons. It supports several extensions of the
+original Markdown language, including smartypants-style substitutions, pandoc-
+style document headers, and parts of Markdown Extra.
+
+The modifications to discount include discarting several parts important only
+to stand-alone applications that accompany the library code, better consistency
+in library interface functions, thread-safety without eager initialization of
+globals, usage of the Zend memory manager and support for Microsoft Windows.
+
+Discount is available at <http://www.pell.portland.or.us/~orc/Code/discount/>.
+
+The page of the original Markdown is available at
+<http://daringfireball.net/projects/markdown/>.

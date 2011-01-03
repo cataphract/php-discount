@@ -2,10 +2,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include "cstring.h"
-#include "markdown.h"
 #include "amalloc.h"
-/* on merge: added config.h (last!) */
-#include "config.h"
+/* on merge: added markdown.h (last!) */
+#include "markdown.h"
 
 
 /* putc() into a cstring
