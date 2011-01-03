@@ -4,6 +4,7 @@
 /* on merge: from mkdio.h.in */
 
 #include <stdio.h>
+#include "config.h"
 
 typedef void MMIOT;
 
