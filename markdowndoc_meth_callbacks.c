@@ -65,8 +65,8 @@ static char *proxy_callback(
 	retval = zend_call_function(fci, fcc TSRMLS_CC);
 	if (retval != SUCCESS || fci->retval_ptr_ptr == NULL) {
 		/* failure was most likely due to a previous exception (probably
-			* in a previous URL), so don't throw yet another exception on
-			* top of it */
+		 * in a previous URL), so don't throw yet another exception on
+		 * top of it */
 		if (!EG(exception)) {
 			zend_throw_exception_ex(spl_ce_RuntimeException, 0 TSRMLS_CC,
 				"Call to PHP %s callback has failed", callback_name);
