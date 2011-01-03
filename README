@@ -1,7 +1,7 @@
-Processes the Markdown language with the bundled discount extension.
+Processes the Markdown language with the bundled discount library.
 
 Markdown is a lightweight markup language created by John Gruber. It is also
-the name of the original tool written in Perl, that converts such markup into
+the name of the original tool written in Perl that converts such markup into
 HTML.
 
 This library is a wrapper for a modified version of the discount Markdown
