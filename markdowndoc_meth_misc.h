@@ -25,7 +25,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* $Id */
+/* $Id$ */
 
 PHP_METHOD(markdowndoc, compile);
 PHP_METHOD(markdowndoc, isCompiled);
