@@ -9,7 +9,7 @@ processor, created by David Parsons. It supports several extensions of the
 original Markdown language, including smartypants-style substitutions, pandoc-
 style document headers, and parts of Markdown Extra.
 
-The modifications to discount include discarting several parts important only
+The modifications to discount include discarding several parts important only
 to stand-alone applications that accompany the library code, better consistency
 in library interface functions, thread-safety without eager initialization of
 globals, usage of the Zend memory manager and support for Microsoft Windows.
