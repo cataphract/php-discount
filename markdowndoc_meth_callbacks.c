@@ -25,7 +25,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* $Id */
+/* $Id$ */
 
 #include <php.h>
 #include <zend_exceptions.h>
