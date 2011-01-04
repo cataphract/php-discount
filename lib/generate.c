@@ -1194,8 +1194,8 @@ text(MMIOT *f)
 		    break;
 	/* A^B -> A<sup>B</sup> */
 	case '^':   if ( (f->flags & (MKD_NOSUPERSCRIPT|MKD_STRICT|MKD_TAGTEXT))
-						       || isthisspace(f,-1)
-							|| isthisspace(f,1) )
+				|| (isthisnonword(f,-1) && peek(f,-1) != ')')
+				|| isthisspace(f,1) )
 			Qchar(c,f);
 		    else {
 			char *sup = cursor(f);
@@ -1636,7 +1636,7 @@ mkd_document(Document *p, char **res)
 	
 	if ( (size == 0) || T(p->ctx->out)[size-1] )
 	    EXPAND(p->ctx->out) = 0;
-
+	
 	*res = T(p->ctx->out);
 
 	/* on merge: changed so that the caller owns the memory */

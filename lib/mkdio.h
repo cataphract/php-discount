@@ -15,8 +15,13 @@ typedef DWORD mkd_flag_t;
 MMIOT *mkd_in(FILE*,mkd_flag_t);		/* assemble input from a file */
 MMIOT *mkd_string(char*,int,mkd_flag_t);	/* assemble input from a buffer */
 
-/* on merge: commented out */
-/* void mkd_basename(MMIOT*,char*); */
+/*void mkd_basename(MMIOT*,char*);*/
+
+void mkd_tags_on_startup(INIT_FUNC_ARGS);
+void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS);
+
+void mkd_initialize();
+void mkd_shlib_destructor();
 
 /* compilation, debugging, cleanup
  */

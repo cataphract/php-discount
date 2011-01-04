@@ -46,24 +46,22 @@ int
 mkd_css(Document *d, char **res)
 {
     Cstring f;
+    int size;
 
-    /* on merge: bug in original, required *res != NULL */
-	if ( res && d && d->compiled ) {
+    if ( res && d && d->compiled ) {
 	CREATE(f);
 	RESERVE(f, 100);
 	stylesheets(d->code, &f);
-
-	/* on merge: added null termination on zero length results */
-	if (S(f) == 0) {
-		EXPAND(f) = '\0';
-		S(f)--;
-	}
 			
-			/* HACK ALERT! HACK ALERT! HACK ALERT! */
-	*res = T(f);	/* we know that a T(Cstring) is a character pointer */
-			/* so we can simply pick it up and carry it away, */
-	return S(f);	/* leaving the husk of the Ctring on the stack */
-			/* END HACK ALERT */
+	/* on merge: on empty output, null termination and return 0 instead of just returning EOF */
+	size = S(f);
+	EXPAND(f) = 0;
+			    /* HACK ALERT! HACK ALERT! HACK ALERT! */
+	*res = T(f);    /* we know that a T(Cstring) is a character pointer */
+			    /* so we can simply pick it up and carry it away, */
+	            /* leaving the husk of the Ctring on the stack */
+			    /* END HACK ALERT */
+	return size;
     }
     return EOF;
 }

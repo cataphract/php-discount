@@ -1,6 +1,6 @@
 /* block-level tags for passing html blocks through the blender
  */
-/* on merge: commented out, as we need amalloc.h to alias malloc to emalloc, etc. */ 
+/* on merge: commented out define */ 
 /* #define __WITHOUT_AMALLOC 1 */
 #include "cstring.h"
 #include "tags.h"
@@ -66,29 +66,8 @@ mkd_search_tags(char *pat, int len)
     return bsearch(&key, T(blocktags), S(blocktags), sizeof key, (stfu)casort);
 }
 
-/* on merge: moved out of mkd_prepare_tags and renamed */
-static int tags_populated = 0;
+static int populated = 0;
 
-#ifdef ZTS
-static MUTEX_T tags_mutex;
-#endif
-
-void mkd_tags_on_startup(INIT_FUNC_ARGS)
-{
-#ifdef ZTS
-	tags_mutex = tsrm_mutex_alloc();
-#endif
-}
-
-void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS)
-{
-#ifdef ZTS
-	tsrm_mutex_free(tags_mutex);
-#endif
-
-	/* no sync necessary */
-	DELETE_PERMANENT(blocktags);
-}
 
 /* load in the standard collection of html tags that markdown supports
  */
@@ -99,12 +78,8 @@ mkd_prepare_tags()
 #define KW(x)	mkd_define_tag(x, 0)
 #define SC(x)	mkd_define_tag(x, 1)
 
-	/* on merge: added critical section */
-#ifdef ZTS
-	tsrm_mutex_lock(tags_mutex);
-#endif
-    if ( tags_populated ) return;
-    tags_populated = 1;
+    if ( populated ) return;
+    populated = 1;
     
     KW("STYLE");
     KW("SCRIPT");
@@ -138,7 +113,16 @@ mkd_prepare_tags()
     KW("MAP");
 
     mkd_sort_tags();
-#ifdef ZTS
-	tsrm_mutex_unlock(tags_mutex);
-#endif
 } /* mkd_prepare_tags */
+
+
+/* destroy the blocktags list (for shared libraries)
+ */
+void
+mkd_deallocate_tags()
+{
+    if ( S(blocktags) > 0 ) {
+	populated = 0;
+	DELETE_PERMANENT(blocktags);
+    }
+} /* mkd_deallocate_tags */

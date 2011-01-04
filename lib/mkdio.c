@@ -276,14 +276,12 @@ mkd_line(char *bfr, int size, char **res, DWORD flags)
     mkd_parse_line(bfr, size, &f, flags);
 
     if ( len = S(f.out) ) {
-	/* on merge: added null termination; zend strings need it */
-	EXPAND(f.out) = '\0';
-
 	/* kludge alert;  we know that T(f.out) is malloced memory,
 	 * so we can just steal it away.   This is awful -- there
 	 * should be an opaque method that transparently moves 
 	 * the pointer out of the embedded Cstring.
 	 */
+	EXPAND(f.out) = 0;
 	*res = T(f.out);
 	T(f.out) = 0;
 	S(f.out) = ALLOCATED(f.out) = 0;

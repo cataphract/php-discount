@@ -9,10 +9,10 @@ struct kw {
     int  selfclose;
 } ;
 
-void mkd_tags_on_startup(INIT_FUNC_ARGS);
-void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS);
+
 struct kw* mkd_search_tags(char *, int);
-void mkd_prepare_tags(void);
+void mkd_prepare_tags();
+void mkd_deallocate_tags();
 /* on merge: these were made static */
 /*void mkd_sort_tags();*/
 /*void mkd_define_tag(char *, int);*/

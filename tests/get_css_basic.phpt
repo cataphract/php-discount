@@ -42,8 +42,6 @@ echo "\nDone.\n";
 <style type="text/css">
 .mystyle {}
 </style>
-<style type="text/css">
-.mystyle3 {}
 
 ======
 string(0) ""

@@ -90,6 +90,9 @@
     <ClCompile Include="markdowndoc_meth_callbacks.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\setup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="php_discount.h">

@@ -44,8 +44,6 @@ bool(true)
 <style type="text/css">
 .mystyle {}
 </style>
-<style type="text/css">
-.mystyle3 {}
 
 ======
 bool(true)
