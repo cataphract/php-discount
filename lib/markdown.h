@@ -149,6 +149,11 @@ extern void mkd_string_to_anchor(char*,int, void(*)(int,void*), void*, int);
 extern Document *mkd_in(FILE *, DWORD);
 extern Document *mkd_string(char*,int, DWORD);
 
+<<<<<<< HEAD
+=======
+extern void mkd_initialize();
+extern void mkd_shlib_destructor();
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 /* internal resource handling functions.
  */

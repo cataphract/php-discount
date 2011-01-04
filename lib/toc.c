@@ -21,6 +21,10 @@ mkd_toc(Document *p, char **doc)
     Paragraph *tp, *srcp;
     int last_hnumber = 0;
     Cstring res;
+<<<<<<< HEAD
+=======
+    int size;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     
     *doc = 0;
 
@@ -65,6 +69,7 @@ mkd_toc(Document *p, char **doc)
 	Csprintf(&res, last_hnumber ? "%*s</ul></li>\n" : "%*s</ul>\n", last_hnumber, "");
     }
 
+<<<<<<< HEAD
 	/* on merge: added null termination on zero length results */
 	if (S(res) == 0) {
 		EXPAND(res) = '\0';
@@ -76,6 +81,19 @@ mkd_toc(Document *p, char **doc)
 			/* so we can simply pick it up and carry it away, */
     return S(res);	/* leaving the husk of the Ctring on the stack */
 			/* END HACK ALERT */
+=======
+	/* on merge: changed operator from > to == and limited if block to 1st statement */
+    if ( (size = S(res)) == 0 ) {
+		EXPAND(res) = 0;
+	}
+			    /* HACK ALERT! HACK ALERT! HACK ALERT! */
+	*doc = T(res);      /* we know that a T(Cstring) is a character pointer
+			     * so we can simply pick it up and carry it away,
+			     * leaving the husk of the Ctring on the stack
+			     * END HACK ALERT
+			     */
+    return size;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 }
 
 

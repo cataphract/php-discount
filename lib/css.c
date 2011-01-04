@@ -46,6 +46,7 @@ int
 mkd_css(Document *d, char **res)
 {
     Cstring f;
+<<<<<<< HEAD
 
     /* on merge: bug in original, required *res != NULL */
 	if ( res && d && d->compiled ) {
@@ -64,6 +65,24 @@ mkd_css(Document *d, char **res)
 			/* so we can simply pick it up and carry it away, */
 	return S(f);	/* leaving the husk of the Ctring on the stack */
 			/* END HACK ALERT */
+=======
+    int size;
+
+    if ( res && d && d->compiled ) {
+	CREATE(f);
+	RESERVE(f, 100);
+	stylesheets(d->code, &f);
+			
+	/* on merge: on empty output, null termination and return 0 instead of just returning EOF */
+	size = S(f);
+	EXPAND(f) = 0;
+			    /* HACK ALERT! HACK ALERT! HACK ALERT! */
+	*res = T(f);    /* we know that a T(Cstring) is a character pointer */
+			    /* so we can simply pick it up and carry it away, */
+	            /* leaving the husk of the Ctring on the stack */
+			    /* END HACK ALERT */
+	return size;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     }
     return EOF;
 }

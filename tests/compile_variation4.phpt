@@ -18,7 +18,12 @@ to <strong>not</strong> do the <a href="http://daringfireball.net/projects/smart
 this is a useful feature.)</li>
 <li><code>-o file</code> tells markdown to write the output to <em><code>file</code></em></li>
 <li><p><code>-V</code> tells you a markdown version number and how the package
+<<<<<<< HEAD
 was configured.   For example</p>
+=======
+was configured.   For example</p></li>
+</ul>
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 <pre><code>$ markdown -V
 markdown: discount 1.0.0 DL_TAG HEADER TAB=8
@@ -48,7 +53,15 @@ to <strong>not</strong> do the <a href="http://daringfireball.net/projects/smart
 this is a useful feature.)</li>
 <li><code>-o file</code> tells markdown to write the output to <em><code>file</code></em></li>
 <li><p><code>-V</code> tells you a markdown version number and how the package
+<<<<<<< HEAD
 was configured.   For example</p>
+=======
+was configured.   For example</p></li>
+</ul>
+
+
+
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 <pre><code>$ markdown -V
 markdown: discount 1.0.0 DL_TAG HEADER TAB=8
@@ -67,7 +80,12 @@ to &lt;strong>not&lt;/strong> do the &lt;a href=&ldquo;http://daringfireball.net
 this is a useful feature.)&lt;/li>
 &lt;li>&lt;code>-o file&lt;/code> tells markdown to write the output to &lt;em>&lt;code>file&lt;/code>&lt;/em>&lt;/li>
 &lt;li>&lt;p>&lt;code>-V&lt;/code> tells you a markdown version number and how the package
+<<<<<<< HEAD
 was configured.   For example&lt;/p></p>
+=======
+was configured.   For example&lt;/p>&lt;/li>
+&lt;/ul></p>
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 <p>&lt;pre>&lt;code>$ markdown -V
 markdown: discount 1.0.0 DL_TAG HEADER TAB=8

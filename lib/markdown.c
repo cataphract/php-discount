@@ -176,7 +176,11 @@ splitline(Line *t, int cutpoint)
 
 
 static Line *
+<<<<<<< HEAD
 commentblock(Paragraph *p)
+=======
+commentblock(Paragraph *p, int *unclosed)
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 {
     Line *t, *ret;
     char *end;
@@ -189,21 +193,36 @@ commentblock(Paragraph *p)
 	    return ret;
 	}
     }
+<<<<<<< HEAD
+=======
+    *unclosed = 1;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     return t;
 
 }
 
 
 static Line *
+<<<<<<< HEAD
 htmlblock(Paragraph *p, struct kw *tag)
+=======
+htmlblock(Paragraph *p, struct kw *tag, int *unclosed)
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 {
     Line *ret;
     FLO f = { p->text, 0 };
     int c;
     int i, closing, depth=0;
 
+<<<<<<< HEAD
     if ( tag == &comment )
 	return commentblock(p);
+=======
+    *unclosed = 0;
+    
+    if ( tag == &comment )
+	return commentblock(p, unclosed);
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     
     if ( tag->selfclose ) {
 	ret = f.t->next;
@@ -241,6 +260,11 @@ htmlblock(Paragraph *p, struct kw *tag)
 			    /* consume trailing gunk in close tag */
 			    c = flogetc(&f);
 			}
+<<<<<<< HEAD
+=======
+			if ( c == EOF )
+			    break;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 			if ( !f.t )
 			    return 0;
 			splitline(f.t, floindex(f));
@@ -252,6 +276,10 @@ htmlblock(Paragraph *p, struct kw *tag)
 	    }
 	}
     }
+<<<<<<< HEAD
+=======
+    *unclosed = 1;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     return 0;
 }
 
@@ -833,7 +861,11 @@ definition_block(Paragraph *top, int clip, MMIOT *f, int kind)
 {
     ParagraphRoot d = { 0, 0 };
     Paragraph *p;
+<<<<<<< HEAD
     Line *q = top->text, *text, *labels; 
+=======
+    Line *q = top->text, *text = 0, *labels; 
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     int z, para;
 
     while (( labels = q )) {
@@ -866,6 +898,7 @@ definition_block(Paragraph *top, int clip, MMIOT *f, int kind)
 	if ( (q = skipempty(text)) == 0 )
 	    break;
 
+<<<<<<< HEAD
 	if ( kind == 2 && is_extra_dd(q) ) {
 	    if (( para = (q != text) )) {
 		Line anchor;
@@ -876,6 +909,19 @@ definition_block(Paragraph *top, int clip, MMIOT *f, int kind)
 	    }
 	    goto dd_block;
 	}
+=======
+	if (( para = (q != text) )) {
+	    Line anchor;
+
+	    anchor.next = text;
+	    ___mkd_freeLineRange(&anchor,q);
+	    text = q;
+	    
+	}
+
+	if ( kind == 2 && is_extra_dd(q) )
+	    goto dd_block;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     }
     top->text = 0;
     top->down = T(d);
@@ -1044,7 +1090,11 @@ compile_document(Line *ptr, MMIOT *f)
     ANCHOR(Line) source = { 0, 0 };
     Paragraph *p = 0;
     struct kw *tag;
+<<<<<<< HEAD
     int eaten;
+=======
+    int eaten, unclosed;
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
     while ( ptr ) {
 	if ( !(f->flags & MKD_NOHTML) && (tag = isopentag(ptr)) ) {
@@ -1058,7 +1108,16 @@ compile_document(Line *ptr, MMIOT *f)
 		T(source) = E(source) = 0;
 	    }
 	    p = Pp(&d, ptr, strcmp(tag->id, "STYLE") == 0 ? STYLE : HTML);
+<<<<<<< HEAD
 	    ptr = htmlblock(p, tag);
+=======
+	    ptr = htmlblock(p, tag, &unclosed);
+	    if ( unclosed ) {
+		p->typ = SOURCE;
+		p->down = compile(p->text, 1, f);
+		p->text = 0;
+	    }
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 	}
 	else if ( isfootnote(ptr) ) {
 	    /* footnotes, like cats, sleep anywhere; pull them
@@ -1166,6 +1225,7 @@ compile(Line *ptr, int toplevel, MMIOT *f)
     return T(d);
 }
 
+<<<<<<< HEAD
 /* on merge: removed this function, it was mkd_prepare_tags + setup
  * of random stuff, but the random stuff was removed*/
 /*void
@@ -1173,6 +1233,8 @@ mkd_initialize() { ... }
 */
 #define mkd_initialize mkd_prepare_tags
 
+=======
+>>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 /*
  * the guts of the markdown() function, ripped out so I can do
