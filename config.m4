@@ -9,11 +9,7 @@ discountlib_sources="lib/Csio.c lib/css.c lib/docheader.c \
                      lib/generate.c lib/html5.c lib/markdown.c \
                      lib/mkdio.c lib/resource.c lib/tags.c \
                      lib/toc.c lib/version.c lib/xml.c \
-<<<<<<< HEAD
-                     lib/xmlpage.c"
-=======
                      lib/xmlpage.c lib/setup.c"
->>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 
 if test "$PHP_DISCOUNT" != "no"; then
   AC_DEFINE(HAVE_DISCOUNT, 1, [Whether you have discount markdown support])
