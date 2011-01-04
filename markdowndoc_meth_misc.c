@@ -58,8 +58,6 @@ PHP_METHOD(markdowndoc, compile)
 	/* always returns success (unless fed a null pointer) */
 	mkd_compile(dobj->markdoc, (mkd_flag_t) flags);
 
-	/* there may be an exception raised at this point */
-
 	RETURN_TRUE;
 }
 /* }}} */
