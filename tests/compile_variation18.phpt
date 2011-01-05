@@ -50,7 +50,3 @@ echo "\nDone.\n";
 
 
 Done.
-<<<<<<< HEAD
---XFAIL--
-=======
->>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
