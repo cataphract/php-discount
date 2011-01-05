@@ -66,16 +66,15 @@ mkd_toc(Document *p, char **doc)
 	Csprintf(&res, last_hnumber ? "%*s</ul></li>\n" : "%*s</ul>\n", last_hnumber, "");
     }
 
-	/* on merge: changed operator from > to == and limited if block to 1st statement */
-    if ( (size = S(res)) == 0 ) {
-		EXPAND(res) = 0;
-	}
-			    /* HACK ALERT! HACK ALERT! HACK ALERT! */
-	*doc = T(res);      /* we know that a T(Cstring) is a character pointer
-			     * so we can simply pick it up and carry it away,
-			     * leaving the husk of the Ctring on the stack
-			     * END HACK ALERT
-			     */
+	/* on merge: changed comparison operator to == from < */
+    if ( (size = S(res)) == 0 )
+	EXPAND(res) = 0;
+			/* HACK ALERT! HACK ALERT! HACK ALERT! */
+    *doc = T(res);      /* we know that a T(Cstring) is a character pointer
+			 * so we can simply pick it up and carry it away,
+			 * leaving the husk of the Ctring on the stack
+			 * END HACK ALERT
+			 */
     return size;
 }
 

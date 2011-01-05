@@ -53,7 +53,7 @@ mkd_css(Document *d, char **res)
 	RESERVE(f, 100);
 	stylesheets(d->code, &f);
 			
-	/* on merge: on empty output, null termination and return 0 instead of just returning EOF */
+	/* on merge: on empty output, null termination (i.e. null termination always) */
 	size = S(f);
 	EXPAND(f) = 0;
 			    /* HACK ALERT! HACK ALERT! HACK ALERT! */
