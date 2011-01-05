@@ -115,10 +115,7 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug_TS|Win32'"> /wd4996 /MP /LDd   /wd4996 /MP /LDd </AdditionalOptions>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug_TS|Win32'">.\..\..\Debug_TS\ext\discount\lib/</ObjectFileName>
     </ClCompile>
-<<<<<<< HEAD
-=======
     <ClCompile Include="lib\setup.c" />
->>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
     <ClCompile Include="lib\tags.c">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug_TS|Win32'"> /wd4996 /MP /LDd   /wd4996 /MP /LDd </AdditionalOptions>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug_TS|Win32'">.\..\..\Debug_TS\ext\discount\lib/</ObjectFileName>
