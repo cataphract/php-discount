@@ -14,13 +14,13 @@ two: [e-mail](mailto:buga@mail.com)
 EOD;
 
 $md = MarkdownDocument::createFromString($t1);
-$md->compile();
 $md->setAttributesCallback(
 	function ($url) {
 		var_dump($url);
 		return "onclick=\"been_here\"";
 	}
 );
+$md->compile();
 echo $md->getHtml();
 
 echo "\n======\n";
