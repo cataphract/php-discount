@@ -52,7 +52,7 @@ mkd_css(Document *d, char **res)
 	CREATE(f);
 	RESERVE(f, 100);
 	stylesheets(d->code, &f);
-			
+	
 	/* on merge: on empty output, null termination (i.e. null termination always) */
 	size = S(f);
 	EXPAND(f) = 0;

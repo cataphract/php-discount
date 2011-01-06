@@ -23,9 +23,10 @@ mkd_toc(Document *p, char **doc)
     Cstring res;
     int size;
     
-    *doc = 0;
+    if ( !(doc && p && p->ctx) ) return -1;
 
-    if ( !(p && p->ctx) ) return -1;
+    *doc = 0;
+    
     if ( ! (p->ctx->flags & MKD_TOC) ) return 0;
 
     CREATE(res);
@@ -70,7 +71,7 @@ mkd_toc(Document *p, char **doc)
     if ( (size = S(res)) == 0 )
 	EXPAND(res) = 0;
 			/* HACK ALERT! HACK ALERT! HACK ALERT! */
-    *doc = T(res);      /* we know that a T(Cstring) is a character pointer
+	*doc = T(res);  /* we know that a T(Cstring) is a character pointer
 			 * so we can simply pick it up and carry it away,
 			 * leaving the husk of the Ctring on the stack
 			 * END HACK ALERT
