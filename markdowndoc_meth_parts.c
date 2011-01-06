@@ -46,7 +46,6 @@ PHP_METHOD(markdowndoc, getToc)
 	if (zend_parse_parameters_none() == FAILURE) {
 		RETURN_FALSE;
 	}
-	/* compilation not necessary: */
 	if ((dobj = markdowndoc_get_object(getThis(), 1 TSRMLS_CC)) == NULL) {
 		RETURN_FALSE;
 	}
