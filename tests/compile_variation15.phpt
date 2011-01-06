@@ -18,6 +18,8 @@ $t = <<<EOD
 [i](newss://example)
 [j](ftp://example)
 [k](irc://example)
+<a href="buga://foobar">l</a>
+[m](class:myclass)
 
 EOD;
 
@@ -43,7 +45,9 @@ echo "\nDone.\n";
 <a href="news:example">h</a>
 <a href="newss://example">i</a>
 <a href="ftp://example">j</a>
-<a href="irc://example">k</a></p>
+<a href="irc://example">k</a>
+<a href="buga://foobar">l</a>
+<span class="myclass">m</span></p>
 
 =====================
 <p><a href="http://www.example.com">a</a>
@@ -56,7 +60,9 @@ echo "\nDone.\n";
 <a href="news:example">h</a>
 [i](newss://example)
 <a href="ftp://example">j</a>
-[k](irc://example)</p>
+[k](irc://example)
+<a href="buga://foobar">l</a>
+[m](class:myclass)</p>
 
 
 Done.
