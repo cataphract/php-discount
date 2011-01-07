@@ -1,0 +1,1776 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Docs For Class MarkdownDocument</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<script src="../media/lib/classTree.js"></script>
+												<script language="javascript" type="text/javascript">
+				var imgPlus = new Image();
+				var imgMinus = new Image();
+				imgPlus.src = "../media/images/plus.png";
+				imgMinus.src = "../media/images/minus.png";
+				
+				function showNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgMinus.src;
+					oTable.style.display = "block";
+				}
+				
+				function hideNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgPlus.src;
+					oTable.style.display = "none";
+				}
+				
+				function nodeIsVisible(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+									break;
+							}
+					return (oTable && oTable.style.display == "block");
+				}
+				
+				function toggleNodeVisibility(Node){
+					if (nodeIsVisible(Node)){
+						hideNode(Node);
+					}else{
+						showNode(Node);
+					}
+				}
+			</script>
+					</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> MarkdownDocument</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A class that represents a document written the markdown markup language,  allowing it to be converted into an HTML document.</p>
+<p class="description"><p>Simple typical usage has the form (full examples linked below):  <div class="src-code"><ol><li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$markdown_str</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetHtml">getHtml</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></div></p><p>Unless otherwise noted, all the methods:  <ul><li>Return <var>FALSE</var> if there is a wrong number of arguments or if
+ the type of the argument is unexpected and PHP does not provide an automatic
+ conversion to the required type.</li><li>Throw <var>LogicException</var> if the method is an instance method and,
+ except for <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a> and
+ <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a>, is used without the document
+ having been initialized. This can only happen in subclasses whose constructor
+ doesn't call either <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a> or
+ <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a> (or calls to them fail but the
+ constructor doesn't abort the object construction with an exception).</li><li>Throw <var>LogicException</var> if the method is called from within a
+ callback provided to <a href="../Discount/MarkdownDocument.html#methodsetUrlCallback">MarkdownDocument::setUrlCallback()</a> or
+ MarkdownDocument::setAttributeCallback().</li><li>Throw <var>LogicException</var> if the method requires the Markdown
+ document to be compiled, but it isn't.</li></ul></p><p>The methods that take a stream can instead take a URL from which such  stream can be opened, but beware that if the method is to write a result,  the stream will be opened with mode <var>'w'</var>, most likely discarding  the previous contents of the file.</p><p>Explaining the Markdown syntax is beyond the scope of this documentation.  For that purpose, you can consult the  <a href="http://daringfireball.net/projects/markdown/syntax">syntax of the
+ original Markdown</a>. Discount also implements  <a href="http://www.pell.portland.or.us/~orc/Code/discount/#Language.extensions">several extensions</a>, which you can deactivate with great granularity by using  the flags described in this document.</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Gustavo Lopes</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_glopes_php_php-discount_examples_subclassing_2.php_512a914e764378edac7af618094272b4.html">Subclassing example with table of contents & CSS.</a></li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_e_glopes_php_php-discount_examples_subclassing.php_2a123368c7493a83d8faaf485805292e.html">Simple subclassing to simplify usage.</a></li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource__glopes_php_php-discount_examples_simple_usage.php_20987d1029f1f93a1f3c12a193f88f1a.html">A simple example of the usage of this class.</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_MarkdownDocument.php.html">/MarkdownDocument.php</a> (line <span class="field">63</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#AUTOLINK" title="details" class="const-name">AUTOLINK</a> = 					<span class="var-type"> 16384</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#CDATA" title="details" class="const-name">CDATA</a> = 					<span class="var-type"> 128</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#EMBED" title="details" class="const-name">EMBED</a> = 					<span class="var-type"> 35</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOALPHALIST" title="details" class="const-name">NOALPHALIST</a> = 					<span class="var-type"> 524288</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NODIVQUOTE" title="details" class="const-name">NODIVQUOTE</a> = 					<span class="var-type"> 262144</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NODLIST" title="details" class="const-name">NODLIST</a> = 					<span class="var-type"> 1048576</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOHEADER" title="details" class="const-name">NOHEADER</a> = 					<span class="var-type"> 65536</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOHTML" title="details" class="const-name">NOHTML</a> = 					<span class="var-type"> 8</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOIMAGE" title="details" class="const-name">NOIMAGE</a> = 					<span class="var-type"> 2</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOLINKS" title="details" class="const-name">NOLINKS</a> = 					<span class="var-type"> 1</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOPANTS" title="details" class="const-name">NOPANTS</a> = 					<span class="var-type"> 4</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NORELAXED" title="details" class="const-name">NORELAXED</a> = 					<span class="var-type"> 512</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOSTRIKETHROUGH" title="details" class="const-name">NOSTRIKETHROUGH</a> = 					<span class="var-type"> 2048</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOSUPERSCRIPT" title="details" class="const-name">NOSUPERSCRIPT</a> = 					<span class="var-type"> 256</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NOTABLES" title="details" class="const-name">NOTABLES</a> = 					<span class="var-type"> 1024</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NO_EXT" title="details" class="const-name">NO_EXT</a> = 					<span class="var-type"> 64</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#ONE_COMPAT" title="details" class="const-name">ONE_COMPAT</a> = 					<span class="var-type"> 8192</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#SAFELINK" title="details" class="const-name">SAFELINK</a> = 					<span class="var-type"> 32768</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#STRICT" title="details" class="const-name">STRICT</a> = 					<span class="var-type"> 16</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#TABSTOP" title="details" class="const-name">TABSTOP</a> = 					<span class="var-type"> 131072</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#TAGTEXT" title="details" class="const-name">TAGTEXT</a> = 					<span class="var-type"> 32</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#TOC" title="details" class="const-name">TOC</a> = 					<span class="var-type"> 4096</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																			
+				<div class="method-definition">
+					<img src="../media/images/StaticMethod.png" alt=" "/>
+					static 						<span class="method-result"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span>
+										<a href="#createFromStream" title="details" class="method-name">createFromStream</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/StaticMethod.png" alt=" "/>
+					static 						<span class="method-result"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span>
+										<a href="#createFromString" title="details" class="method-name">createFromString</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_doc</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+																																																																																																																							
+				<div class="method-definition">
+					<img src="../media/images/StaticMethod.png" alt=" "/>
+					static 						<span class="method-result">string</span>
+										<a href="#transformFragment" title="details" class="method-name">transformFragment</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$markdown_fragment</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+																							
+				<div class="method-definition">
+					<img src="../media/images/StaticMethod.png" alt=" "/>
+					static 						<span class="method-result">boolean</span>
+										<a href="#writeFragment" title="details" class="method-name">writeFragment</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$markdown_fragment</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$out_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+																																											
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#compile" title="details" class="method-name">compile</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span>)
+									</div>
+																															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#dumpTree" title="details" class="method-name">dumpTree</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$out_stream</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$title</span> = <span class="var-default">&quot;&quot;</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getAuthor" title="details" class="method-name">getAuthor</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getCss" title="details" class="method-name">getCss</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getDate" title="details" class="method-name">getDate</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getHtml" title="details" class="method-name">getHtml</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getTitle" title="details" class="method-name">getTitle</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">string</span>
+										<a href="#getToc" title="details" class="method-name">getToc</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#initFromStream" title="details" class="method-name">initFromStream</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#initFromString" title="details" class="method-name">initFromString</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_doc</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#isCompiled" title="details" class="method-name">isCompiled</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Constructor.png" alt=" "/>
+											<span class="method-result">MarkdownDocument</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setAttributesCallback" title="details" class="method-name">setAttributesCallback</a>
+											(<span class="var-type">callback</span>&nbsp;<span class="var-name">$callback</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#setUrlCallback" title="details" class="method-name">setUrlCallback</a>
+											(<span class="var-type">callback</span>&nbsp;<span class="var-name">$callback</span>)
+									</div>
+																							
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#writeCss" title="details" class="method-name">writeCss</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+									</div>
+																							
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#writeHtml" title="details" class="method-name">writeHtml</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#writeToc" title="details" class="method-name">writeToc</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+									</div>
+															
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result">boolean</span>
+										<a href="#writeXhtmlPage" title="details" class="method-name">writeXhtmlPage</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+									</div>
+											</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodcreateFromStream" id="createFromStream"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/StaticMethod.png" />
+		<span class="method-title">static createFromStream</span> (line <span class="line-number">434</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> from a stream.</p>
+<p class="description"><p>This is one of the two public methods available for creating an object of  this type, which is required as an initial step for full markdown  processing.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> An object of the type of this class, created  from data read from the specified stream.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		static <span class="method-result"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span>
+		<span class="method-name">
+			createFromStream
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_stream</span><span class="var-description">: Either a stream resource opened with  reading permissions or a URL from which such a stream can be opened.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Data input type flags. Only the flags  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> and <a href="../Discount/MarkdownDocument.html#constTABSTOP">MarkdownDocument::TABSTOP</a>  are allowed.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreateFromString" id="createFromString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/StaticMethod.png" />
+		<span class="method-title">static createFromString</span> (line <span class="line-number">454</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> from a string.</p>
+<p class="description"><p>This is one of the two public methods available for creating an object of  this type, which is required as an initial step for full markdown  processing.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> An object of the type of this class, created  from data read from the specified string.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromStream">MarkdownDocument::createFromStream()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		static <span class="method-result"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span>
+		<span class="method-name">
+			createFromString
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_doc</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_doc</span><span class="var-description">: A string containing the document expressed  in the markdown markup language.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Data input type flags. Only the flags  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> and <a href="../Discount/MarkdownDocument.html#constTABSTOP">MarkdownDocument::TABSTOP</a>  are allowed.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtransformFragment" id="transformFragment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/StaticMethod.png" />
+		<span class="method-title">static transformFragment</span> (line <span class="line-number">480</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reads markdown from a string and transforms it to HTML without creating  any block elements.</p>
+<p class="description"><p>In this form (inline markdown), the transformations made are much more  limited than with the combination of  <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a>,  <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a> and  <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a>. No paragraph tags are added and no  tables, block quotes, code blocks, pandoc headers or reference-style  links/images or lists are processed.</p><p>Arbitrary HTML is still allowed, unless the  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> flag is given.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> A string with the HTML resulting from transforming the  markdown fragment.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteFragment">MarkdownDocument::writeFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		static <span class="method-result">string</span>
+		<span class="method-name">
+			transformFragment
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$markdown_fragment</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$markdown_fragment</span><span class="var-description">: The markdown fragment to convert.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Compile flags appropriate for inline markdown  (several features are disabled in inline markdown, so many flags have  no effect).</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwriteFragment" id="writeFragment"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/StaticMethod.png" />
+		<span class="method-title">static writeFragment</span> (line <span class="line-number">510</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reads markdown from a string, transforms it to HTML without creating  any block elements and writes the result to a stream.</p>
+<p class="description"><p>In this form (inline markdown), the transformations made are much more  limited than with the combination of  <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a>,  <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a> and  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a>. No paragraph tags are added and no  tables, block quotes, code blocks, pandoc headers or reference-style  links/images or lists are processed.</p><p>Arbitrary HTML is still allowed, unless the  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> flag is given.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> if all the data is successfully written;  if there is an error when writing to the stream, <var>FALSE</var> is  returned and a warning is raised. The usual error handling for  <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> objects still apply.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		static <span class="method-result">boolean</span>
+		<span class="method-name">
+			writeFragment
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$markdown_fragment</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$out_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$markdown_fragment</span><span class="var-description">: The markdown fragment to convert.</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$out_stream</span><span class="var-description">: A resource stream that can be written to or a  URL with which a stream with writing permissions can be opened.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Compile flags appropriate for inline markdown  (several features are disabled in inline markdown, so many flags have  no effect).</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcompile" id="compile"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">compile</span> (line <span class="line-number">591</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compiles this document, preparing the HTML data to be retrieved.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> unless one of the usual error  conditions for the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> class is triggered.</li>
+				<li><span class="field">throws:</span> LogicException if the object has already been compiled.</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			compile
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: A combination of the compile flags, i.e., all but  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> and <a href="../Discount/MarkdownDocument.html#constTABSTOP">MarkdownDocument::TABSTOP</a>.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddumpTree" id="dumpTree"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">dumpTree</span> (line <span class="line-number">618</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Write an outline view of the document.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Returns <var>TRUE</var>, except for the situations covered  in the class summary.</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_ome_glopes_php_php-discount_examples_dump_tree.php_ae6d57d3a65b9d294dc7a978198801f1.html">dumpTree() in action.</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			dumpTree
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$out_stream</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$title</span> = <span class="var-default">&quot;&quot;</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$out_stream</span><span class="var-description">: A resource stream opened with write permissions  or a URL that can be opened to yield such a stream, for writing the  output.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$title</span><span class="var-description">: A string to be prefixed to the tree.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetAuthor" id="getAuthor"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getAuthor</span> (line <span class="line-number">657</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The author or authors found in the pandoc-style hader.</p>
+<p class="description"><p>Note that discount does not currently support multi-line authors.</p><p>The document need not have been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The authors found in the pandoc-style header. An empty  string is returned if no authors were found or if  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> was used.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetDate">MarkdownDocument::getDate()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetTitle">MarkdownDocument::getTitle()</a></li>
+				<li><span class="field">link:</span> <a href="http://johnmacfarlane.net/pandoc/README.html#title-blocks">Documentation on pandoc-style headers.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getAuthor
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetCss" id="getCss"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getCss</span> (line <span class="line-number">790</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Give all the <kbd>&lt;style&gt;</kbd> elements found in the  markdown document. These elements will not be included in the result  returned by <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a>.</p>
+<p class="description"><p>This function returns an empty string if the flag  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> was specified.</p><p>The markdown document must have already been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> All the <kbd>&lt;style&gt;</kbd> elements found in the  markdown document.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteCss">MarkdownDocument::writeCss()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getCss
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetDate" id="getDate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getDate</span> (line <span class="line-number">674</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The date found in the pandoc-style header.</p>
+<p class="description"><p>The document need not have been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The date found in the pandoc-style header. An empty  string is returned if no date was found or if  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> was used.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetAuthor">MarkdownDocument::getAuthor()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetTitle">MarkdownDocument::getTitle()</a></li>
+				<li><span class="field">link:</span> <a href="http://johnmacfarlane.net/pandoc/README.html#title-blocks">Documentation on pandoc-style headers.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getDate
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetHtml" id="getHtml"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getHtml</span> (line <span class="line-number">701</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generate and return the body HTML data that results from processing this  document.</p>
+<p class="description"><p>This includes all the data present in the given markup with the exception  of the pandoc-style headers and the style blocks. The unprocessed headers  will, however, show up if <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> is given,  and the escaped style blocks will show up if  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> is given.</p><p>The document should already have been compiled.</p><p>If defined, this method calls the callbacks specified through  <a href="../Discount/MarkdownDocument.html#methodsetUrlCallback">MarkdownDocument::setUrlCallback()</a> and  <a href="../Discount/MarkdownDocument.html#methodsetAttributesCallback">MarkdownDocument::setAttributesCallback()</a> for each link  generated. If any of these callbacks throws an exception, this method  throws another exception on top of it on the first time.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The body of the final HTML that results from processing  this document.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteXhtmlPage">MarkdownDocument::writeXhtmlPage()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getHtml
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetTitle" id="getTitle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getTitle</span> (line <span class="line-number">638</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The title found in the pandoc-style header.</p>
+<p class="description"><p>Note that discount does not currently support multi-line titles.</p><p>The document need not have been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The title found in the pandoc-style header. An empty  string is returned if no title was found or if  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> was used.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetAuthor">MarkdownDocument::getAuthor()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetDate">MarkdownDocument::getDate()</a></li>
+				<li><span class="field">link:</span> <a href="http://johnmacfarlane.net/pandoc/README.html#title-blocks">Documentation on pandoc-style headers.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_lopes_php_php-discount_examples_pandoc_headers.php_8c014fc5d40bf224e9b195b48650aa46.html">getTitle() in action.</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getTitle
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetToc" id="getToc"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">getToc</span> (line <span class="line-number">773</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the table of contents HTML data.</p>
+<p class="description"><p>This method must be called after the document has been compiled with  <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the table of contents HTML data or <var>FALSE</var> if  <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a> was not given to  <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a>.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getToc
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodinitFromStream" id="initFromStream"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">initFromStream</span> (line <span class="line-number">555</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Initialize the native part of the object using an input stream.</p>
+<p class="description"><p>This method reads markdown data from the passed stream and initializes  the native discount data structure. It should be called in the  constructor of subclasses; if not, it should at least be called before  any of the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> methods be called. Alternatively,  <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a> can be called instead.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> unless one of the usual error  conditions for the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> class is triggered.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromStream">MarkdownDocument::createFromStream()</a></li>
+				<li><span class="field">throws:</span> LogicException If the object has already been initialized.</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			initFromStream
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_stream</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_stream</span><span class="var-description">: Either a stream resource opened with  reading permissions or a URL from which such a stream can be opened.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Data input type flags. Only the flags  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> and <a href="../Discount/MarkdownDocument.html#constTABSTOP">MarkdownDocument::TABSTOP</a>  are allowed.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodinitFromString" id="initFromString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">initFromString</span> (line <span class="line-number">577</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Initialize the native part of the object using a string.</p>
+<p class="description"><p>This method reads markdown data from the passed string and initializes  the native discount data structure. It should be called in the  constructor of subclasses; if not, it should at least be called before  any of the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> methods be called. Alternatively,  <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a> can be called instead.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> unless one of the usual error  conditions for the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a> class is triggered.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a></li>
+				<li><span class="field">throws:</span> LogicException if the object has already been initialized.</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			initFromString
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_doc</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$flags</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_doc</span><span class="var-description">: Either a stream resource opened with  reading permissions or a URL from which such a stream can be opened.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$flags</span><span class="var-description">: Data input type flags. Only the flags  <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> and <a href="../Discount/MarkdownDocument.html#constTABSTOP">MarkdownDocument::TABSTOP</a>  are allowed.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisCompiled" id="isCompiled"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">isCompiled</span> (line <span class="line-number">604</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tells whether this document has already been compiled.</p>
+<p class="description"><p>This method will return <var>TRUE</var> if  <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a> has already been successfully called  and <var>FALSE</var> otherwise.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the document has already been compiled.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isCompiled
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Constructor.png" />
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">532</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A no-op protected constructor.</p>
+<p class="description"><p>This method prevents instantiation of the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a>  class with <var>new</var>, forcing the usage of  <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a> or  <a href="../Discount/MarkdownDocument.html#methodcreateFromStream">MarkdownDocument::createFromStream()</a>.</p><p>It is protected to, nevertheless, allow subclassing in a straightforward  manner by overriding this constructor. The overriding constructor need  not call this method, as it is a no-op. It should, however, call either  the <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a> or  <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromStream">MarkdownDocument::createFromStream()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">MarkdownDocument</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetAttributesCallback" id="setAttributesCallback"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setAttributesCallback</span> (line <span class="line-number">889</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets a callback to add attributes to <kbd>A</kbd> elements in generated  links.</p>
+<p class="description"><p>The callback refers to a function that will receive one argument, a  string with the URL that would be included with a generated link and  returns either a string with the attributes and their values, to be  appended to the generated <kbd>A</kbd> element or <var>NULL</var>, which  has the same effect as an empty string and causes no extra attributes to  be appended.</p><p>Links that were written as literal HTML in the input will <strong>not</strong>  cause the callback to be called!</p><p>The object need not have been compiled before this function is called.</p><p>The actual URL conversion and calling of the callback happens when  <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a> or  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a> are called.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Returns <var>TRUE</var>, except for the situations  covered in the class summary.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodsetUrlCallback">MarkdownDocument::setUrlCallback()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setAttributesCallback
+		</span>
+					(<span class="var-type">callback</span>&nbsp;<span class="var-name">$callback</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">callback</span>
+				<span class="var-name">$callback</span><span class="var-description">: Callback function to add attributes to links.  Receives a string and should return either a string or NULL. This  parameter can be <var>NULL</var> to remove the callback.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetUrlCallback" id="setUrlCallback"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">setUrlCallback</span> (line <span class="line-number">859</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets a callback to replace the URLs in generated links.</p>
+<p class="description"><p>The callback refers to a function that will receive one argument, a  string with the URL that would be included with a generated link and  returns either a replacement URL that will be used instead or  <var>NULL</var>, to use the original URLs.</p><p>Links that were written as literal HTML in the input will <strong>not</strong> be  passed to the callback!</p><p>The object need not have been compiled before this function is called.</p><p>The actual URL conversion and calling of the callback happens when  <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a> or  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a> are called.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Returns <var>TRUE</var>, except for the situations  covered in the class summary.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodsetAttributesCallback">MarkdownDocument::setAttributesCallback()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			setUrlCallback
+		</span>
+					(<span class="var-type">callback</span>&nbsp;<span class="var-name">$callback</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">callback</span>
+				<span class="var-name">$callback</span><span class="var-description">: Callback function to replace URLs. Receives  a string and should return either a string or NULL. This parameter can be  <var>NULL</var> to remove the callback.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwriteCss" id="writeCss"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">writeCss</span> (line <span class="line-number">832</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Writes all the <kbd>&lt;style&gt;</kbd> elements found in the  markdown document. These elements will not be included in the result  returned by <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a> or written by  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a>.</p>
+<p class="description"><p>This function returns an empty string if the flag  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> was specified.</p><p>The markdown document must have already been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> on normal conditions or  <var>FALSE</var> and raises a warning if there was an I/O error when  writing to the given stream (or to a successfully opened stream, if a URL  was provided instead). The usual error handling described in the class  synopsis also applies.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetCss">MarkdownDocument::getCss()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			writeCss
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_outstream</span><span class="var-description">: A stream resource where the style  elements can be written or a URL that can be opened for writing.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwriteHtml" id="writeHtml"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">writeHtml</span> (line <span class="line-number">735</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Writes the HTML contents of the body of the processed markup document.</p>
+<p class="description"><p>This includes all the data present in the given markup with the exception  of the pandoc-style headers and the style blocks. The unprocessed headers  will, however, show up if <a href="../Discount/MarkdownDocument.html#constNOHEADER">MarkdownDocument::NOHEADER</a> is given,  and the escaped style blocks will show up if  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a> is given.</p><p>The document should already have been compiled.</p><p>If defined, this method calls the callbacks specified through  <a href="../Discount/MarkdownDocument.html#methodsetUrlCallback">MarkdownDocument::setUrlCallback()</a> and  <a href="../Discount/MarkdownDocument.html#methodsetAttributesCallback">MarkdownDocument::setAttributesCallback()</a> for each link  generated. If any of these callbacks throws an exception, this method  throws another exception on top of it on the first time.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> on normal conditions or  <var>FALSE</var> and raises a warning if there was an I/O error when  writing to the given stream (or to a successfully opened stream, if a URL  was provided instead). The usual error handling described in the class  synopsis still applies.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteXhtmlPage">MarkdownDocument::writeXhtmlPage()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteCss">MarkdownDocument::writeCss()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			writeHtml
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_outstream</span><span class="var-description">: A resource stream opened with write  permissions or a URL that can be opened to yield such a stream, for  writing the output.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwriteToc" id="writeToc"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">writeToc</span> (line <span class="line-number">809</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Writes the table of contents HTML data into a file.</p>
+<p class="description"><p>This method must be called after the document has been compiled with  <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> if the table of contents was built and  successfully written; <var>FALSE</var> if  <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a> was not given or if writing failed, in the  last case, a warning is also raised. The usual handling of the errror  conditions described in the introduction to the <a href="../Discount/MarkdownDocument.html">MarkdownDocument</a>  class still apply.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constTOC">MarkdownDocument::TOC</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			writeToc
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_outstream</span><span class="var-description">: A stream resource where the HTML table  of contents can be written or a URL that can be opened for writing.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwriteXhtmlPage" id="writeXhtmlPage"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">writeXhtmlPage</span> (line <span class="line-number">759</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Writes a complete XHTML page.</p>
+<p class="description"><p>The style blocks found in the markdown data are put in the  <kbd>HEAD</kbd> element, the <kbd>TITLE</kbd> element is built from the  title extracted from the pandoc-style header and the  <kbd>BODY</kbd> is composed by what  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a> would return.</p><p>The document should already have been compiled.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <var>TRUE</var> on normal conditions or  <var>FALSE</var> and raises a warning if there was an I/O error when  writing to the given stream or to a successfully opened stream, if a URL  was provided instead.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetTitle">MarkdownDocument::getTitle()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteCss">MarkdownDocument::writeCss()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			writeXhtmlPage
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$markdown_outstream</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$markdown_outstream</span><span class="var-description">: A resource stream opened with write  permissions or a URL that can be opened to yield such a stream.</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constAUTOLINK" id="AUTOLINK"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">AUTOLINK</span>
+			 = <span class="const-default"> 16384</span>
+			(line <span class="line-number">301</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that turns every found URL into a link.</p>
+<p class="description"><p>In general, for a URL to linkified, it needs &lt; and &gt; around it. This flag  drops that requirement and linkifies all the recognized URLs.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to linkify every URL.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constCDATA" id="CDATA"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">CDATA</span>
+			 = <span class="const-default"> 128</span>
+			(line <span class="line-number">182</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that, for <a href="../Discount/MarkdownDocument.html#methodwriteFragment">MarkdownDocument::writeFragment()</a> and  <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a>, causes any <kbd>&lt;</kbd>,  <kbd>&gt;</kbd>, <kbd>&amp;</kbd>, <kbd>&quot;</kbd> and <kbd>'</kbd> characters  in the final output to be converted to their corresponding XML entities.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to enable conversion into basic XML entities.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteFragment">MarkdownDocument::writeFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteHtml">MarkdownDocument::writeHtml()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constEMBED" id="EMBED"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">EMBED</span>
+			 = <span class="const-default"> 35</span>
+			(line <span class="line-number">414</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A combination of the compile flags <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a>,  <a href="../Discount/MarkdownDocument.html#constNOIMAGE">MarkdownDocument::NOIMAGE</a> and <a href="../Discount/MarkdownDocument.html#constTAGTEXT">MarkdownDocument::TAGTEXT</a>.</p>
+<p class="description"><p>Effectively, the same effect as <a href="../Discount/MarkdownDocument.html#constTAGTEXT">MarkdownDocument::TAGTEXT</a>.</p><p>It's unclear why discount includes this flag since the effects of  <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a> and <a href="../Discount/MarkdownDocument.html#constNOIMAGE">MarkdownDocument::NOIMAGE</a>  are included in those of <a href="../Discount/MarkdownDocument.html#constTAGTEXT">MarkdownDocument::TAGTEXT</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Combination of compile flags with the same effect as  <a href="../Discount/MarkdownDocument.html#constTAGTEXT">MarkdownDocument::TAGTEXT</a>.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOIMAGE">MarkdownDocument::NOIMAGE</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constTAGTEXT">MarkdownDocument::TAGTEXT</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOALPHALIST" id="NOALPHALIST"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOALPHALIST</span>
+			 = <span class="const-default"> 524288</span>
+			(line <span class="line-number">381</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compile flag that deactivates alphabetically ordered lists. These lists  are a discount extension.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate alphabetically ordered lists.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNODIVQUOTE" id="NODIVQUOTE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NODIVQUOTE</span>
+			 = <span class="const-default"> 262144</span>
+			(line <span class="line-number">370</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compile flag that deactivates turning certain special block quotes into  <kbd>DIV</kbd> elements with a certain class.</p>
+<p class="description"><p>In discount, blockquotes whose first line has the form  <kbd>&gt; %classname%</kbd> will be transformed into a <kbd>DIV</kbd>  element with the indicated class instead of a <kbd>BLOCKQUOTE</kbd>  element. This is a discount extension that can be deactivated with this  class.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate turning certain quoted blocks into  <kbd>DIV</kbd> elements with an arbitrary class.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNODLIST" id="NODLIST"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NODLIST</span>
+			 = <span class="const-default"> 1048576</span>
+			(line <span class="line-number">395</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compile flag that deactivates definition lists, either discount-style or  Markdown-extra style.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate definition lists. These lists are a  discount extension.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_opes_php_php-discount_examples_definition_list.php_7559906f6f50c745e8f34b977e844fe9.html">Definitions list and NODLIST.</a></li>
+			</ul>
+	
+	
+</div>
+<a name="constNOHEADER" id="NOHEADER"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOHEADER</span>
+			 = <span class="const-default"> 65536</span>
+			(line <span class="line-number">340</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">An input flag that deactivates parsing of pandoc-style headers.</p>
+<p class="description"><p>Note that Markdown does not currently support multi-line headers.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Input flag to process pandoc-style headers.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromString">MarkdownDocument::createFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromStream">MarkdownDocument::initFromStream()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodinitFromString">MarkdownDocument::initFromString()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcreateFromStream">MarkdownDocument::createFromStream()</a></li>
+				<li><span class="field">link:</span> <a href="http://johnmacfarlane.net/pandoc/README.html#title-blocks">Documentation on pandoc-style headers.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_lopes_php_php-discount_examples_pandoc_headers.php_8c014fc5d40bf224e9b195b48650aa46.html">Pandoc headers in action.</a></li>
+			</ul>
+	
+	
+</div>
+<a name="constNOHTML" id="NOHTML"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOHTML</span>
+			 = <span class="const-default"> 8</span>
+			(line <span class="line-number">113</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that disables all literal HTML present in the input by  encoding all the tags.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate literal HTML.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOIMAGE" id="NOIMAGE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOIMAGE</span>
+			 = <span class="const-default"> 2</span>
+			(line <span class="line-number">89</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that disables processing the markdown elements that would  otherwise create HTML images (like in  <kbd>![alt text](http://www.example.com/myimg.jpg &quot;title&quot;)</kbd>);  aditionally, it escapes any <kbd>IMG</kbd> element it finds.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to forbid images (HTML img element)</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOLINKS" id="NOLINKS"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOLINKS</span>
+			 = <span class="const-default"> 1</span>
+			(line <span class="line-number">77</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that disables processing the markdown elements that would  otherwise create HTML links (like in  <kbd>[text](http://www.example.com)</kbd>);  additionally, it escapes any <kbd>A</kbd> (anchor) element it finds.</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to forbid links (HTML anchors).</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constAUTOLINK">MarkdownDocument::AUTOLINK</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNO_EXT">MarkdownDocument::NO_EXT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSAFELINK">MarkdownDocument::SAFELINK</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOPANTS" id="NOPANTS"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOPANTS</span>
+			 = <span class="const-default"> 4</span>
+			(line <span class="line-number">103</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that deactivates smartypants substitutions such as turning  <kbd>(tm)</kbd> into <kbd>&amp;trade;</kbd>, <kbd>don't</kbd> into  <kbd>don&amp;rsquo;t</kbd>, among others (see the example).</p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate smartypants substitutions.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">link:</span> <a href="http://daringfireball.net/projects/smartypants/">Page for original
+ SmartyPants project</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource_e_glopes_php_php-discount_examples_smartypants.php_e68effec198747444717fb0e97443e13.html">Smartypants-style substitutions in action</a></li>
+			</ul>
+	
+	
+</div>
+<a name="constNORELAXED" id="NORELAXED"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NORELAXED</span>
+			 = <span class="const-default"> 512</span>
+			(line <span class="line-number">219</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that forces discount to substitute with EM elements all  the pairs of underscores it finds. In normal circumstances, discount will  ignore underscores that are surrounded by alphanumeric characters.</p>
+<p class="description"><p>For instance, this flag forces emphasis in <kbd>c d</kbd> for the input  string <kbd>ab_c d_2</kbd>, which would otherwise not happen.</p><p>The &quot;relaxed&quot; parsing of underscores is a discount extension borrowed  from Markdown extra; this flag forces compliant behavior.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to disable relaxed parsing of underscores.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">link:</span> <a href="http://michelf.com/projects/php-markdown/extra/#em">Markdown extra
+ description of the relaxed emphasis rules.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOSTRIKETHROUGH" id="NOSTRIKETHROUGH"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOSTRIKETHROUGH</span>
+			 = <span class="const-default"> 2048</span>
+			(line <span class="line-number">251</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that deactivates the conversion of striken-through text,  as in <kbd>~~text~~</kbd>, to be converted to <kbd>&lt;del&gt;text&lt;/del&gt;</kbd>.</p>
+<p class="description"><p>This conversion is a discount extension.</p><p>The <kbd>DEL</kbd> element can still be introduced with literal HTML  (but see <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a>).</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to disable strike-through.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOSUPERSCRIPT" id="NOSUPERSCRIPT"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOSUPERSCRIPT</span>
+			 = <span class="const-default"> 256</span>
+			(line <span class="line-number">198</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that deactivates the conversion of superscripts expressed  with <kbd>^&lt;/kdb&gt;, as in &lt;kbd&gt;A^B&lt;/kdd&gt; or &lt;kbd&gt;A^(BC)</kbd> (a discount  extension).</p>
+<p class="description"><p><kbd>SUP</kbd> tags can still be included literally (but see  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a>).</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to disable superscripts.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNOTABLES" id="NOTABLES"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NOTABLES</span>
+			 = <span class="const-default"> 1024</span>
+			(line <span class="line-number">235</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that disables the parsing of tables. Tables are a discount  extension borrowed by Markdown Extra.</p>
+<p class="description"><p>Tables can still be written with literal HTML (but see  <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a>).</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to deactivate Markdown Extra tables.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSTRICT">MarkdownDocument::STRICT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">link:</span> <a href="http://michelf.com/projects/php-markdown/extra/#table">Syntax for
+ Markdown Extra tables.</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constNO_EXT" id="NO_EXT"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NO_EXT</span>
+			 = <span class="const-default"> 64</span>
+			(line <span class="line-number">168</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that disables the use of pseudo-protocols for links.</p>
+<p class="description"><p>Pseudo-protocols are link protocols that result in HTML elements other  than anchors being generated. They are a discount extension. See the  example for more details.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to disable the use of pseudo-protocols.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constSAFELINK">MarkdownDocument::SAFELINK</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+				<li><span class="field">example:</span> <a href="../__examplesource/exsource__glopes_php_php-discount_examples_pseudoprotos.php_6164811c85414e654c4f0049a0cd3b93.html">Pseudo-protocols in action.</a></li>
+			</ul>
+	
+	
+</div>
+<a name="constONE_COMPAT" id="ONE_COMPAT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">ONE_COMPAT</span>
+			 = <span class="const-default"> 8192</span>
+			(line <span class="line-number">287</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that applies some compatibility quirks in order to force  discount passing some compatibility tests.</p>
+<p class="description"><p>Particularly, it makes:  <ol><li>the first line of every block has trailing whitespace trimmed
+ off;</li><li>require second [] for links/images instead of using label as key in
+ the absence of it;</li><li>more lax algorithm if content of []() link/image starts with &lt;.</li></ol></p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to turn on compatibility quirks.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constSAFELINK" id="SAFELINK"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">SAFELINK</span>
+			 = <span class="const-default"> 32768</span>
+			(line <span class="line-number">323</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that limits generated links to certain protocols.</p>
+<p class="description"><p>The allowed protocols are <var>http</var>, <var>https</var>,  <var>news</var> and <var>ftp</var>. Links starting with <var>/</var>, but  not relative links, are also allowed.</p><p>Pseudo-protocols are also deactivated, there is no need to include  <a href="../Discount/MarkdownDocument.html#constNO_EXT">MarkdownDocument::NO_EXT</a>.</p><p>Links with arbitrary destinations are still allowed with literal HTML,  but see <a href="../Discount/MarkdownDocument.html#constNOHTML">MarkdownDocument::NOHTML</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to generate links only for some protocols.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNO_EXT">MarkdownDocument::NO_EXT</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#constNOLINKS">MarkdownDocument::NOLINKS</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constSTRICT" id="STRICT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">STRICT</span>
+			 = <span class="const-default"> 16</span>
+			(line <span class="line-number">134</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flags that has the effects of approximating the behavior of  discount to that of the original Markdown, by disabling several  extensions.</p>
+<p class="description"><p>In particular, it has the effect of combining  <a href="../Discount/MarkdownDocument.html#constNOSUPERSCRIPT">MarkdownDocument::NOSUPERSCRIPT</a>,  <a href="../Discount/MarkdownDocument.html#constNORELAXED">MarkdownDocument::NORELAXED</a>,  <a href="../Discount/MarkdownDocument.html#constNOSTRIKETHROUGH">MarkdownDocument::NOSTRIKETHROUGH</a>,  <a href="../Discount/MarkdownDocument.html#constNODLIST">MarkdownDocument::NODLIST</a>,  <a href="../Discount/MarkdownDocument.html#constNOALPHALIST">MarkdownDocument::NOALPHALIST</a>,  <a href="../Discount/MarkdownDocument.html#constNODIVQUOTE">MarkdownDocument::NODIVQUOTE</a> and,  <a href="../Discount/MarkdownDocument.html#constNOTABLES">MarkdownDocument::NOTABLES</a>,</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to disable most discount extensions and  increase compatibility with the original Markdown.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constTABSTOP" id="TABSTOP"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">TABSTOP</span>
+			 = <span class="const-default"> 131072</span>
+			(line <span class="line-number">352</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">An input flag to treat tab stops as 4 spaces — has no effect unless the  extension was compiled with a different tab stop.</p>
+<p class="description"><p>The default tab stop is 4 spaces, so this flag usually has no effect.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Input flag to force tab stops to be 4 spaces longs, even when  discount was compiled otherwise.</li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constTAGTEXT" id="TAGTEXT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">TAGTEXT</span>
+			 = <span class="const-default"> 32</span>
+			(line <span class="line-number">152</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that aims to process attribute-safe fragments.</p>
+<p class="description"><p>This flag disables <kbd>[]</kbd> expansion for images or links,  (including literal HTML for them) smarty pants, ticks, autolink (even  with <a href="../Discount/MarkdownDocument.html#constAUTOLINK">MarkdownDocument::AUTOLINK</a>), emphasis; it also transforms &gt;  into &amp;gt; and &quot; into &amp;quote;. Its purpose is to transform text  that could go into tag attributes. Best used with  <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a> or  <a href="../Discount/MarkdownDocument.html#methodwriteFragment">MarkdownDocument::writeFragment()</a>, as many substitutions done  by <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a> +  <a href="../Discount/MarkdownDocument.html#methodgetHtml">MarkdownDocument::getHtml()</a> are not covered.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Flag to make fragments more attribute-safe.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodtransformFragment">MarkdownDocument::transformFragment()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+<a name="constTOC" id="TOC"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">TOC</span>
+			 = <span class="const-default"> 4096</span>
+			(line <span class="line-number">267</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A compile flag that forces a table of contents to be generated and the  headings to have attributed an id.</p>
+<p class="description"><p>The generated table of contents can then be retrieved with  <a href="../Discount/MarkdownDocument.html#methodgetToc">MarkdownDocument::getToc()</a> or written with  <a href="../Discount/MarkdownDocument.html#methodwriteToc">MarkdownDocument::writeToc()</a>.</p></p>
+	<ul class="tags">
+				<li><span class="field">var:</span> Compile flag to activate table of contents generation.</li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodwriteToc">MarkdownDocument::writeToc()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodgetToc">MarkdownDocument::getToc()</a></li>
+				<li><span class="field">see:</span> <a href="../Discount/MarkdownDocument.html#methodcompile">MarkdownDocument::compile()</a></li>
+				<li><span class="field">since:</span> 0.1.0</li>
+			</ul>
+	
+	
+</div>
+						
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:34 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

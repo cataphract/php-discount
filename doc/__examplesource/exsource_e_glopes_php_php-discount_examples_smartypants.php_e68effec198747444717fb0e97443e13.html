@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Smartypants-style substitutions in action</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+											</head>
+		<body>
+						<h1>Smartypants-style substitutions in action</h1>
+<div class="listing">
+<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-var">$t&nbsp;</span>=&nbsp;&lt;&lt;&lt;EOD</div></li>
+<li><div class="src-line">``text''&nbsp;is&nbsp;translated&nbsp;to&nbsp;“text”.</div></li>
+<li><div class="src-line">&quot;double-quoted&nbsp;text&quot;&nbsp;becomes&nbsp;“double-quoted&nbsp;text”</div></li>
+<li><div class="src-line">'single-quoted&nbsp;text'&nbsp;becomes&nbsp;‘single-quoted&nbsp;text’</div></li>
+<li><div class="src-line">don't&nbsp;is&nbsp;“don’t.”&nbsp;as&nbsp;well&nbsp;as&nbsp;anything-else’t.&nbsp;(But&nbsp;foo'tbar&nbsp;is&nbsp;just&nbsp;foo'tbar.)</div></li>
+<li><div class="src-line">And&nbsp;it's&nbsp;is&nbsp;“it’s,”&nbsp;as&nbsp;well&nbsp;as&nbsp;anything-else’s&nbsp;(except&nbsp;not&nbsp;foo'sbar&nbsp;and&nbsp;the&nbsp;like.)</div></li>
+<li><div class="src-line">(tm)&nbsp;becomes&nbsp;™</div></li>
+<li><div class="src-line">(r)&nbsp;becomes&nbsp;®</div></li>
+<li><div class="src-line">(c)&nbsp;becomes&nbsp;©</div></li>
+<li><div class="src-line">1/4th&nbsp;?&nbsp;¼th.&nbsp;Ditto&nbsp;for&nbsp;1/4&nbsp;(¼),&nbsp;1/2&nbsp;(½),&nbsp;3/4ths&nbsp;(¾ths),&nbsp;and&nbsp;3/4&nbsp;(¾).</div></li>
+<li><div class="src-line">...&nbsp;becomes&nbsp;…</div></li>
+<li><div class="src-line">.&nbsp;.&nbsp;.&nbsp;also&nbsp;becomes&nbsp;…</div></li>
+<li><div class="src-line">--&nbsp;becomes&nbsp;—</div></li>
+<li><div class="src-line">-&nbsp;becomes&nbsp;–&nbsp;,&nbsp;but&nbsp;A-B&nbsp;remains&nbsp;A-B.</div></li>
+<li><div class="src-line">EOD<span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-comm">//To&nbsp;disable&nbsp;these&nbsp;substitutions,&nbsp;one&nbsp;could&nbsp;use</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$md-&gt;compile(MarkdownDocument::NOPANTS);</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetHtml">getHtml</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;\n\n&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-str">&quot;=====================\n&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><span class="src-id">NOPANTS</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetHtml">getHtml</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;\n\n&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">/*&nbsp;Expected&nbsp;output:</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;&amp;ldquo;text&amp;rdquo;&nbsp;is&nbsp;translated&nbsp;to&nbsp;“text”.</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;ldquo;double-quoted&nbsp;text&amp;rdquo;&nbsp;becomes&nbsp;“double-quoted&nbsp;text”</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;lsquo;single-quoted&nbsp;text&amp;rsquo;&nbsp;becomes&nbsp;‘single-quoted&nbsp;text’</span></div></li>
+<li><div class="src-line"><span class="src-comm">don&amp;rsquo;t&nbsp;is&nbsp;“don’t.”&nbsp;as&nbsp;well&nbsp;as&nbsp;anything-else’t.&nbsp;(But&nbsp;foo'tbar&nbsp;is&nbsp;just&nbsp;foo'tbar.)</span></div></li>
+<li><div class="src-line"><span class="src-comm">And&nbsp;it&amp;rsquo;s&nbsp;is&nbsp;“it’s,”&nbsp;as&nbsp;well&nbsp;as&nbsp;anything-else’s&nbsp;(except&nbsp;not&nbsp;foo'sbar&nbsp;and&nbsp;the&nbsp;like.)</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;trade;&nbsp;becomes&nbsp;™</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;reg;&nbsp;becomes&nbsp;®</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;copy;&nbsp;becomes&nbsp;©</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;frac14;th&nbsp;?&nbsp;¼th.&nbsp;Ditto&nbsp;for&nbsp;&amp;frac14;&nbsp;(¼),&nbsp;&amp;frac12;&nbsp;(½),&nbsp;&amp;frac34;ths&nbsp;(¾ths),&nbsp;and&nbsp;&amp;frac34;&nbsp;(¾).</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;hellip;&nbsp;becomes&nbsp;…</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;hellip;&nbsp;also&nbsp;becomes&nbsp;…</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;mdash;&nbsp;becomes&nbsp;—</span></div></li>
+<li><div class="src-line"><span class="src-comm">&amp;ndash;&nbsp;becomes&nbsp;–&nbsp;,&nbsp;but&nbsp;A-B&nbsp;remains&nbsp;A-B.&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">*/</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:35 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</body>
+</html>

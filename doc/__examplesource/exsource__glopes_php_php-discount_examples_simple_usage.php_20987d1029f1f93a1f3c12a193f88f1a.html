@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>A simple example of the usage of this class.</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+											</head>
+		<body>
+						<h1>A simple example of the usage of this class.</h1>
+<div class="listing">
+<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-var">$markdown_str&nbsp;</span>=&nbsp;&lt;&lt;&lt;EOD</div></li>
+<li><div class="src-line">A&nbsp;First&nbsp;Level&nbsp;Header</div></li>
+<li><div class="src-line">====================</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">A&nbsp;Second&nbsp;Level&nbsp;Header</div></li>
+<li><div class="src-line">---------------------</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">Now&nbsp;is&nbsp;the&nbsp;time&nbsp;for&nbsp;all&nbsp;good&nbsp;men&nbsp;to&nbsp;come&nbsp;to</div></li>
+<li><div class="src-line">the&nbsp;aid&nbsp;of&nbsp;their&nbsp;country.&nbsp;This&nbsp;is&nbsp;just&nbsp;a</div></li>
+<li><div class="src-line">regular&nbsp;paragraph.</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">The&nbsp;quick&nbsp;brown&nbsp;fox&nbsp;jumped&nbsp;over&nbsp;the&nbsp;lazy</div></li>
+<li><div class="src-line">dog's&nbsp;back.</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">###&nbsp;Header&nbsp;3</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&gt;&nbsp;This&nbsp;is&nbsp;a&nbsp;blockquote.</div></li>
+<li><div class="src-line">&gt;&nbsp;</div></li>
+<li><div class="src-line">&gt;&nbsp;This&nbsp;is&nbsp;the&nbsp;second&nbsp;paragraph&nbsp;in&nbsp;the&nbsp;blockquote.</div></li>
+<li><div class="src-line">&gt;</div></li>
+<li><div class="src-line">&gt;&nbsp;##&nbsp;This&nbsp;is&nbsp;an&nbsp;H2&nbsp;in&nbsp;a&nbsp;blockquote</div></li>
+<li><div class="src-line">EOD<span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$markdown_str</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetHtml">getHtml</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">/*&nbsp;Expected&nbsp;output:</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;h1&gt;A&nbsp;First&nbsp;Level&nbsp;Header&lt;/h1&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;h2&gt;A&nbsp;Second&nbsp;Level&nbsp;Header&lt;/h2&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;Now&nbsp;is&nbsp;the&nbsp;time&nbsp;for&nbsp;all&nbsp;good&nbsp;men&nbsp;to&nbsp;come&nbsp;to</span></div></li>
+<li><div class="src-line"><span class="src-comm">the&nbsp;aid&nbsp;of&nbsp;their&nbsp;country.&nbsp;This&nbsp;is&nbsp;just&nbsp;a</span></div></li>
+<li><div class="src-line"><span class="src-comm">regular&nbsp;paragraph.&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;The&nbsp;quick&nbsp;brown&nbsp;fox&nbsp;jumped&nbsp;over&nbsp;the&nbsp;lazy</span></div></li>
+<li><div class="src-line"><span class="src-comm">dog&amp;rsquo;s&nbsp;back.&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;h3&gt;Header&nbsp;3&lt;/h3&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;blockquote&gt;&lt;p&gt;This&nbsp;is&nbsp;a&nbsp;blockquote.&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;This&nbsp;is&nbsp;the&nbsp;second&nbsp;paragraph&nbsp;in&nbsp;the&nbsp;blockquote.&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;h2&gt;This&nbsp;is&nbsp;an&nbsp;H2&nbsp;in&nbsp;a&nbsp;blockquote&lt;/h2&gt;&lt;/blockquote&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">*/</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:35 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Pandoc headers in action.</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+											</head>
+		<body>
+						<h1>Pandoc headers in action.</h1>
+<div class="listing">
+<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-var">$t&nbsp;</span>=&nbsp;&lt;&lt;&lt;EOD</div></li>
+<li><div class="src-line">%&nbsp;This&nbsp;is&nbsp;the&nbsp;title</div></li>
+<li><div class="src-line">%</div></li>
+<li><div class="src-line">%&nbsp;30&nbsp;December&nbsp;2010</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">Body&nbsp;of&nbsp;the&nbsp;document</div></li>
+<li><div class="src-line">EOD<span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">//Multi-line&nbsp;pandoc&nbsp;headers&nbsp;are&nbsp;not&nbsp;supported,&nbsp;e.g.:</span></div></li>
+<li><div class="src-line"><span class="src-comm">/*</span></div></li>
+<li><div class="src-line"><span class="src-comm">&nbsp;*&nbsp;%&nbsp;First&nbsp;line&nbsp;of&nbsp;title</span></div></li>
+<li><div class="src-line"><span class="src-comm">&nbsp;*&nbsp;&nbsp;&nbsp;Second&nbsp;line&nbsp;of&nbsp;title</span></div></li>
+<li><div class="src-line"><span class="src-comm">&nbsp;*&nbsp;%</span></div></li>
+<li><div class="src-line"><span class="src-comm">&nbsp;*&nbsp;%</span></div></li>
+<li><div class="src-line"><span class="src-comm">&nbsp;*/</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-str">&quot;Title:&nbsp;&quot;</span><span class="src-sym">,&nbsp;</span><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetTitle">getTitle</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-str">&quot;\n\n&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">//Complete&nbsp;page:</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodwriteXhtmlPage">writeXhtmlPage</a><span class="src-sym">(</span><span class="src-var">$f&nbsp;</span>=&nbsp;<a href="http://www.php.net/fopen">fopen</a><span class="src-sym">(</span><span class="src-str">'php://temp'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'r+'</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">echo&nbsp;<a href="http://www.php.net/stream_get_contents">stream_get_contents</a><span class="src-sym">(</span><span class="src-var">$f</span><span class="src-sym">,&nbsp;</span>-<span class="src-num">1</span><span class="src-sym">,&nbsp;</span><span class="src-num">0</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">/*&nbsp;Expected&nbsp;output:</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">Title:&nbsp;This&nbsp;is&nbsp;the&nbsp;title</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;?xml&nbsp;version=&quot;1.0&quot;&nbsp;encoding=&quot;UTF-8&quot;?&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;!DOCTYPE&nbsp;html&nbsp;&nbsp;PUBLIC&nbsp;&quot;-//W3C//DTD&nbsp;XHTML&nbsp;1.0&nbsp;Strict//EN&quot;&nbsp;&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;html&nbsp;xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&nbsp;xml:lang=&quot;en&quot;&nbsp;lang=&quot;en&quot;&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;head&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;title&gt;This&nbsp;is&nbsp;the&nbsp;title&lt;/title&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;/head&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;body&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;Body&nbsp;of&nbsp;the&nbsp;document&lt;/p&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;/body&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;/html&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">*/</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:35 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</body>
+</html>

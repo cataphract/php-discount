@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Simple subclassing to simplify usage.</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+											</head>
+		<body>
+						<h1>Simple subclassing to simplify usage.</h1>
+<div class="listing">
+<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-key">class&nbsp;</span><span class="src-id">SimpleMarkdown&nbsp;</span><span class="src-key">extends&nbsp;</span><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a>&nbsp;<span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-var">$markdown</span><span class="src-sym">,&nbsp;</span><span class="src-var">$flags&nbsp;</span>=&nbsp;<span class="src-num">0</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><span class="src-id">__construct</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$inputMask&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><span class="src-id">NOHEADER&nbsp;</span>|&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><span class="src-id">TABSTOP</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">initFromString</span><span class="src-sym">(</span>(string)<span class="src-var">$markdown</span><span class="src-sym">,&nbsp;</span><span class="src-var">$flags&nbsp;</span><span class="src-sym">&amp;&nbsp;</span><span class="src-var">$inputMask</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">compile</span><span class="src-sym">((</span>(int)&nbsp;<span class="src-var">$flags</span><span class="src-sym">)&nbsp;</span><span class="src-sym">&amp;&nbsp;</span>~<span class="src-var">$inputMask</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><span class="src-id">__toString</span><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">getHtml</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-sym">}</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$markdown_str&nbsp;</span>=&nbsp;&lt;&lt;&lt;EOD</div></li>
+<li><div class="src-line">A&nbsp;First&nbsp;Level&nbsp;Header</div></li>
+<li><div class="src-line">====================</div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">&gt;&nbsp;a&nbsp;quote</div></li>
+<li><div class="src-line">&gt;&nbsp;continuation&nbsp;of&nbsp;a&nbsp;quote</div></li>
+<li><div class="src-line">EOD<span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line">echo<span class="src-sym">(</span><span class="src-key">new&nbsp;</span><span class="src-id">SimpleMarkdown</span><span class="src-sym">(</span><span class="src-var">$markdown_str</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">/*&nbsp;Expected&nbsp;output:</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;h1&gt;A&nbsp;First&nbsp;Level&nbsp;Header&lt;/h1&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;blockquote&gt;&lt;p&gt;a&nbsp;quote</span></div></li>
+<li><div class="src-line"><span class="src-comm">continuation&nbsp;of&nbsp;a&nbsp;quote&lt;/p&gt;&lt;/blockquote&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">*/</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:35 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</body>
+</html>

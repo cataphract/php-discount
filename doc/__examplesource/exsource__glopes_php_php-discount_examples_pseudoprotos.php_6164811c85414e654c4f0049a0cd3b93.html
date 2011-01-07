@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Pseudo-protocols in action.</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+											</head>
+		<body>
+						<h1>Pseudo-protocols in action.</h1>
+<div class="listing">
+<div class="src-code"><ol><li><div class="src-line"><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><span class="src-var">$t&nbsp;</span>=&nbsp;&lt;&lt;&lt;EOD</div></li>
+<li><div class="src-line">[normal&nbsp;link](http://www.example.com/)</div></li>
+<li><div class="src-line">[id](id:myid)</div></li>
+<li><div class="src-line">[raw](raw:&lt;raw&gt;text&lt;/raw&gt;)</div></li>
+<li><div class="src-line">[lang](lang:mylang)</div></li>
+<li><div class="src-line">[abbr](abbr:myabbr)</div></li>
+<li><div class="src-line">[class](class:myclass)</div></li>
+<li><div class="src-line">EOD<span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-var">$md&nbsp;</span>=&nbsp;<span class="src-id"><a href="../Discount/MarkdownDocument.html">MarkdownDocument</a></span><span class="src-sym">::</span><a href="../Discount/MarkdownDocument.html#methodcreateFromString">createFromString</a><span class="src-sym">(</span><span class="src-var">$t</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodcompile">compile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><span class="src-comm">//To&nbsp;disable&nbsp;the&nbsp;special&nbsp;treatment&nbsp;for&nbsp;these&nbsp;pseudo-protocols,&nbsp;one&nbsp;could&nbsp;use</span></div></li>
+<li><div class="src-line"><span class="src-comm">//$md-&gt;compile(MarkdownDocument::NO_EXT);</span></div></li>
+<li><div class="src-line">echo&nbsp;<span class="src-var">$md</span><span class="src-sym">-&gt;</span><a href="../Discount/MarkdownDocument.html#methodgetHtml">getHtml</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">/*&nbsp;Expected&nbsp;output:</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">&lt;p&gt;&lt;a&nbsp;href=&quot;http://www.example.com/&quot;&gt;normal&nbsp;link&lt;/a&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;span&nbsp;id=&quot;myid&quot;&gt;id&lt;/span&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;raw&gt;text&lt;/raw&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;span&nbsp;lang=&quot;mylang&quot;&gt;lang&lt;/span&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;abbr&nbsp;title=&quot;myabbr&quot;&gt;abbr&lt;/abbr&gt;</span></div></li>
+<li><div class="src-line"><span class="src-comm">&lt;span&nbsp;class=&quot;myclass&quot;&gt;class&lt;/span&gt;&lt;/p&gt;</span></div></li>
+<li><div class="src-line">&nbsp;</div></li>
+<li><div class="src-line"><span class="src-comm">*/</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 07 Jan 2011 01:56:35 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</body>
+</html>
