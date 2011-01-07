@@ -31,6 +31,7 @@
 
 #include "lib/mkdio.h"
 
+#include "php_discount.h"
 #include "markdowndoc_class.h"
 #include "markdowndoc_meth_header.h"
 
