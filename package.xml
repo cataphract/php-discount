@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package version="2.1"
-	xmlns="http://pear.php.net/dtd/package-2.1"
-	xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd
-						http://pear.php.net/dtd/package-2.1 http://pear.php.net/dtd/package-2.1.xsd">
+<package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
  <name>discount</name>
  <channel>nebm.ist.utl.pt/phpchannel</channel>
  <summary>Processes the Markdown language with the bundled discount library.
@@ -35,8 +30,8 @@ The page of the original Markdown is available at
   <email>cataphract@php.net</email>
   <active>yes</active>
  </lead>
- <date>2011-01-07</date>
- <time>02:44:17</time>
+ <date>2011-01-08</date>
+ <time>08:41:10</time>
  <version>
   <release>0.1.0</release>
   <api>0.1.0</api>
@@ -50,9 +45,6 @@ The page of the original Markdown is available at
 </notes>
  <contents>
   <dir name="/">
-   <dir name="build">
-    <file role="src" name="libtool.m4"/>
-   </dir>
    <dir name="examples">
     <file role="doc" name="definition_list.php"/>
     <file role="doc" name="dump_tree.php"/>
@@ -170,9 +162,6 @@ The page of the original Markdown is available at
     <file role="test" name="write_xhtml_page_basic.phpt"/>
     <file role="test" name="write_xhtml_page_error.phpt"/>
    </dir>
-   <file role="src" name="acinclude.m4"/>
-   <file role="src" name="aclocal.m4"/>
-   <file role="src" name="config.h"/>
    <file role="src" name="config.m4"/>
    <file role="src" name="config.w32"/>
    <file role="src" name="discount.c"/>
