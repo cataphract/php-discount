@@ -33,7 +33,7 @@
 extern zend_module_entry discount_module_entry;
 #define phpext_discount_ptr &discount_module_entry
 
-#define PHP_DISCOUNT_VERSION "0.1.0"
+#define PHP_DISCOUNT_VERSION "1.0.0-dev"
 
 #ifdef PHP_WIN32
 #define PHP_DISCOUNT_API __declspec(dllexport)
