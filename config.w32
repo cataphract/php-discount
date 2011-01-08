@@ -11,11 +11,7 @@ if (PHP_DISCOUNT != "no") {
 		generate.c html5.c markdown.c \
 		mkdio.c resource.c tags.c \
 		toc.c version.c xml.c \
-<<<<<<< HEAD
-		xmlpage.c", "discount");
-=======
 		xmlpage.c setup.c", "discount");
->>>>>>> 2ba9082cee8f2c7bdf6c93a67ff6438ee4af1a58
 	
 	AC_DEFINE("HAVE_DISCOUNT", 1, "Discount markdown support");
 }
