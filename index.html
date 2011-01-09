@@ -5,30 +5,32 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-	<title>cataphract/php-discount @ GitHub</title>
+	<title>php-discount extension</title>
 	
 	<style type="text/css">
 		body {
-  		margin-top: 1.0em;
-  		background-color: #404c3d;
+  		background-color: white;
 		  font-family: "Helvetica,Arial,FreeSans";
-  		color: #ffffff;
+  		color: black;
+		font-size: 1.1em;
     }
     #container {
-      margin: 0 auto;
-      width: 700px;
+      margin: 2em 4em 2em 4em;
     }
-		h1 { font-size: 3.8em; color: #bfb3c2; margin-bottom: 3px; }
+		h1 { font-size: 3.8em; color: rgb(150,0,50); margin-bottom: 3px; }
 		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #bfb3c2; }
-    h3 { text-align: center; color: #bfb3c2; }
-    a { color: #bfb3c2; }
+	h2 {
+		font-size: 1.5em;
+		color: rgb(150,0,50);
+		border-bottom: 1px dotted black;
+	}
+    h3 { text-align: center; color: rgb(150,0,100); }
+    a { color: rgb(200, 0, 50); }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
+		pre { background: rgb(210,210,210); padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
+    .footer { text-align:right; padding-top:30px; font-style: italic; }
 	</style>
 	
 </head>
@@ -43,18 +45,12 @@
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="http://github.com/cataphract/php-discount">php-discount</a></h1>
+    <h1>php-discount</h1>
 
     <div class="description">
-      PHP extension that wraps the discount Markdown library.<br />
+      PHP extension that wraps the <a href="http://www.pell.portland.or.us/~orc/Code/discount/">discount Markdown library</a>.<br />
       Compatible with PHP 5.2, 5.3 and trunk.
     </div>
-
-    <h2>Authors</h2>
-<ul>
-<li>Gustavo Lopes for the extension</li>
-<li>David Parsons for the bundled discount library</li>
-</ul>
 
 	<h2>Documentation</h2>
 	<p>The documentation is <a href="doc/Discount/MarkdownDocument.html">available here.</a></p>
@@ -71,16 +67,27 @@
       by running:
       <pre>$ git clone git://github.com/cataphract/php-discount</pre>
     </p>
-    <p>
-      <b>Windows binaries</b> for PHP 5.3, VC9 (the binaries may trail behind):
-	  <ul>
-        <li><a href="php_discount_5_3_ZTS_X86_VC9.zip">Release, ZTS (thread-safe)</a>,</li>
-        <li><a href="php_discount_5_3_NOZTS_X86_VC9.zip">Release, no ZTS (thread-unsafe)</a>.</li>
-	  </ul>
-    </p>
 
 	<h3>Releases</h3>
-	<p>There are no releases yet.</p>
+	
+	<p>Note: The <kbd>pecl</kbd> command indicated should be preceded, on the first time, by:
+	<pre>pecl channel-discover nebm.ist.utl.pt/phpchannel</pre>
+	</p>
+	
+	<h4>0.1.0 (2011-01-08)</h4>
+	<ul>
+		<li><a href="http://nebm.ist.utl.pt/phpchannel/get/discount-0.1.0.tgz">Source tarball</a></li>
+		<li><a href="https://github.com/cataphract/php-discount/tree/ext-v0.1.0">Tag on github</a></li>
+		<li>PEAR installation: <pre>pecl install nebm/discount-0.1.0</pre></li>
+		<li>Windows x86/VC9/Release libraries:
+			<ul>
+				<li><a href="windows/php_discount-0.1.0-PHP_5_3-NO_ZTS-x86-vc9.zip">PHP 5.3, no ZTS (thread-safety)</a></li>
+				<li><a href="windows/php_discount-0.1.0-PHP_5_3-ZTS-x86-vc9.zip">PHP 5.3, ZTS (thread-safety)</a></li>
+				<li><a href="windows/php_discount-0.1.0-PHP_5_2-NO_ZTS-x86-vc9.zip">PHP 5.2, no ZTS (thread-safety)</a></li>
+				<li><a href="windows/php_discount-0.1.0-PHP_5_2-ZTS-x86-vc9.zip">PHP 5.2, ZTS (thread-safety)</a></li>
+			</ul>
+		</li>
+	</ul>
 
 	<h2>Installation</h2>
 	
@@ -89,16 +96,25 @@
 		<pre>phpize &amp;&amp; ./configure --with-php-config=/path/to/php-config &amp;&amp; \
 make &amp;&amp; make test &amp;&amp; sudo make install</pre>
 	</p>
+	<p>For release download and installation can be handled by <kbd>pecl</kbd> by executing the
+	giving commands.</p>
+	<p>The configuration file <kbd>php.ini</kbd> may have to be edited to load the extension.</p>
 
     <h2>Bugs</h2>
     <p>You can report your bug on the
     <a href="https://github.com/cataphract/php-discount/issues">issue tracker</a> or by e-mail.</p>
 
+    <h2>Authors</h2>
+	<ul>
+	<li>Gustavo Lopes for the extension</li>
+	<li>David Parsons for the bundled discount library</li>
+	</ul>
+	
     <h2>Contact</h2>
     <p>Gustavo Lopes (e-mail: cataphract php net)</p>
 
 	<div class="footer">
-      get the source code on GitHub : <a href="http://github.com/cataphract/php-discount">cataphract/php-discount</a>
+      Last updated on 9 Jan 2011
     </div>
 
   </div>
