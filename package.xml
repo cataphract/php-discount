@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>markdown</name>
+ <channel>pecl.php.net</channel>
+ <summary>Processes the Markdown language with the bundled discount library.
+</summary>
+ <description>
+Markdown is a lightweight markup language created by John Gruber. It is also
+the name of the original tool written in Perl that converts such markup into
+HTML.
+
+This library is a wrapper for a modified version of the discount Markdown
+processor, created by David Parsons. It supports several extensions of the
+original Markdown language, including smartypants-style substitutions, pandoc-
+style document headers, and parts of Markdown Extra.
+
+The modifications to discount include discarding several parts important only
+to stand-alone applications that accompany the library code, better consistency
+in library interface functions, thread-safety without eager initialization of
+globals, usage of the Zend memory manager and support for Microsoft Windows.
+
+Discount is available at &lt;http://www.pell.portland.or.us/~orc/Code/discount/&gt;.
+
+The page of the original Markdown is available at
+&lt;http://daringfireball.net/projects/markdown/&gt;.
+</description>
+ <lead>
+  <name>Gustavo Lopes</name>
+  <user>cataphract</user>
+  <email>cataphract@php.net</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Pierre-Alain Joye</name>
+  <user>pajoye</user>
+  <email>pierre@php.net</email>
+  <active>yes</active>
+ </developer>
+ <date>2011-01-11</date>
+ <time>17:43:19</time>
+ <version>
+  <release>0.2.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>- Completely new codebase.
+- More recent and tightly coupled discount library.
+- Much richer interface.
+- Interface incompatible with PECL markdown 0.1.0.
+</notes>
+ <contents>
+  <dir name="/">
+   <dir name="examples">
+    <file role="doc" name="definition_list.php"/>
+    <file role="doc" name="dump_tree.php"/>
+    <file role="doc" name="pandoc_headers.php"/>
+    <file role="doc" name="pseudoprotos.php"/>
+    <file role="doc" name="simple_usage.php"/>
+    <file role="doc" name="smartypants.php"/>
+    <file role="doc" name="subclassing.php"/>
+    <file role="doc" name="subclassing_2.php"/>
+   </dir>
+   <dir name="lib">
+    <file role="src" name="amalloc.c"/>
+    <file role="src" name="amalloc.h"/>
+    <file role="src" name="basename.c"/>
+    <file role="src" name="config.h"/>
+    <file role="src" name="config.win32.h"/>
+    <file role="src" name="Csio.c"/>
+    <file role="src" name="css.c"/>
+    <file role="src" name="cstring.h"/>
+    <file role="src" name="docheader.c"/>
+    <file role="src" name="dumptree.c"/>
+    <file role="src" name="emmatch.c"/>
+    <file role="src" name="flags.c"/>
+    <file role="src" name="generate.c"/>
+    <file role="src" name="html5.c"/>
+    <file role="src" name="main.c"/>
+    <file role="src" name="makepage.c"/>
+    <file role="src" name="markdown.c"/>
+    <file role="src" name="markdown.h"/>
+    <file role="src" name="mkd2html.c"/>
+    <file role="src" name="mkdio.c"/>
+    <file role="src" name="mkdio.h"/>
+    <file role="src" name="resource.c"/>
+    <file role="src" name="setup.c"/>
+    <file role="src" name="tags.c"/>
+    <file role="src" name="tags.h"/>
+    <file role="src" name="theme.c"/>
+    <file role="src" name="toc.c"/>
+    <file role="src" name="version.c"/>
+    <file role="src" name="xml.c"/>
+    <file role="src" name="xmlpage.c"/>
+   </dir>
+   <dir name="tests">
+    <file role="test" name="compile_basic.phpt"/>
+    <file role="test" name="compile_error.phpt"/>
+    <file role="test" name="compile_error2.phpt"/>
+    <file role="test" name="compile_variation1.phpt"/>
+    <file role="test" name="compile_variation2.phpt"/>
+    <file role="test" name="compile_variation3.phpt"/>
+    <file role="test" name="compile_variation4.phpt"/>
+    <file role="test" name="compile_variation5.phpt"/>
+    <file role="test" name="compile_variation6.phpt"/>
+    <file role="test" name="compile_variation7.phpt"/>
+    <file role="test" name="compile_variation8.phpt"/>
+    <file role="test" name="compile_variation9.phpt"/>
+    <file role="test" name="compile_variation10.phpt"/>
+    <file role="test" name="compile_variation11.phpt"/>
+    <file role="test" name="compile_variation12.phpt"/>
+    <file role="test" name="compile_variation13.phpt"/>
+    <file role="test" name="compile_variation14.phpt"/>
+    <file role="test" name="compile_variation15.phpt"/>
+    <file role="test" name="compile_variation16.phpt"/>
+    <file role="test" name="compile_variation17.phpt"/>
+    <file role="test" name="compile_variation18.phpt"/>
+    <file role="test" name="compile_variation19.phpt"/>
+    <file role="test" name="compile_variation20.phpt"/>
+    <file role="test" name="create_from_stream_basic.phpt"/>
+    <file role="test" name="create_from_stream_error.phpt"/>
+    <file role="test" name="create_from_stream_variation1.phpt"/>
+    <file role="test" name="create_from_stream_variation2.phpt"/>
+    <file role="test" name="create_from_string_basic.phpt"/>
+    <file role="test" name="create_from_string_error.phpt"/>
+    <file role="test" name="dump_tree_basic.phpt"/>
+    <file role="test" name="dump_tree_error.phpt"/>
+    <file role="test" name="get_author_basic.phpt"/>
+    <file role="test" name="get_author_error.phpt"/>
+    <file role="test" name="get_css_basic.phpt"/>
+    <file role="test" name="get_css_error.phpt"/>
+    <file role="test" name="get_date_basic.phpt"/>
+    <file role="test" name="get_date_error.phpt"/>
+    <file role="test" name="get_html_basic.phpt"/>
+    <file role="test" name="get_html_error.phpt"/>
+    <file role="test" name="get_html_error2.phpt"/>
+    <file role="test" name="get_html_error3.phpt"/>
+    <file role="test" name="get_title_basic.phpt"/>
+    <file role="test" name="get_title_error.phpt"/>
+    <file role="test" name="get_toc_basic.phpt"/>
+    <file role="test" name="get_toc_error.phpt"/>
+    <file role="test" name="helpers.php.inc"/>
+    <file role="test" name="inheritance_basic.phpt"/>
+    <file role="test" name="inheritance_error.phpt"/>
+    <file role="test" name="is_compiled_basic.phpt"/>
+    <file role="test" name="is_compiled_error.phpt"/>
+    <file role="test" name="set_attributes_callback_basic.phpt"/>
+    <file role="test" name="set_attributes_callback_error.phpt"/>
+    <file role="test" name="set_url_callback_basic.phpt"/>
+    <file role="test" name="set_url_callback_error.phpt"/>
+    <file role="test" name="simple_example.txt"/>
+    <file role="test" name="syntax_start.txt"/>
+    <file role="test" name="tranform_fragment_basic.phpt"/>
+    <file role="test" name="tranform_fragment_error.phpt"/>
+    <file role="test" name="tranform_fragment_variation1.phpt"/>
+    <file role="test" name="tranform_fragment_variation2.phpt"/>
+    <file role="test" name="write_css_basic.phpt"/>
+    <file role="test" name="write_css_error.phpt"/>
+    <file role="test" name="write_fragment_basic.phpt"/>
+    <file role="test" name="write_fragment_error.phpt"/>
+    <file role="test" name="write_fragment_variation1.phpt"/>
+    <file role="test" name="write_fragment_variation2.phpt"/>
+    <file role="test" name="write_html_basic.phpt"/>
+    <file role="test" name="write_html_error.phpt"/>
+    <file role="test" name="write_html_variation1.phpt"/>
+    <file role="test" name="write_toc_basic.phpt"/>
+    <file role="test" name="write_toc_error.phpt"/>
+    <file role="test" name="write_xhtml_page_basic.phpt"/>
+    <file role="test" name="write_xhtml_page_error.phpt"/>
+   </dir>
+   <file role="src" name="config.m4"/>
+   <file role="src" name="config.w32"/>
+   <file role="src" name="discount.c"/>
+   <file role="src" name="markdowndoc_class.c"/>
+   <file role="src" name="markdowndoc_class.h"/>
+   <file role="src" name="markdowndoc_meth_callbacks.c"/>
+   <file role="src" name="markdowndoc_meth_callbacks.h"/>
+   <file role="src" name="markdowndoc_meth_document.c"/>
+   <file role="src" name="markdowndoc_meth_document.h"/>
+   <file role="src" name="markdowndoc_meth_header.c"/>
+   <file role="src" name="markdowndoc_meth_header.h"/>
+   <file role="src" name="markdowndoc_meth_input.c"/>
+   <file role="src" name="markdowndoc_meth_input.h"/>
+   <file role="src" name="markdowndoc_meth_misc.c"/>
+   <file role="src" name="markdowndoc_meth_misc.h"/>
+   <file role="src" name="markdowndoc_meth_parts.c"/>
+   <file role="src" name="markdowndoc_meth_parts.h"/>
+   <file role="src" name="php_discount.h"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.8</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <providesextension>discount</providesextension>
+ <extsrcrelease/>
+</package>

@@ -1,20 +1,20 @@
 dnl $Id$
 dnl config.m4 for extension discount
-dnl
 
-PHP_ARG_ENABLE(markdown, whether to enable discount support,
-[  --enable-markdown      Enable discount support])
+PHP_ARG_ENABLE(discount, whether to enable discount support,
+[  --enable-discount       Enable dicount markdown support])
 
-if test "$PHP_MARKDOWN" != "no"; then
-  PHP_NEW_EXTENSION(markdown, markdown.c \
-	discount/mkdio.c \
-	discount/markdown.c \
-	discount/dumptree.c \
-	discount/generate.c \
-	discount/resource.c \
-	discount/docheader.c \
-	discount/toc.c \
-	discount/xmlpage.c , $ext_shared,,)
-  PHP_ADD_BUILD_DIR($ext_builddir/discount)
-  AC_DEFINE(HAVE_MARKDOWN, 1, [Whether you have markdown])
+discountlib_sources="lib/Csio.c lib/css.c lib/docheader.c \
+                     lib/dumptree.c lib/emmatch.c lib/flags.c \
+                     lib/generate.c lib/html5.c lib/markdown.c \
+                     lib/mkdio.c lib/resource.c lib/tags.c \
+                     lib/toc.c lib/version.c lib/xml.c \
+                     lib/xmlpage.c lib/setup.c"
+
+if test "$PHP_DISCOUNT" != "no"; then
+  AC_DEFINE(HAVE_DISCOUNT, 1, [Whether you have discount markdown support])
+  PHP_SUBST(DISCOUNT_SHARED_LIBADD)
+
+  PHP_NEW_EXTENSION(discount, discount.c markdowndoc_class.c markdowndoc_meth_callbacks.c markdowndoc_meth_document.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_misc.c markdowndoc_meth_parts.c $discountlib_sources, $ext_shared,,-DUSE_DISCOUNT_DL=1 -DUSE_EXTRA_DL=1 -DTABSTOP=4 -Wall)  
+  PHP_ADD_BUILD_DIR($ext_builddir/lib)
 fi
