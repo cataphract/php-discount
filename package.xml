@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package version="2.1" xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
- <name>discount</name>
- <channel>nebm.ist.utl.pt/phpchannel</channel>
+ <name>markdown</name>
+ <channel>pecl.php.net</channel>
  <summary>Processes the Markdown language with the bundled discount library.
 </summary>
  <description>
@@ -30,10 +30,16 @@ The page of the original Markdown is available at
   <email>cataphract@php.net</email>
   <active>yes</active>
  </lead>
- <date>2011-01-08</date>
- <time>08:41:10</time>
+ <developer>
+  <name>Pierre-Alain Joye</name>
+  <user>pajoye</user>
+  <email>pierre@php.net</email>
+  <active>yes</active>
+ </developer>
+ <date>2011-01-11</date>
+ <time>17:43:19</time>
  <version>
-  <release>0.1.0</release>
+  <release>0.2.0</release>
   <api>0.1.0</api>
  </version>
  <stability>
@@ -41,7 +47,10 @@ The page of the original Markdown is available at
   <api>alpha</api>
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
- <notes>- Initial release.
+ <notes>- Completely new codebase.
+- More recent and tightly coupled discount library.
+- Much richer interface.
+- Interface incompatible with PECL markdown 0.1.0.
 </notes>
  <contents>
   <dir name="/">
