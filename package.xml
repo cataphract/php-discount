@@ -189,6 +189,9 @@ The page of the original Markdown is available at
    <file role="src" name="markdowndoc_meth_parts.c"/>
    <file role="src" name="markdowndoc_meth_parts.h"/>
    <file role="src" name="php_discount.h"/>
+   <file role="doc" name="README"/>
+   <file role="doc" name="CREDITS"/>
+   <file role="doc" name="MarkdownDocument.php"/>
   </dir>
  </contents>
  <dependencies>
