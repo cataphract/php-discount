@@ -21,6 +21,7 @@ void mkd_tags_on_startup(INIT_FUNC_ARGS);
 void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS);
 
 void mkd_initialize();
+void mkd_with_html5_tags();
 void mkd_shlib_destructor();
 
 /* compilation, debugging, cleanup
@@ -35,8 +36,9 @@ int mkd_is_compiled(MMIOT*);
 int mkd_dump(MMIOT*, FILE*, char*);
 int markdown(MMIOT*, FILE*, mkd_flag_t); /* XXX: generatehtml + cleanup */
 int mkd_line(char *, int, char **, mkd_flag_t);
-void mkd_string_to_anchor(char *, int, int (*)(int,void*), void*, int); /* XXX */
-int mkd_xhtmlpage(MMIOT*,FILE*); /* complete page to file; on merge: rem 2nd par */
+typedef int (*mkd_sta_function_t)(const int,const void*);
+void mkd_string_to_anchor(char *, int, mkd_sta_function_t, void*, int);
+int mkd_xhtmlpage(MMIOT*,FILE*); /* on merge: removed 2nd param */
 
 /* header block access
  */
@@ -74,6 +76,9 @@ void mkd_e_data(void *, void *);
 /* version#.
  */
 extern const char markdown_version[];
+void mkd_mmiot_flags(FILE *, MMIOT *, int);
+void mkd_flags_are(FILE*, mkd_flag_t, int);
+
 
 /* special flags for markdown() and mkd_text()
  */
@@ -99,6 +104,7 @@ extern const char markdown_version[];
 #define MKD_NODIVQUOTE	0x00040000	/* forbid >%class% blocks */
 #define MKD_NOALPHALIST	0x00080000	/* forbid alphabetic lists */
 #define MKD_NODLIST	0x00100000	/* forbid definition lists */
+#define MKD_EXTRA_FOOTNOTE 0x00200000	/* enable markdown extra-style footnotes */
 #define MKD_EMBED	MKD_NOLINKS|MKD_NOIMAGE|MKD_TAGTEXT
 
 /* special flags for mkd_in() and mkd_string()

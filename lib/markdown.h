@@ -13,6 +13,10 @@ typedef struct footnote {
     Cstring title;		/* what it's called (TITLE= attribute) */
     int height, width;		/* dimensions (for image link) */
     int dealloc;		/* deallocation needed? */
+    int refnumber;
+    int flags;
+#define EXTRA_BOOKMARK	0x01
+#define REFERENCED	0x02
 } Footnote;
 
 /* each input line is read into a Line, which contains the line,
@@ -76,6 +80,7 @@ typedef struct mmiot {
     Cstring in;
     Qblock Q;
     int isp;
+    int reference;
     STRING(Footnote) *footnotes;
     DWORD flags;
 #define MKD_NOLINKS	0x00000001
@@ -99,6 +104,7 @@ typedef struct mmiot {
 #define MKD_NODIVQUOTE	0x00040000
 #define MKD_NOALPHALIST	0x00080000
 #define MKD_NODLIST	0x00100000
+#define MKD_EXTRA_FOOTNOTE 0x00200000
 #define IS_LABEL	0x08000000
 #define USER_FLAGS	0x0FFFFFFF
 #define INPUT_MASK	(MKD_NOHEADER|MKD_TABSTOP)
@@ -144,7 +150,9 @@ extern int  mkd_line(char *, int, char **, DWORD);
 extern int  mkd_generateline(char *, int, FILE*, DWORD);
 #define mkd_text mkd_generateline
 extern void mkd_basename(Document*, char *);
-extern void mkd_string_to_anchor(char*,int, void(*)(int,void*), void*, int);
+
+typedef int (*mkd_sta_function_t)(const int,const void*);
+extern void mkd_string_to_anchor(char*,int, mkd_sta_function_t, void*, int);
 
 extern Document *mkd_in(FILE *, DWORD);
 extern Document *mkd_string(char*,int, DWORD);
