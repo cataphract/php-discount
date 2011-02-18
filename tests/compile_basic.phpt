@@ -14,7 +14,7 @@ $md->dumpTree('php://stdout');
 echo "\nDone.\n";
 --EXPECTF--
 bool(true)
------[source]--+--[header, <P>, 1 line]
-               `--[markup, <P>, 2 lines]
+-----[source]--+--[header, 1 line]
+               `--[markup, 2 lines]
 
 Done.
