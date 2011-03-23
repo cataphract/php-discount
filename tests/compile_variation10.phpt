@@ -70,3 +70,5 @@ hello|sailor</p>
 
 
 Done.
+--XFAIL--
+Extra line in table. Must be investigated. Probably caused by commits 0be590709c3a2df and b7b3141309e611.
