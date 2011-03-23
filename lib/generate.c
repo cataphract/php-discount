@@ -192,6 +192,7 @@ ___mkd_reparse(char *bfr, int size, int flags, MMIOT *f)
     
     sub.flags = f->flags | flags;
     sub.cb = f->cb;
+    sub.ref_prefix = f->ref_prefix;
 
     push(bfr, size, &sub);
     EXPAND(sub.in) = 0;
@@ -565,6 +566,17 @@ printlinkyref(MMIOT *f, linkytype *tag, char *link, int size)
 } /* printlinkyref */
 
 
+/* helper function for php markdown extra footnotes; allow the user to
+ * define a prefix tag instead of just `fn`
+ */
+static char *
+p_or_nothing(p)
+MMIOT *p;
+{
+    return p->ref_prefix ? p->ref_prefix : "fn";
+}
+
+
 /* php markdown extra/daring fireball style print footnotes
  */
 static int
@@ -578,8 +590,9 @@ extra_linky(MMIOT *f, Cstring text, Footnote *ref)
     else {
 	ref->flags |= REFERENCED;
 	ref->refnumber = ++ f->reference;
-	Qprintf(f, "<sup id=\"fnref:%d\"><a href=\"#fn:%d\" rel=\"footnote\">%d</a></sup>",
-		ref->refnumber, ref->refnumber, ref->refnumber);
+	Qprintf(f, "<sup id=\"%sref:%d\"><a href=\"#%s:%d\" rel=\"footnote\">%d</a></sup>",
+		p_or_nothing(f), ref->refnumber,
+		p_or_nothing(f), ref->refnumber, ref->refnumber);
     }
     return 1;
 } /* extra_linky */
@@ -952,7 +965,11 @@ maybe_tag_or_link(MMIOT *f)
 	}
 	else if ( isspace(c) )
 	    break;
+#if WITH_GITHUB_TAGS
+	else if ( ! (c == '/' || c == '-' || c == '_' || isalnum(c) ) )
+#else
 	else if ( ! (c == '/' || isalnum(c) ) )
+#endif
 	    maybetag=0;
     }
 
@@ -1300,6 +1317,15 @@ text(MMIOT *f)
 				Qchar(c, f);
 				break;
 				
+		    case ':': case '|':
+				if ( f->flags & MKD_NOTABLES ) {
+				    Qchar('\\', f);
+				    shift(f,-1);
+				    break;
+				}
+				Qchar(c, f);
+				break;
+				
 		    case '>': case '#': case '.': case '-':
 		    case '+': case '{': case '}': case ']':
 		    case '!': case '[': case '*': case '_':
@@ -1342,15 +1368,26 @@ text(MMIOT *f)
 static void
 printheader(Paragraph *pp, MMIOT *f)
 {
+#if WITH_ID_ANCHOR
     Qprintf(f, "<h%d", pp->hnumber);
     if ( f->flags & MKD_TOC ) {
-	Qprintf(f, " id=\"", pp->hnumber);
-	mkd_string_to_anchor(T(pp->text->text),
-				S(pp->text->text),
-				(mkd_sta_function_t)Qchar, f, 1);
-	Qchar('"', f); /* on merge: not using <a name=""> */
+        Qstring(" id=\"", f);
+        mkd_string_to_anchor(T(pp->text->text),
+                             S(pp->text->text),
+                             (mkd_sta_function_t)Qchar, f, 1);
+        Qchar('"', f);
     }
     Qchar('>', f);
+#else
+    if ( f->flags & MKD_TOC ) {
+        Qstring("<a name=\"", f);
+        mkd_string_to_anchor(T(pp->text->text),
+                             S(pp->text->text),
+                             (mkd_sta_function_t)Qchar, f, 1);
+        Qstring("\"></a>\n", f);
+    }
+    Qprintf(f, "<h%d>", pp->hnumber);
+#endif
     push(T(pp->text->text), S(pp->text->text), f);
     text(f);
     Qprintf(f, "</h%d>", pp->hnumber);
@@ -1377,8 +1414,11 @@ splat(Line *p, char *block, Istring align, int force, MMIOT *f)
 	if ( force && (colno >= S(align)-1) )
 	    idx = S(p->text);
 	else
-	    while ( (idx < S(p->text)) && (T(p->text)[idx] != '|') )
+	    while ( (idx < S(p->text)) && (T(p->text)[idx] != '|') ) {
+		if ( T(p->text)[idx] == '\\' )
+		    ++idx;
 		++idx;
+	    }
 
 	Qprintf(f, "<%s%s>",
 		   block,
@@ -1426,7 +1466,9 @@ printtable(Paragraph *pp, MMIOT *f)
 	
 	last=first=0;
 	for (end=start ; (end < S(dash->text)) && p[end] != '|'; ++ end ) {
-	    if ( !isspace(p[end]) ) {
+	    if ( p[end] == '\\' )
+		++ end;
+	    else if ( !isspace(p[end]) ) {
 		if ( !first) first = p[end];
 		last = p[end];
 	    }
@@ -1665,10 +1707,11 @@ mkd_extra_footnotes(MMIOT *m)
 	for ( j=0; j < S(*m->footnotes); j++ ) {
 	    t = &T(*m->footnotes)[j];
 	    if ( (t->refnumber == i) && (t->flags & REFERENCED) ) {
-		Csprintf(&m->out, "<li id=\"fn:%d\">\n<p>", t->refnumber);
+		Csprintf(&m->out, "<li id=\"%s:%d\">\n<p>",
+			    p_or_nothing(m), t->refnumber);
 		Csreparse(&m->out, T(t->title), S(t->title), 0);
-		Csprintf(&m->out, "<a href=\"#fnref:%d\" rev=\"footnote\">&#8617;</a>",
-			    t->refnumber);
+		Csprintf(&m->out, "<a href=\"#%sref:%d\" rev=\"footnote\">&#8617;</a>",
+			    p_or_nothing(m), t->refnumber);
 		Csprintf(&m->out, "</p></li>\n");
 	    }
 	}
