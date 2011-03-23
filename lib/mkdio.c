@@ -36,7 +36,8 @@ new_Document()
 }
 
 
-/* add a line to the markdown input chain
+/* add a line to the markdown input chain, expanding tabs and
+ * noting the presence of special characters as we go.
  */
 static void
 queue(Document* a, Cstring *line)
@@ -62,6 +63,8 @@ queue(Document* a, Cstring *line)
 	    } while ( ++xp % a->tabstop );
 	}
 	else if ( c >= ' ' ) {
+	    if ( c == '|' )
+		p->flags |= PIPECHAR;
 	    EXPAND(p->text) = c;
 	    ++xp;
 	}
@@ -150,7 +153,7 @@ mkd_in(FILE *f, DWORD flags)
 /* return a single character out of a buffer
  */
 struct string_ctx {
-    char *data;		/* the unread data */
+    const char *data;	/* the unread data */
     int   size;		/* and how much is there? */
 } ;
 
@@ -169,7 +172,7 @@ strget(struct string_ctx *in)
 /* convert a block of text into a linked list
  */
 Document *
-mkd_string(char *buf, int len, DWORD flags)
+mkd_string(const char *buf, int len, DWORD flags)
 {
     struct string_ctx about;
 
@@ -234,7 +237,7 @@ mkd_string_to_anchor(char *s, int len, mkd_sta_function_t outchar,
 
     size = mkd_line(s, len, &line, IS_LABEL);
     
-    if ( labelformat && size && !isalpha(line[0]) )
+    if ( labelformat && (size>0) && !isalpha(line[0]) )
 	(*outchar)('L',out);
     for ( i=0; i < size ; i++ ) {
 	c = line[i];
@@ -242,7 +245,7 @@ mkd_string_to_anchor(char *s, int len, mkd_sta_function_t outchar,
 	    if ( isalnum(c) || (c == '_') || (c == ':') || (c == '-') || (c == '.' ) )
 		(*outchar)(c, out);
 	    else
-		(*outchar)('.',out);
+		(*outchar)('.', out);
 	}
 	else
 	    (*outchar)(c,out);
@@ -357,4 +360,14 @@ mkd_e_data(Document *f, void *data)
 {
     if ( f )
 	f->cb.e_data = data;
+}
+
+
+/* set the href prefix for markdown extra style footnotes
+ */
+void
+mkd_ref_prefix(Document *f, char *data)
+{
+    if ( f )
+	f->ref_prefix = data;
 }

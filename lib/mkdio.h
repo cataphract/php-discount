@@ -13,7 +13,7 @@ typedef DWORD mkd_flag_t;
 /* line builder for markdown()
  */
 MMIOT *mkd_in(FILE*,mkd_flag_t);		/* assemble input from a file */
-MMIOT *mkd_string(char*,int,mkd_flag_t);	/* assemble input from a buffer */
+MMIOT *mkd_string(const char*,int,mkd_flag_t);	/* assemble input from a buffer */
 
 /*void mkd_basename(MMIOT*,char*);*/
 
@@ -78,6 +78,8 @@ void mkd_e_data(void *, void *);
 extern const char markdown_version[];
 void mkd_mmiot_flags(FILE *, MMIOT *, int);
 void mkd_flags_are(FILE*, mkd_flag_t, int);
+
+void mkd_ref_prefix(MMIOT*, char*);
 
 
 /* special flags for markdown() and mkd_text()

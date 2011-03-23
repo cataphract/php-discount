@@ -271,25 +271,35 @@ static int
 istable(Line *t)
 {
     char *p;
-    Line *dashes = t->next;
-    int contains = 0;	/* found character bits; 0x01 is |, 0x02 is - */
+    Line *dashes, *body;
+    int l;
+    int dashed = 0;
     
-    /* two lines, first must contain | */
-    if ( !(dashes && memchr(T(t->text), '|', S(t->text))) )
+    /* three lines, first must contain |,
+		    second must be ---|---,
+		    third must contain |
+     */
+    if ( !(t->flags & PIPECHAR) )
+	return 0;
+	
+    dashes = t->next;
+    if ( !(dashes && (dashes->flags & PIPECHAR)) )
+	return 0;
+
+    body = dashes->next;
+    if ( !(body && (body->flags & PIPECHAR)) )
 	return 0;
 
     /* second line must contain - or | and nothing
      * else except for whitespace or :
      */
-    for ( p = T(dashes->text)+S(dashes->text)-1; p >= T(dashes->text); --p)
-	if ( *p == '|' )
-	    contains |= 0x01;
-	else if ( *p == '-' )
-	    contains |= 0x02;
-	else if ( ! ((*p == ':') || isspace(*p)) )
+    for ( p = T(dashes->text), l = S(dashes->text); l > 0; ++p, --l)
+	if ( *p == '-' )
+	    dashed = 1;
+	else if ( ! ((*p == '|') || (*p == ':') || isspace(*p)) )
 	    return 0;
 
-    return (contains & 0x03);
+    return dashed;
 }
 
 
@@ -771,7 +781,7 @@ tableblock(Paragraph *p)
     Line *t, *q;
 
     for ( t = p->text; t && (q = t->next); t = t->next ) {
-	if ( !memchr(T(q->text), '|', S(q->text)) ) {
+	if ( !(t->flags & PIPECHAR) ) {
 	    t->next = 0;
 	    return q;
 	}
@@ -958,7 +968,7 @@ addfootnote(Line *p, MMIOT* f)
     CREATE(foot->tag);
     CREATE(foot->link);
     CREATE(foot->title);
-    foot->height = foot->width = foot->flags = 0;
+    foot->flags = foot->height = foot->width = 0;
 
     for (j=i=p->dle+1; T(p->text)[j] != ']'; j++)
 	EXPAND(foot->tag) = T(p->text)[j];
@@ -1209,6 +1219,7 @@ mkd_compile(Document *doc, DWORD flags)
 
     doc->compiled = 1;
     memset(doc->ctx, 0, sizeof(MMIOT) );
+    doc->ctx->ref_prefix= doc->ref_prefix;
     doc->ctx->cb        = &(doc->cb);
     doc->ctx->flags     = flags & USER_FLAGS;
     CREATE(doc->ctx->in);

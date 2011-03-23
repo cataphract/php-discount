@@ -7,6 +7,7 @@
 #define USE_DISCOUNT_DL 1
 #define USE_EXTRA_DL 1
 #define TABSTOP 4
+#define WITH_ID_ANCHOR 1
 
 #define DWORD unsigned long
 #define WORD unsigned short
