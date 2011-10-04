@@ -3,7 +3,7 @@
 /* on merge: check against version.c.in */
 
 /* on merge: obtain version from VERSION */
-const char markdown_version[] = "2.0.9-dev"
+const char markdown_version[] = "2.1.2.1-dev"
 #if TABSTOP != 4
 		" TAB=" #TABSTOP
 #endif
@@ -28,5 +28,7 @@ const char markdown_version[] = "2.0.9-dev"
 #if WITH_GITHUB_TAGS
                 " GITHUB-TAGS"
 #endif
+#if WITH_FENCED_CODE
+                " FENCED-CODE"
+#endif
                 ;
-
