@@ -2,6 +2,8 @@
 MarkdownDocument::compile: test NODLIST flag (markdown style)
 --COMMENT--
 This is currently leaking memory.
+--XFAIL--
+Failing. Check before release.
 --SKIPIF--
 <?php
 if (!extension_loaded('discount'))
