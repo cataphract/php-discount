@@ -20,22 +20,24 @@ static STRING(struct kw) extratags;
 
 /* define an additional html block tag
  */
-/* on merge: made static because html5.c is commented out */
+/* on merge: commented out because html5.c is commented out */
+/*
 static void
 mkd_define_tag(char *id, int selfclose)
 {
     struct kw *p;
 
-    /* only add the new tag if it doesn't exist in
+    *//* only add the new tag if it doesn't exist in
      * either the standard or extra tag tables.
-     */
+     *//*
     if ( !(p = mkd_search_tags(id, strlen(id))) ) {
-	p = &EXPAND_PERMANENT(extratags); /* in merge permanent */
+	p = &EXPAND_PERMANENT(extratags); *//* in merge permanent *//*
 	p->id = id;
 	p->size = strlen(id);
 	p->selfclose = selfclose;
     }
 }
+*/
 
 
 /* case insensitive string sort (for qsort() and bsearch() of block tags)
@@ -57,12 +59,14 @@ typedef int (*stfu)(const void*,const void*);
 
 /* sort the list of extra html block tags for later searching
  */
-/* on merge: made static because html5.c is commented out */
+/* on merge: commented out because html5.c is commented out */
+/*
 static void
 mkd_sort_tags()
 {
     qsort(T(extratags), S(extratags), sizeof(struct kw), (stfu)casort);
 }
+*/
 
 
 /* look for a token in the html block tag list

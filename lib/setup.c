@@ -48,23 +48,17 @@ void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS)
 void
 mkd_initialize()
 {
-	/* on merge: added critical section */
-#ifdef ZTS
+	/* on merge: nothing needed */
+/*#ifdef ZTS
 	tsrm_mutex_lock(tags_mutex);
-#endif
-	/* on merge: reduced to call to mkd_prepare_tags(); */
+#endif*/
     /* if ( need_to_initrng ) {
 	need_to_initrng = 0;
 	INITRNG(time(0));
-    }
-    if ( need_to_setup ) {
-	need_to_setup = 0;*/
-	mkd_prepare_tags();
-    /*}*/
-
-#ifdef ZTS
+    }*/
+/*#ifdef ZTS
 	tsrm_mutex_unlock(tags_mutex);
-#endif
+#endif*/
 }
 
 
@@ -75,11 +69,7 @@ mkd_shlib_destructor()
 #ifdef ZTS
 	tsrm_mutex_lock(tags_mutex);
 #endif
-	/* on merge: reduced to call to mkd_deallocate_tags(); */
-    /*if ( !need_to_setup ) {
-	need_to_setup = 1;*/
 	mkd_deallocate_tags();
-    /*}*/
 #ifdef ZTS
 	tsrm_mutex_unlock(tags_mutex);
 #endif
