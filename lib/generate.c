@@ -41,7 +41,7 @@ push(char *bfr, int size, MMIOT *f)
 
 /* look <i> characters ahead of the cursor.
  */
-static int
+static inline int
 peek(MMIOT *f, int i)
 {
 
@@ -53,7 +53,7 @@ peek(MMIOT *f, int i)
 
 /* pull a byte from the input buffer
  */
-static int
+static inline int
 pull(MMIOT *f)
 {
     return ( f->isp < S(f->in) ) ? T(f->in)[f->isp++] : EOF;
@@ -62,14 +62,14 @@ pull(MMIOT *f)
 
 /* return a pointer to the current position in the input buffer.
  */
-static char*
+static inline char*
 cursor(MMIOT *f)
 {
     return T(f->in) + f->isp;
 }
 
 
-static int
+static inline int
 isthisspace(MMIOT *f, int i)
 {
     int c = peek(f, i);
@@ -78,7 +78,7 @@ isthisspace(MMIOT *f, int i)
 }
 
 
-static int
+static inline int
 isthisalnum(MMIOT *f, int i)
 {
     int c = peek(f, i);
@@ -87,7 +87,7 @@ isthisalnum(MMIOT *f, int i)
 }
 
 
-static int
+static inline int
 isthisnonword(MMIOT *f, int i)
 {
     return isthisspace(f, i) || ispunct(peek(f,i));
@@ -1095,8 +1095,8 @@ static struct smarties {
     { '\'', "'ve>",     "rsquo",  0 },
     { '\'', "'m>",      "rsquo",  0 },
     { '\'', "'d>",      "rsquo",  0 },
-    { '-',  "--",       "mdash",  1 },
-    { '-',  "<->",      "ndash",  0 },
+    { '-',  "---",      "mdash",  2 },
+    { '-',  "--",       "ndash",  1 },
     { '.',  "...",      "hellip", 2 },
     { '.',  ". . .",    "hellip", 4 },
     { '(',  "(c)",      "copy",   2 },
@@ -1168,10 +1168,13 @@ smartypants(int c, int *flags, MMIOT *f)
  * let the caller figure it out.
  */
 static int
-tickhandler(MMIOT *f, int tickchar, int minticks, spanhandler spanner)
+tickhandler(MMIOT *f, int tickchar, int minticks, int allow_space, spanhandler spanner)
 {
     int endticks, size;
     int tick = nrticks(0, tickchar, f);
+
+    if ( !allow_space && isspace(peek(f,tick)) )
+	return 0;
 
     if ( (tick >= minticks) && (size = matchticks(f,tickchar,tick,&endticks)) ) {
 	if ( endticks < tick ) {
@@ -1296,11 +1299,11 @@ text(MMIOT *f)
 		    }
 		    break;
 	
-	case '~':   if ( (f->flags & (MKD_NOSTRIKETHROUGH|MKD_TAGTEXT|MKD_STRICT)) || !tickhandler(f,c,2,delspan) )
+	case '~':   if ( (f->flags & (MKD_NOSTRIKETHROUGH|MKD_TAGTEXT|MKD_STRICT)) || ! tickhandler(f,c,2,0, delspan) )
 			Qchar(c, f);
 		    break;
 
-	case '`':   if ( tag_text(f) || !tickhandler(f,c,1,codespan) )
+	case '`':   if ( tag_text(f) || !tickhandler(f,c,1,1,codespan) )
 			Qchar(c, f);
 		    break;
 
@@ -1402,12 +1405,18 @@ static char* alignments[] = { "", " align=\"center\"", " align=\"left\"",
 typedef STRING(int) Istring;
 
 static int
-splat(Line *p, char *block, Istring align, int force, MMIOT *f)
+splat(Line *p, int leading_pipe, char *block, Istring align, int force, MMIOT *f)
 {
     int first,
-	idx = 0,
+	idx = p->dle,
 	colno = 0;
 
+
+    if ( leading_pipe ) idx++;
+    ___mkd_tidy(&p->text);
+    if ( T(p->text)[S(p->text)-1] == '|' )
+	--S(p->text);
+    
     Qstring("<tr>\n", f);
     while ( idx < S(p->text) ) {
 	first = idx;
@@ -1445,16 +1454,14 @@ printtable(Paragraph *pp, MMIOT *f)
 
     Line *hdr, *dash, *body;
     Istring align;
-    int start;
-    int hcols;
+    int hcols,start,starts_with_pipe=0;
     char *p;
-
-    if ( !(pp->text && pp->text->next) )
-	return 0;
 
     hdr = pp->text;
     dash= hdr->next;
     body= dash->next;
+
+    starts_with_pipe = T(hdr->text)[hdr->dle] == '|';
 
     /* first figure out cell alignments */
 
@@ -1480,7 +1487,7 @@ printtable(Paragraph *pp, MMIOT *f)
 
     Qstring("<table>\n", f);
     Qstring("<thead>\n", f);
-    hcols = splat(hdr, "th", align, 0, f);
+    hcols = splat(hdr, starts_with_pipe, "th", align, 0, f);
     Qstring("</thead>\n", f);
 
     if ( hcols < S(align) )
@@ -1491,7 +1498,7 @@ printtable(Paragraph *pp, MMIOT *f)
 
     Qstring("<tbody>\n", f);
     for ( ; body; body = body->next)
-	splat(body, "td", align, 1, f);
+	splat(body, starts_with_pipe, "td", align, 1, f);
     Qstring("</tbody>\n", f);
     Qstring("</table>\n", f);
 

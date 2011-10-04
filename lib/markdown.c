@@ -23,6 +23,9 @@ typedef int (*stfu)(const void*,const void*);
 
 typedef ANCHOR(Paragraph) ParagraphRoot;
 
+static Paragraph *Pp(ParagraphRoot *, Line *, int);
+static Paragraph *compile(Line *, int, MMIOT *);
+
 /* case insensitive string sort for Footnote tags.
  */
 int
@@ -78,7 +81,7 @@ mkd_firstnonblank(Line *p)
 }
 
 
-static int
+static inline int
 blankline(Line *p)
 {
     return ! (p && (S(p->text) > p->dle) );
@@ -174,6 +177,61 @@ splitline(Line *t, int cutpoint)
     }
 }
 
+#define UNCHECK(l) ((l)->flags &= ~CHECKED)
+
+/*
+ * walk a line, seeing if it's any of half a dozen interesting regular
+ * types.
+ */
+static void
+checkline(Line *l)
+{
+    int eol, i;
+    int dashes = 0, spaces = 0,
+	equals = 0, underscores = 0,
+	stars = 0, tildes = 0;
+
+    l->flags |= CHECKED;
+    l->kind = chk_text;
+    l->count = 0;
+    
+    if (l->dle >= 4) { l->kind=chk_code; return; }
+
+    for ( eol = S(l->text); eol > l->dle && isspace(T(l->text)[eol-1]); --eol )
+	;
+
+    for (i=l->dle; i<eol; i++) {
+	register int c = T(l->text)[i];
+
+	if ( c != ' ' ) l->count++;
+
+	switch (c) {
+	case '-':  dashes = 1; break;
+	case ' ':  spaces = 1; break;
+	case '=':  equals = 1; break;
+	case '_':  underscores = 1; break;
+	case '*':  stars = 1; break;
+	case '~':  tildes = 1; break;
+	default:   return;
+	}
+    }
+
+    if ( dashes + equals + underscores + stars + tildes > 1 )
+	return;
+
+    if ( spaces ) {
+	if ( (underscores || stars || dashes) )
+	    l->kind = chk_hr;
+	return;
+    }
+
+    if ( stars || underscores ) { l->kind = chk_hr; }
+    else if ( dashes ) { l->kind = chk_dash; }
+    else if ( tildes ) { l->kind = chk_tilde; }
+    else if ( equals ) { l->kind = chk_equal; }
+}
+
+
 
 static Line *
 commentblock(Paragraph *p, int *unclosed)
@@ -262,47 +320,6 @@ htmlblock(Paragraph *p, struct kw *tag, int *unclosed)
 }
 
 
-/* tables look like
- *   header|header{|header}
- *   ------|------{|......}
- *   {body lines}
- */
-static int
-istable(Line *t)
-{
-    char *p;
-    Line *dashes, *body;
-    int l;
-    int dashed = 0;
-    
-    /* three lines, first must contain |,
-		    second must be ---|---,
-		    third must contain |
-     */
-    if ( !(t->flags & PIPECHAR) )
-	return 0;
-	
-    dashes = t->next;
-    if ( !(dashes && (dashes->flags & PIPECHAR)) )
-	return 0;
-
-    body = dashes->next;
-    if ( !(body && (body->flags & PIPECHAR)) )
-	return 0;
-
-    /* second line must contain - or | and nothing
-     * else except for whitespace or :
-     */
-    for ( p = T(dashes->text), l = S(dashes->text); l > 0; ++p, --l)
-	if ( *p == '-' )
-	    dashed = 1;
-	else if ( ! ((*p == '|') || (*p == ':') || isspace(*p)) )
-	    return 0;
-
-    return dashed;
-}
-
-
 /* footnotes look like ^<whitespace>{0,3}[stuff]: <content>$
  */
 static int
@@ -323,76 +340,46 @@ isfootnote(Line *t)
 }
 
 
-static int
+static inline int
 isquote(Line *t)
 {
-    int j;
-
-    for ( j=0; j < 4; j++ )
-	if ( T(t->text)[j] == '>' )
-	    return 1;
-	else if ( !isspace(T(t->text)[j]) )
-	    return 0;
-    return 0;
+    return (t->dle < 4 && T(t->text)[t->dle] == '>');
 }
 
 
-static int
-dashchar(char c)
-{
-    return (c == '*') || (c == '-') || (c == '_');
-}
-
-
-static int
+static inline int
 iscode(Line *t)
 {
     return (t->dle >= 4);
 }
 
 
-static int
+static inline int
 ishr(Line *t)
 {
-    int i, count=0;
-    char dash = 0;
-    char c;
+    if ( ! (t->flags & CHECKED) )
+	checkline(t);
 
-    if ( iscode(t) ) return 0;
-
-    for ( i = 0; i < S(t->text); i++) {
-	c = T(t->text)[i];
-	if ( (dash == 0) && dashchar(c) )
-	    dash = c;
-
-	if ( c == dash ) ++count;
-	else if ( !isspace(c) )
-	    return 0;
-    }
-    return (count >= 3);
+    if ( t->count > 2 )
+	return t->kind == chk_hr || t->kind == chk_dash || t->kind == chk_equal;
+    return 0;
 }
 
 
 static int
 issetext(Line *t, int *htyp)
 {
-    int i;
-    /* then check for setext-style HEADER
-     *                             ======
+    Line *n;
+    
+    /* check for setext-style HEADER
+     *                        ======
      */
 
-    if ( t->next ) {
-	char *q = T(t->next->text);
-	int last = S(t->next->text);
+    if ( (n = t->next) ) {
+	if ( !(n->flags & CHECKED) )
+	    checkline(n);
 
-	if ( (*q == '=') || (*q == '-') ) {
-	    /* ignore trailing whitespace */
-	    while ( (last > 1) && isspace(q[last-1]) )
-		--last;
-
-	    for (i=1; i < last; i++)
-		if ( q[0] != q[i] )
-		    return 0;
+	if ( n->kind == chk_dash || n->kind == chk_equal ) {
 	    *htyp = SETEXT;
 	    return 1;
 	}
@@ -404,25 +391,28 @@ issetext(Line *t, int *htyp)
 static int
 ishdr(Line *t, int *htyp)
 {
-    int i;
-
-
-    /* first check for etx-style ###HEADER###
-     */
-
-    /* leading run of `#`'s ?
-     */
-    for ( i=0; T(t->text)[i] == '#'; ++i)
-	;
-
     /* ANY leading `#`'s make this into an ETX header
      */
-    if ( i && (i < S(t->text) || i > 1) ) {
+    if ( (t->dle == 0) && (S(t->text) > 1) && (T(t->text)[0] == '#') ) {
 	*htyp = ETX;
 	return 1;
     }
 
+    /* And if not, maybe it's a SETEXT header instead
+     */
     return issetext(t, htyp);
+}
+
+
+static inline int
+end_of_block(Line *t)
+{
+    int dummy;
+    
+    if ( !t )
+	return 0;
+	
+    return ( (S(t->text) <= t->dle) || ishr(t) || ishdr(t, &dummy) );
 }
 
 
@@ -459,13 +449,12 @@ static Line*
 is_extra_dt(Line *t, int *clip)
 {
 #if USE_EXTRA_DL
-    int i;
     
     if ( t && t->next && T(t->text)[0] != '='
 		      && T(t->text)[S(t->text)-1] != '=') {
 	Line *x;
     
-	if ( iscode(t) || blankline(t) || ishdr(t,&i) || ishr(t) )
+	if ( iscode(t) || end_of_block(t) )
 	    return 0;
 
 	if ( (x = skipempty(t->next)) && is_extra_dd(x) ) {
@@ -501,7 +490,7 @@ islist(Line *t, int *clip, DWORD flags, int *list_type)
     int i, j;
     char *q;
     
-    if ( /*iscode(t) ||*/ blankline(t) || ishdr(t,&i) || ishr(t) )
+    if ( end_of_block(t) )
 	return 0;
 
     if ( !(flags & (MKD_NODLIST|MKD_STRICT)) && isdefinition(t,clip,list_type) )
@@ -572,6 +561,7 @@ headerblock(Paragraph *pp, int htyp)
 		++i;
 
 	    CLIP(p->text, 0, i);
+	    UNCHECK(p);
 
 	    for (j=S(p->text); (j > 1) && (T(p->text)[j-1] == '#'); --j)
 		;
@@ -608,6 +598,46 @@ codeblock(Paragraph *p)
 }
 
 
+#ifdef WITH_FENCED_CODE
+static int
+iscodefence(Line *r, int size)
+{
+    if ( !(r->flags & CHECKED) )
+	checkline(r);
+
+    return (r->kind == chk_tilde) && (r->count >= size);
+}
+
+static Paragraph *
+fencedcodeblock(ParagraphRoot *d, Line **ptr)
+{
+    Line *first, *r;
+    Paragraph *ret;
+
+    first = (*ptr);
+    
+    /* don't allow zero-length code fences
+     */
+    if ( (first->next == 0) || iscodefence(first->next, first->count) )
+	return 0;
+
+    /* find the closing fence, discard the fences,
+     * return a Paragraph with the contents
+     */
+    for ( r = first; r && r->next; r = r->next )
+	if ( iscodefence(r->next, first->count) ) {
+	    (*ptr) = r->next->next;
+	    ret = Pp(d, first->next, CODE);
+	    ___mkd_freeLine(first);
+	    ___mkd_freeLine(r->next);
+	    r->next = 0;
+	    return ret;
+	}
+    return 0;
+}
+#endif
+
+
 static int
 centered(Line *first, Line *last)
 {
@@ -631,19 +661,18 @@ endoftextblock(Line *t, int toplevelblock, DWORD flags)
 {
     int z;
 
-    if ( blankline(t)||isquote(t)||ishdr(t,&z)||ishr(t) )
+    if ( end_of_block(t) || isquote(t) )
 	return 1;
 
-    /* HORRIBLE STANDARDS KLUDGE: non-toplevel paragraphs absorb adjacent
-     * code blocks
+    /* HORRIBLE STANDARDS KLUDGES:
+     * 1. non-toplevel paragraphs absorb adjacent code blocks
+     * 2. Toplevel paragraphs eat absorb adjacent list items,
+     *    but sublevel blocks behave properly.
+     * (What this means is that we only need to check for code
+     *  blocks at toplevel, and only check for list items at
+     *  nested levels.)
      */
-    if ( toplevelblock && iscode(t) )
-	return 1;
-
-    /* HORRIBLE STANDARDS KLUDGE: Toplevel paragraphs eat absorb adjacent
-     * list items, but sublevel blocks behave properly.
-     */
-    return toplevelblock ? 0 : islist(t,&z,flags, &z);
+    return toplevelblock ? 0 : islist(t,&z,flags,&z);
 }
 
 
@@ -714,7 +743,7 @@ isdivmarker(Line *p, int start, DWORD flags)
  *
  * one sick horrible thing about blockquotes is that even though
  * it just takes ^> to start a quote, following lines, if quoted,
- * assume that the prefix is ``>''.   This means that code needs
+ * assume that the prefix is ``> ''.   This means that code needs
  * to be indented *5* spaces from the leading '>', but *4* spaces
  * from the start of the line.   This does not appear to be 
  * documented in the reference implementation, but it's the
@@ -739,6 +768,7 @@ quoteblock(Paragraph *p, DWORD flags)
 	    if ( T(t->text)[qp] == ' ' )
 		qp++;
 	    CLIP(t->text, 0, qp);
+	    UNCHECK(t);
 	    t->dle = mkd_firstnonblank(t);
 	}
 
@@ -771,28 +801,6 @@ quoteblock(Paragraph *p, DWORD flags)
 }
 
 
-/*
- * A table block starts with a table header (see istable()), and continues
- * until EOF or a line that /doesn't/ contain a |.
- */
-static Line *
-tableblock(Paragraph *p)
-{
-    Line *t, *q;
-
-    for ( t = p->text; t && (q = t->next); t = t->next ) {
-	if ( !(t->flags & PIPECHAR) ) {
-	    t->next = 0;
-	    return q;
-	}
-    }
-    return 0;
-}
-
-
-static Paragraph *Pp(ParagraphRoot *, Line *, int);
-static Paragraph *compile(Line *, int, MMIOT *);
-
 typedef int (*linefn)(Line *);
 
 
@@ -811,6 +819,7 @@ listitem(Paragraph *p, int indent, DWORD flags, linefn check)
 
     for ( t = p->text; t ; t = q) {
 	CLIP(t->text, 0, clip);
+	UNCHECK(t);
 	t->dle = mkd_firstnonblank(t);
 
 	if ( (q = skipempty(t->next)) == 0 ) {
@@ -871,6 +880,7 @@ definition_block(Paragraph *top, int clip, MMIOT *f, int kind)
 	if ( kind == 1 /* discount dl */ )
 	    for ( q = labels; q; q = q->next ) {
 		CLIP(q->text, 0, 1);
+		UNCHECK(q);
 		S(q->text)--;
 	    }
 
@@ -1120,6 +1130,58 @@ compile_document(Line *ptr, MMIOT *f)
 }
 
 
+static int
+first_nonblank_before(Line *j, int dle)
+{
+    return (j->dle < dle) ? j->dle : dle;
+}
+
+
+static int
+actually_a_table(MMIOT *f, Line *pp)
+{
+    Line *r;
+    int j;
+    int c;
+
+    /* tables need to be turned on */
+    if ( f->flags & (MKD_STRICT|MKD_NOTABLES) )
+	return 0;
+
+    /* tables need three lines */
+    if ( !(pp && pp->next && pp->next->next) ) {
+	return 0;
+    }
+
+    /* all lines must contain |'s */
+    for (r = pp; r; r = r->next )
+	if ( !(r->flags & PIPECHAR) ) {
+	    return 0;
+	}
+
+    /* if the header has a leading |, all lines must have leading |'s */
+    if ( T(pp->text)[pp->dle] == '|' ) {
+	for ( r = pp; r; r = r->next )
+	    if ( T(r->text)[first_nonblank_before(r,pp->dle)] != '|' ) {
+		return 0;
+	    }
+    }
+
+    /* second line must be only whitespace, -, |, or : */
+    r = pp->next;
+
+    for ( j=r->dle; j < S(r->text); ++j ) {
+	c = T(r->text)[j];
+
+	if ( !(isspace(c)||(c=='-')||(c==':')||(c=='|')) ) {
+	    return 0;
+	}
+    }
+
+    return 1;
+}
+
+
 /*
  * break a collection of markdown input into
  * blocks of lists, code, html, and text to
@@ -1150,6 +1212,10 @@ compile(Line *ptr, int toplevel, MMIOT *f)
 	    
 	    ptr = codeblock(p);
 	}
+#if WITH_FENCED_CODE
+	else if ( iscodefence(ptr,3) && (p=fencedcodeblock(&d, &ptr)) )
+	    /* yay, it's already done */ ;
+#endif
 	else if ( ishr(ptr) ) {
 	    p = Pp(&d, 0, HR);
 	    r = ptr;
@@ -1176,13 +1242,12 @@ compile(Line *ptr, int toplevel, MMIOT *f)
 	    p = Pp(&d, ptr, HDR);
 	    ptr = headerblock(p, hdr_type);
 	}
-	else if ( istable(ptr) && !(f->flags & (MKD_STRICT|MKD_NOTABLES)) ) {
-	    p = Pp(&d, ptr, TABLE);
-	    ptr = tableblock(p);
-	}
 	else {
 	    p = Pp(&d, ptr, MARKUP);
 	    ptr = textblock(p, toplevel, f->flags);
+	    /* tables are a special kind of paragraph */
+	    if ( actually_a_table(f, p->text) )
+		p->typ = TABLE;
 	}
 
 	if ( (para||toplevel) && !p->align )
