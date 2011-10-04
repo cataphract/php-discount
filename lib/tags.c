@@ -15,7 +15,7 @@ static STRING(struct kw) extratags;
  *
  * Additional tags still need to be allocated, sorted, and deallocated.
  */
-#include "blocktags"
+#include "blocktags_generated.c" /* on merge: changed file name */
 
 
 /* define an additional html block tag

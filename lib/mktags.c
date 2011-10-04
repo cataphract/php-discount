@@ -1,6 +1,14 @@
+/* On merge: This file is to be run to generate blocktags_generated.c
+   every time it changes */
+
 /* block-level tags for passing html blocks through the blender
  */
 #include <stdio.h>
+
+/* on merge: added these three lines */
+#include "config.h"
+#define emalloc malloc
+#define erealloc realloc
 
 #define __WITHOUT_AMALLOC 1
 #include "cstring.h"
@@ -29,6 +37,7 @@ casort(struct kw *a, struct kw *b)
 {
     if ( a->size != b->size )
 	return a->size - b->size;
+
     return strncasecmp(a->id, b->id, b->size);
 }
 
