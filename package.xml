@@ -68,6 +68,7 @@ The page of the original Markdown is available at
     <file role="src" name="amalloc.c"/>
     <file role="src" name="amalloc.h"/>
     <file role="src" name="basename.c"/>
+    <file role="src" name="blocktags_generated.c"/>
     <file role="src" name="config.h"/>
     <file role="src" name="config.win32.h"/>
     <file role="src" name="Csio.c"/>
@@ -79,7 +80,6 @@ The page of the original Markdown is available at
     <file role="src" name="flags.c"/>
     <file role="src" name="generate.c"/>
     <file role="src" name="html5.c"/>
-    <file role="src" name="main.c"/>
     <file role="src" name="makepage.c"/>
     <file role="src" name="markdown.c"/>
     <file role="src" name="markdown.h"/>
