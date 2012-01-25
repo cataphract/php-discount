@@ -3,7 +3,7 @@
 /* on merge: check against version.c.in */
 
 /* on merge: obtain version from VERSION */
-const char markdown_version[] = "2.1.2.1-dev"
+const char markdown_version[] = "2.1.3.1-dev"
 #if TABSTOP != 4
 		" TAB=" #TABSTOP
 #endif
