@@ -2,8 +2,6 @@
 MarkdownDocument::compile: test NODLIST flag (markdown style)
 --COMMENT--
 This is currently leaking memory.
---XFAIL--
-Failing. Check before release.
 --SKIPIF--
 <?php
 if (!extension_loaded('discount'))
@@ -42,10 +40,8 @@ echo "\nDone.\n";
 
 =====================
 <p>Apple
-:   Pomaceous fruit of plants of the genus Malus in</p>
-
-<pre><code>the family Rosaceae.
-</code></pre>
+:   Pomaceous fruit of plants of the genus Malus in
+    the family Rosaceae.</p>
 
 <p>Orange
 :   The fruit of an evergreen tree of the genus Citrus.</p>

@@ -2,8 +2,6 @@
 MarkdownDocument::compile: test STRICT flag
 --COMMENT--
 Combination of NOSUPERSCRIPT, NORELAXED, NOSTRIKETHROUGH, NODLIST, NOALPHALIST, NODIVQUOTE and MKD_NOTABLES
---XFAIL--
-Failing. Check before release.
 --SKIPIF--
 <?php
 if (!extension_loaded('discount'))
@@ -91,15 +89,13 @@ echo "\nDone.\n";
 <p>. sdfsd
 . wesdf</p>
 
-<p>=hey!=</p>
-
-<pre><code>This is a definition list
-</code></pre>
+<p>=hey!=
+    This is a definition list</p>
 
 <blockquote><p>%class%</p></blockquote>
 
 <p>aaa | bbbb
-&mdash;&mdash;&ndash;|&mdash;&mdash;&mdash;
+&mdash;&ndash;|&mdash;&mdash;
 hello|sailor</p>
 
 
