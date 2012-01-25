@@ -58,15 +58,17 @@ bool(false)
 
 =====================
 <ul>
- <li><a href="#header.1">header 1</a></li>
- <li><ul>
-  <li><a href="#header.1.1">header 1.1</a></li>
-  <li><ul>
+ <li><a href="#header.1">header 1</a>
+ <ul>
+  <li><a href="#header.1.1">header 1.1</a>
+  <ul>
    <li><a href="#header.1.1.1">header 1.1.1</a></li>
    <li><a href="#header.1.1.2">header 1.1.2</a></li>
-  </ul></li>
+  </ul>
+  </li>
   <li><a href="#header.1.2">header 1.2</a></li>
- </ul></li>
+ </ul>
+ </li>
  <li><a href="#header.2">header 2</a></li>
 </ul>
 
