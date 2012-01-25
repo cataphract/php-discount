@@ -15,6 +15,6 @@ if test "$PHP_DISCOUNT" != "no"; then
   AC_DEFINE(HAVE_DISCOUNT, 1, [Whether you have discount markdown support])
   PHP_SUBST(DISCOUNT_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(discount, discount.c markdowndoc_class.c markdowndoc_meth_callbacks.c markdowndoc_meth_document.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_misc.c markdowndoc_meth_parts.c $discountlib_sources, $ext_shared,,-DUSE_DISCOUNT_DL=1 -DUSE_EXTRA_DL=1 -DTABSTOP=4 -DWITH_ID_ANCHOR=1 -DWITH_FENCED_CODE=1 -Wall -Wno-parentheses)  
+  PHP_NEW_EXTENSION(discount, discount.c markdowndoc_class.c markdowndoc_meth_callbacks.c markdowndoc_meth_document.c markdowndoc_meth_header.c markdowndoc_meth_input.c markdowndoc_meth_misc.c markdowndoc_meth_parts.c $discountlib_sources, $ext_shared,,-DUSE_DISCOUNT_DL=1 -DUSE_EXTRA_DL=1 -DTABSTOP=4 -DWITH_ID_ANCHOR=1 -DWITH_FENCED_CODE=1 -DWITH_GITHUB_TAGS=1 -Wall -Wno-parentheses)  
   PHP_ADD_BUILD_DIR($ext_builddir/lib)
 fi

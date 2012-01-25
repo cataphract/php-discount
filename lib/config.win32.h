@@ -8,6 +8,8 @@
 #define USE_EXTRA_DL 1
 #define TABSTOP 4
 #define WITH_ID_ANCHOR 1
+#define WITH_FENCED_CODE 1
+#define WITH_GITHUB_TAGS 1
 
 #define DWORD unsigned long
 #define WORD unsigned short
