@@ -180,3 +180,29 @@ PHP_METHOD(markdowndoc, writeFragment)
 	RETURN_TRUE;
 }
 /* }}} */
+
+/* {{{ proto bool MarkdownDocument::setReferencePrefix(string) */
+PHP_METHOD(markdowndoc, setReferencePrefix)
+{
+	char			*prefix;
+	int				prefix_len;
+	discount_object	*dobj;
+
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s",
+			&prefix, &prefix_len) == FAILURE) {
+		RETURN_FALSE;
+	}
+	if ((dobj = markdowndoc_get_object(getThis(), 0 TSRMLS_CC)) == NULL) {
+		RETURN_FALSE;
+	}
+	if (mkd_is_compiled(dobj->markdoc)) {
+		zend_throw_exception_ex(spl_ce_LogicException, 0 TSRMLS_CC,
+			"Invalid state: the markdown document has already been compiled");
+		RETURN_FALSE;
+	}
+
+	mkd_ref_prefix(dobj->markdoc, prefix);
+
+	RETURN_TRUE;
+}
+/* }}} */

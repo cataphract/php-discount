@@ -84,6 +84,10 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_writefragment, 0, 0, 2)
 	ZEND_ARG_INFO(0, flags)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_setreferenceprefix, 0, 0, 1)
+	ZEND_ARG_INFO(0, prefix)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_outstream, 0, 0, 1)
 	ZEND_ARG_INFO(0, markdown_outstream)
 ZEND_END_ARG_INFO()
@@ -104,6 +108,7 @@ static zend_function_entry class_methods[] = {
 	PHP_ME(markdowndoc,	dumpTree,			arginfo_dumptree,			ZEND_ACC_PUBLIC)
 	PHP_ME(markdowndoc,	transformFragment,	arginfo_transformfragment,	ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
 	PHP_ME(markdowndoc,	writeFragment,		arginfo_writefragment,		ZEND_ACC_PUBLIC | ZEND_ACC_STATIC)
+	PHP_ME(markdowndoc,	setReferencePrefix,	arginfo_setreferenceprefix,	ZEND_ACC_PUBLIC)
 	PHP_ME(markdowndoc,	getTitle,			arginfo_void,				ZEND_ACC_PUBLIC)
 	PHP_ME(markdowndoc,	getAuthor,			arginfo_void,				ZEND_ACC_PUBLIC)
 	PHP_ME(markdowndoc,	getDate,			arginfo_void,				ZEND_ACC_PUBLIC)
@@ -193,7 +198,7 @@ discount_object* markdowndoc_get_object(zval *zobj, int require_compiled TSRMLS_
 		zend_throw_exception_ex(spl_ce_LogicException, 0 TSRMLS_CC,
 			"Invalid state: the markdown document is not initialized");
 		return NULL;
-    }
+	}
 
 	if (dobj->in_callback) {
 		zend_throw_exception_ex(spl_ce_LogicException, 0 TSRMLS_CC,

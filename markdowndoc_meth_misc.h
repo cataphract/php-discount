@@ -32,3 +32,4 @@ PHP_METHOD(markdowndoc, isCompiled);
 PHP_METHOD(markdowndoc, dumpTree);
 PHP_METHOD(markdowndoc, transformFragment);
 PHP_METHOD(markdowndoc, writeFragment);
+PHP_METHOD(markdowndoc, setReferencePrefix);
