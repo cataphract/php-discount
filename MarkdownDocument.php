@@ -8,9 +8,10 @@
  * This a file with dummy definitions written in order to generate the
  * documentation.
  *
- * @copyright 2011 Gustavo Lopes (extension), David Parsons (library)
+ * @copyright 2012 Gustavo Lopes (extension), David Parsons (library)
  * @package Discount
- * @link http://cataphract.github.com/php-discount/ Project homepage
+ * @link http://pecl.php.net/markdown Project homepage
+ * @link http://cataphract.github.com/php-discount/ Git development repository
  * @link http://www.pell.portland.or.us/~orc/kbd/discount/ Discount library
  */
 
@@ -37,7 +38,8 @@
  * callback provided to {@link MarkdownDocument::setUrlCallback()} or
  * {@link MarkdownDocument::setAttributeCallback()}.</li>
  * <li>Throw <var>LogicException</var> if the method requires the Markdown
- * document to be compiled, but it isn't.</li>
+ * document to be compiled, but it isn't (or not to be compiled, but it
+ * is).</li>
  * </ul>
  *
  * The methods that take a stream can instead take a URL from which such
@@ -58,6 +60,9 @@
  * @example simple_usage.php A simple example of the usage of this class.
  * @example subclassing.php Simple subclassing to simplify usage.
  * @example subclassing_2.php Subclassing example with table of contents & CSS.
+ * @link http://pecl.php.net/markdown Project homepage
+ * @link http://cataphract.github.com/php-discount/ Git development repository
+ * @link http://www.pell.portland.or.us/~orc/kbd/discount/ Discount library
  * @since 0.1.0
  */
 class MarkdownDocument {
@@ -80,7 +85,7 @@ class MarkdownDocument {
 	 * A compile flag that disables processing the markdown elements that would
 	 * otherwise create HTML images (like in
 	 * <kbd>![alt text](http://www.example.com/myimg.jpg "title")</kbd>);
-	 * aditionally, it escapes any <kbd>IMG</kbd> element it finds.
+	 * additionally, it escapes any <kbd>IMG</kbd> element it finds.
 	 * @var int Compile flag to forbid images (HTML img element)
 	 * @see MarkdownDocument::compile()
 	 * @see MarkdownDocument::transformFragment()
@@ -340,7 +345,7 @@ class MarkdownDocument {
 	const NOHEADER			= 65536;
 
 	/**
-	 * An input flag to treat tab stops as 4 spaces — has no effect unless the
+	 * An input flag to treat tab stops as 4 spaces ï¿½ has no effect unless the
 	 * extension was compiled with a different tab stop.
 	 *
 	 * The default tab stop is 4 spaces, so this flag usually has no effect.
@@ -412,6 +417,19 @@ class MarkdownDocument {
 	 * @since 0.1.0
 	 */
 	const EMBED				= 35;
+
+	/**
+	 * Compile flag that enables the use of PHP Markdown Extra-style footnotes.
+	 * 
+	 * @var int Compile flag that enables footnotes. Footnotes are a discount
+	 * extension borrowed from Markdown Extra.
+	 * 
+	 * @link http://michelf.com/projects/php-markdown/extra/#footnotes Syntax
+	 * for Markdown Extra footnotes
+	 * @see MarkdownDocument::compile()
+	 * @since 1.0.0
+	 */
+	const EXTRA_FOOTNOTE	= 2097152;
 
 	/**
 	 * Creates a {@link MarkdownDocument} from a stream.
@@ -887,5 +905,29 @@ class MarkdownDocument {
 	 * @since 0.1.0
 	 */
 	public function setAttributesCallback($callback) {}
+
+
+	/**
+	 * This function allows customizing the prefix used in footnote references.
+	 * More specifically, it changes the <kbd>name</kbd> attributes of the
+	 * anchors from <kbd>fn:N</kbd> and <kbd>fnref:N</kbd> to
+	 * <kbd>{$prefix}:N</kbd> and <kbd>{$prefix}ref:N</kbd>. This allows, for
+	 * instance, for displaying several articles rendered individually in the
+	 * same page without clashes in the footnote links.
+	 * 
+	 * This function can only be called if the document has not yet been
+	 * compiled.
+	 * 
+	 * Usage of footnotes requires the {@link MarkdownDocument::EXTRA_FOOTNOTE}
+	 * compile flag.
+	 * 
+	 * @return boolean Returns <var>TRUE</var>, except for the situations
+	 * covered in the class summary.
+	 * @param string $prefix The prefix to use.
+	 * @see MarkdownDocument::EXTRA_FOOTNOTE
+	 * @see MarkdownDocument::compile()
+	 * @since 1.0.0
+	 */
+	public function setReferencePrefix($prefix) {}
 }
 
