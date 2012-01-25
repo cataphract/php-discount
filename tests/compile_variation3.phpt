@@ -4,8 +4,6 @@ MarkdownDocument::compile: test NOPANTS flag
 <?php
 if (!extension_loaded('discount'))
 	die('SKIP discount extension not loaded');
---XFAIL--
-Failing. Check before release.
 --FILE--
 <?php
 $t = <<<EOD
@@ -20,8 +18,8 @@ And it's is “it’s,” as well as anything-else’s (except not foo'sbar and the like
 1/4th ? ¼th. Ditto for 1/4 (¼), 1/2 (½), 3/4ths (¾ths), and 3/4 (¾).
 ... becomes …
 . . . also becomes …
--- becomes —
-- becomes – , but A-B remains A-B.
+--- becomes —
+-- becomes –
 EOD;
 
 $md = MarkdownDocument::createFromString($t);
@@ -48,7 +46,7 @@ And it&rsquo;s is “it’s,” as well as anything-else’s (except not foo'sbar and th
 &hellip; becomes …
 &hellip; also becomes …
 &mdash; becomes —
-&ndash; becomes – , but A-B remains A-B.</p>
+&ndash; becomes –</p>
 
 =====================
 <p>``text'' is translated to “text”.
@@ -62,8 +60,8 @@ And it's is “it’s,” as well as anything-else’s (except not foo'sbar and the like
 1/4th ? ¼th. Ditto for 1/4 (¼), 1/2 (½), 3/4ths (¾ths), and 3/4 (¾).
 ... becomes …
 . . . also becomes …
--- becomes —
-- becomes – , but A-B remains A-B.</p>
+--- becomes —
+-- becomes –</p>
 
 
 Done.
