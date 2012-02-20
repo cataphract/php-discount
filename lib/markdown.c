@@ -451,6 +451,7 @@ is_extra_dt(Line *t, int *clip)
 #if USE_EXTRA_DL
     
     if ( t && t->next && T(t->text)[0] != '='
+		      && S(t->text) != 0
 		      && T(t->text)[S(t->text)-1] != '=') {
 	Line *x;
     
