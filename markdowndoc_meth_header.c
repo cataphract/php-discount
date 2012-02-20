@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2011, Gustavo Lopes
+* Copyright (c) 2012, Gustavo Lopes
 * All rights reserved.
 * 
 * Redistribution and use in source and binary forms, with or without
