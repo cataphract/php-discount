@@ -201,7 +201,11 @@ PHP_METHOD(markdowndoc, setReferencePrefix)
 		RETURN_FALSE;
 	}
 
-	mkd_ref_prefix(dobj->markdoc, prefix);
+	if (dobj->ref_prefix != NULL) {
+		efree(dobj->ref_prefix);
+	}
+	dobj->ref_prefix = estrndup(prefix, prefix_len);
+	mkd_ref_prefix(dobj->markdoc, dobj->ref_prefix);
 
 	RETURN_TRUE;
 }

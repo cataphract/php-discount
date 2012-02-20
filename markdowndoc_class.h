@@ -37,6 +37,7 @@ typedef struct discount_object {
 	zend_fcall_info_cache	*url_fcc;
 	zend_fcall_info			*attr_fci;
 	zend_fcall_info_cache	*attr_fcc;
+	char					*ref_prefix;
 } discount_object;
 
 extern zend_class_entry *markdowndoc_ce;

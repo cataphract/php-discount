@@ -132,6 +132,10 @@ static void free_object_storage(void *object TSRMLS_DC)
 		mkd_cleanup(dobj->markdoc);
 		dobj->markdoc = NULL;
 	}
+	if (dobj->ref_prefix != NULL) {
+		efree(dobj->ref_prefix);
+		dobj->ref_prefix = NULL;
+	}
 	
 	markdowndoc_free_callback(&dobj->url_fci, &dobj->url_fcc);
 	markdowndoc_free_callback(&dobj->attr_fci, &dobj->attr_fcc);
@@ -160,6 +164,7 @@ static zend_object_value ce_create_object(zend_class_entry *class_type TSRMLS_DC
 	dobj->url_fcc		= NULL;
 	dobj->attr_fci		= NULL;
 	dobj->attr_fcc		= NULL;
+	dobj->ref_prefix	= NULL;
  
     zov.handle = zend_objects_store_put(dobj,
         (zend_objects_store_dtor_t) zend_objects_destroy_object,
