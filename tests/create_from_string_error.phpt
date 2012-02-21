@@ -4,6 +4,8 @@ MarkdownDocument::createFromString error in arguments
 <?php
 if (!extension_loaded('discount'))
 	die('SKIP discount extension not loaded');
+if (PHP_VERSION_ID < 50300)
+	die('SKIP for 5.3+');
 --FILE--
 <?php
 include dirname(__FILE__)."/helpers.php.inc";
