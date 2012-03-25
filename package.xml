@@ -94,6 +94,9 @@ The page of the original Markdown is available at
     <file role="src" name="version.c"/>
     <file role="src" name="xml.c"/>
     <file role="src" name="xmlpage.c"/>
+    <file role="doc" name="COPYRIGHT"/>
+    <file role="doc" name="CREDITS"/>
+    <file role="doc" name="VERSION"/>
    </dir>
    <dir name="tests">
     <file role="test" name="compile_basic.phpt"/>
