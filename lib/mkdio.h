@@ -17,6 +17,11 @@ MMIOT *mkd_string(const char*,int,mkd_flag_t);	/* assemble input from a buffer *
 
 /*void mkd_basename(MMIOT*,char*);*/
 
+/* line builder for github flavoured markdown
+ */
+MMIOT *gfm_in(FILE*,mkd_flag_t);		/* assemble input from a file */
+MMIOT *gfm_string(const char*,int,mkd_flag_t);	/* assemble input from a buffer */
+
 void mkd_tags_on_startup(INIT_FUNC_ARGS);
 void mkd_tags_on_shutdown(SHUTDOWN_FUNC_ARGS);
 
@@ -108,6 +113,7 @@ void mkd_ref_prefix(MMIOT*, char*);
 #define MKD_NOALPHALIST	0x00080000	/* forbid alphabetic lists */
 #define MKD_NODLIST	0x00100000	/* forbid definition lists */
 #define MKD_EXTRA_FOOTNOTE 0x00200000	/* enable markdown extra-style footnotes */
+#define MKD_NOSTYLE	0x00400000	/* don't extract <style> blocks */
 #define MKD_EMBED	MKD_NOLINKS|MKD_NOIMAGE|MKD_TAGTEXT
 
 /* special flags for mkd_in() and mkd_string()

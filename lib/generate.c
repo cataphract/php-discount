@@ -631,7 +631,8 @@ linkyformat(MMIOT *f, Cstring text, int image, Footnote *ref)
 {
     linkytype *tag;
 
-    if ( image || (ref == 0) )
+
+    if ( image )
 	tag = &imaget;
     else if ( tag = pseudo(ref->link) ) {
 	if ( f->flags & (MKD_NO_EXT|MKD_SAFELINK) )
@@ -734,8 +735,6 @@ linkylinky(int image, MMIOT *f)
 		    else
 			status = linkyformat(f, name, image, ref);
 		}
-		else if ( f->flags & IS_LABEL )
-		    status = linkyformat(f, name, image, 0);
 	    }
 	}
     }
@@ -1088,7 +1087,7 @@ islike(MMIOT *f, char *s)
     int len;
     int i;
 
-    if ( s[0] == '<' ) {
+    if ( s[0] == '|' ) {
 	if ( !isthisnonword(f, -1) )
 	    return 0;
        ++s;
@@ -1097,7 +1096,7 @@ islike(MMIOT *f, char *s)
     if ( !(len = strlen(s)) )
 	return 0;
 
-    if ( s[len-1] == '>' ) {
+    if ( s[len-1] == '|' ) {
 	if ( !isthisnonword(f,len-1) )
 	    return 0;
 	len--;
@@ -1116,13 +1115,13 @@ static struct smarties {
     char *entity;
     int shift;
 } smarties[] = {
-    { '\'', "'s>",      "rsquo",  0 },
-    { '\'', "'t>",      "rsquo",  0 },
-    { '\'', "'re>",     "rsquo",  0 },
-    { '\'', "'ll>",     "rsquo",  0 },
-    { '\'', "'ve>",     "rsquo",  0 },
-    { '\'', "'m>",      "rsquo",  0 },
-    { '\'', "'d>",      "rsquo",  0 },
+    { '\'', "'s|",      "rsquo",  0 },
+    { '\'', "'t|",      "rsquo",  0 },
+    { '\'', "'re|",     "rsquo",  0 },
+    { '\'', "'ll|",     "rsquo",  0 },
+    { '\'', "'ve|",     "rsquo",  0 },
+    { '\'', "'m|",      "rsquo",  0 },
+    { '\'', "'d|",      "rsquo",  0 },
     { '-',  "---",      "mdash",  2 },
     { '-',  "--",       "ndash",  1 },
     { '.',  "...",      "hellip", 2 },
@@ -1130,11 +1129,11 @@ static struct smarties {
     { '(',  "(c)",      "copy",   2 },
     { '(',  "(r)",      "reg",    2 },
     { '(',  "(tm)",     "trade",  3 },
-    { '3',  "<3/4>",    "frac34", 2 },
-    { '3',  "<3/4ths>", "frac34", 2 },
-    { '1',  "<1/2>",    "frac12", 2 },
-    { '1',  "<1/4>",    "frac14", 2 },
-    { '1',  "<1/4th>",  "frac14", 2 },
+    { '3',  "|3/4|",    "frac34", 2 },
+    { '3',  "|3/4ths|", "frac34", 2 },
+    { '1',  "|1/2|",    "frac12", 2 },
+    { '1',  "|1/4|",    "frac14", 2 },
+    { '1',  "|1/4th|",  "frac14", 2 },
     { '&',  "&#0;",      0,       3 },
 } ;
 #define NRSMART ( sizeof smarties / sizeof smarties[0] )
@@ -1338,7 +1337,16 @@ text(MMIOT *f)
 	case '\\':  switch ( c = pull(f) ) {
 		    case '&':   Qstring("&amp;", f);
 				break;
-		    case '<':   Qstring("&lt;", f);
+		    case '<':   c = peek(f,1);
+				if ( (c == EOF) || isspace(c) )
+				    Qstring("&lt;", f);
+				else {
+				    /* Markdown.pl does not escape <[nonwhite]
+				     * sequences */
+				    Qchar('\\', f);
+				    shift(f, -1);
+				}
+				
 				break;
 		    case '^':   if ( f->flags & (MKD_STRICT|MKD_NOSUPERSCRIPT) ) {
 				    Qchar('\\', f);
@@ -1427,8 +1435,9 @@ printheader(Paragraph *pp, MMIOT *f)
 
 enum e_alignments { a_NONE, a_CENTER, a_LEFT, a_RIGHT };
 
-static char* alignments[] = { "", " align=\"center\"", " align=\"left\"",
-				  " align=\"right\"" };
+static char* alignments[] = { "", " style=\"text-align:center;\"",
+				  " style=\"text-align:left;\"",
+				  " style=\"text-align:right;\"" };
 
 typedef STRING(int) Istring;
 
