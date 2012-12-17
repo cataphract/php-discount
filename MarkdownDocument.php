@@ -432,6 +432,18 @@ class MarkdownDocument {
 	const EXTRA_FOOTNOTE	= 2097152;
 
 	/**
+	 * Compile flag that disables the processing of &lt;style> sections (for inclusion
+	 * in the return of {@link MarkdownDocument::getCss()}). It has no effect if
+	 * {@link MarkdownDocument:NOHTML} is already enabled.
+	 *
+	 * @var int Bit for disabling processing &lt;style> sections.
+	 * @see MarkdownDocument::NOHTML
+	 * @see MarkdownDocument::getCss()
+	 * @since 1.1.0
+	 */
+	const NOSTYLE			= 4194304;
+
+	/**
 	 * Creates a {@link MarkdownDocument} from a stream.
 	 * 
 	 * This is one of the two public methods available for creating an object of
